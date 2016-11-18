@@ -33,8 +33,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
 const TaskRowItem = (props) => {
     console.log(props.due);
     var numDays = moment(props.due).fromNow();
