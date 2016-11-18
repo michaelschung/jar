@@ -12,7 +12,9 @@ import TasksPage from '../jar/pages/TasksPage.js'
 class App extends React.Component {
   render() {
     return (
-      <NavigatorIOS 
+      <NavigatorIOS
+        barTintColor='#319bce'
+        titleTextColor='#fff'
         initialRoute={{
           component: TasksPage,
           title: 'Tasks Page',

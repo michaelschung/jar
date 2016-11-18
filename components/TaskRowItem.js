@@ -1,6 +1,13 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StyleSheet,
+  Image,
+  TouchableHighlight,
+   } from 'react-native';
+import TaskDetailsPage from '../pages/TaskDetailsPage.js'
 
 var moment = require('moment');
 
@@ -26,15 +33,19 @@ const styles = StyleSheet.create({
   },
 });
 
+
+
 const TaskRowItem = (props) => {
     console.log(props.due);
     var numDays = moment(props.due).fromNow();
     return (
-      <View style={styles.container}>
-        <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }} style={styles.photo} />
-        <Text style={styles.taskName}>{props.name}</Text>
-        <Text style={styles.due}>{numDays}</Text>
-      </View>
+      <TouchableHighlight style={styles.container}>
+        <View style={styles.container}>
+          <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }} style={styles.photo} />
+          <Text style={styles.taskName}>{props.name}</Text>
+          <Text style={styles.due}>{numDays}</Text>
+        </View>
+      </TouchableHighlight>
     );
   };
 
