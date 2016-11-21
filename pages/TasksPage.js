@@ -18,8 +18,9 @@ import TaskDetailsPage from './TaskDetailsPage.js'
 var moment = require('moment');
 
 var today = new Date();
-var taskList = [{name:'Take out trash', owner:'Michael', completed:false, due:new Date().setDate(today.getDate() + 1), picUri:'./images/Michael.jpg'},
-				{name:'Call the landlord', owner:'Evan', completed:false, due:new Date().setDate(today.getDate() + 3), picUri:'./images/Evan.jpg'}, ];
+var taskList = [{name:'Take out trash', owner: {name: 'Michael', picURL:'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg'}, completed:false, due:new Date().setDate(today.getDate() + 1)},
+				{name:'Call the landlord', owner: {name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'}, completed:false, due:new Date().setDate(today.getDate() + 3)}, 
+				{name:'Clean room', owner: {name: 'David', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG'}, completed:false, due:new Date().setDate(today.getDate() + 4)}, ];
 
 
 const styles = StyleSheet.create({
@@ -85,7 +86,7 @@ class TasksPage extends Component {
 		return (
 			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
 			  <View style={styles.row}>
-			    <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }} style={styles.photo} />
+			    <Image source={{ uri: data.owner.picURL }} style={styles.photo} />
 			    <Text style={styles.taskName}>{data.name}</Text>
 			    <Text style={styles.due}>{numDays}</Text>
 			  </View>
