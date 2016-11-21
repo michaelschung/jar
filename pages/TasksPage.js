@@ -7,11 +7,15 @@ import {
 	Text,
 	TextInput,
 	View,
-	TouchableHighlight,
 	ActivityIndicator,
 	Image,
-	ListView
+	ListView,
+	TouchableOpacity,
 } from 'react-native';
+
+import TaskDetailsPage from './TaskDetailsPage.js'
+
+var moment = require('moment');
 
 var today = new Date();
 var taskList = [{name:'Take out trash', owner:'Michael', completed:false, due:new Date().setDate(today.getDate() + 1), picUri:'./images/Michael.jpg'},
@@ -19,15 +23,31 @@ var taskList = [{name:'Take out trash', owner:'Michael', completed:false, due:ne
 
 
 const styles = StyleSheet.create({
-  container: {
+  row: {
     flex: 1,
-    marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+  },
+  taskName: {
+    marginLeft: 12,
+    fontSize: 16,
+  },
+  photo: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+  },
+  due: {
+    textAlign: 'right',
+    flex: 1,
   },
   separator: {
   	flex: 1,
-    height: StyleSheet.hairlineWidth,
+    height: .5,
     backgroundColor: '#8E8E8E',
-  }
+    padding: 0
+  },
 });
 
 class TasksPage extends Component {
@@ -40,23 +60,37 @@ class TasksPage extends Component {
 		};
 	}
 
-	static route = {
-		navigationBar: {
-			title: 'Tasks Screen',
-		}
+	onTaskPressed = (taskItem) => {
+		this.props.navigator.push({
+			title: 'Task Details',
+			component: TaskDetailsPage,
+			passProps: taskItem,
+		});
+	}
+
+	renderRow = (data) => {
+		var numDays = moment(data.due).fromNow();
+		return (
+			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
+			  <View style={styles.row}>
+			    <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }} style={styles.photo} />
+			    <Text style={styles.taskName}>{data.name}</Text>
+			    <Text style={styles.due}>{numDays}</Text>
+			  </View>
+			</TouchableOpacity>
+		);
 	}
 
 	render() {
 		return (
 			<ListView
-			  style={styles.container}
 			  dataSource={this.state.dataSource}
-			  renderRow={(data) => TaskRowItem(data)} 
-			  renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
+			  renderRow={this.renderRow}  
+			  renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+			 />
 		);
 	}
 }
-
 
 export default TasksPage;
 

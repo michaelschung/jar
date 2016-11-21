@@ -6,11 +6,12 @@ import {
   View,
   NavigatorIOS
 } from 'react-native';
-import Router from '../jar/navigation/Router.js'
+
 import TasksPage from '../jar/pages/TasksPage.js'
 
 class App extends React.Component {
   render() {
+    console.log('rendering main');
     return (
       <NavigatorIOS
         barTintColor='#319bce'
