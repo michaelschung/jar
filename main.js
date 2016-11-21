@@ -30,6 +30,7 @@ class App extends React.Component {
         ref='nav'
         barTintColor='#319bce'
         titleTextColor='#fff'
+        tintColor='#fff'
         initialRoute={{
           component: TasksPage,
           title: 'Tasks Page',
