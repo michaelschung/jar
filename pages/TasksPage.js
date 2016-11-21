@@ -48,6 +48,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#8E8E8E',
     padding: 0
   },
+  addButton: {
+    backgroundColor: '#319bce',
+    marginBottom: 7,
+    borderRadius: 25,
+    minHeight: 50,
+    minWidth: 50,
+  },
+  buttonText: {
+  	color: 'white',
+  	alignSelf: 'center',
+  	fontSize: 18,
+  }
 });
 
 class TasksPage extends Component {
@@ -83,11 +95,16 @@ class TasksPage extends Component {
 
 	render() {
 		return (
-			<ListView
-			  dataSource={this.state.dataSource}
-			  renderRow={this.renderRow}  
-			  renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
-			 />
+			<View style={{flex: 1}}>
+				<ListView
+				  dataSource={this.state.dataSource}
+				  renderRow={this.renderRow}  
+				  renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
+				<TouchableOpacity style={styles.addButton}>
+					<Text style={styles.buttonText}>+</Text>
+				</TouchableOpacity>
+			</View>
+			
 		);
 	}
 }
