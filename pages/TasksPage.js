@@ -18,7 +18,7 @@ import TaskDetailsPage from './TaskDetailsPage.js'
 var moment = require('moment');
 
 var today = new Date();
-var taskList = [{name:'Take out trash', owner: {name: 'Michael', picURL:'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg'}, completed:false, due:new Date().setDate(today.getDate() + 1)},
+var taskList = [{name:'Take out trash', isMyTask: true, completed:false, due:new Date().setDate(today.getDate() + 1)},
 				{name:'Call the landlord', owner: {name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'}, completed:false, due:new Date().setDate(today.getDate() + 3)}, 
 				{name:'Clean room', owner: {name: 'David', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG'}, completed:false, due:new Date().setDate(today.getDate() + 4)}, ];
 
@@ -38,6 +38,12 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 20,
+  },
+  checkBox: {
+  	height: 40,
+  	width: 40,
+  	borderRadius: 20,
+  	backgroundColor: '#319bce',
   },
   due: {
     textAlign: 'right',
@@ -81,12 +87,26 @@ class TasksPage extends Component {
 		});
 	}
 
+	renderIcon = (data) => {
+		if (data.isMyTask) {
+			return (
+				<TouchableOpacity style={styles.checkBox} />
+			);
+		} else {
+			return (
+				<Image source={{ uri: data.owner.picURL }} style={styles.photo} />
+			);
+		}
+
+	}
+
 	renderRow = (data) => {
 		var numDays = moment(data.due).fromNow();
+
 		return (
 			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
 			  <View style={styles.row}>
-			    <Image source={{ uri: data.owner.picURL }} style={styles.photo} />
+			  	{this.renderIcon(data)}
 			    <Text style={styles.taskName}>{data.name}</Text>
 			    <Text style={styles.due}>{numDays}</Text>
 			  </View>
