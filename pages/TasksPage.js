@@ -18,9 +18,30 @@ import TaskDetailsPage from './TaskDetailsPage.js'
 var moment = require('moment');
 
 var today = new Date();
-var taskList = [{name:'Take out trash', isMyTask: true, completed:false, due:new Date().setDate(today.getDate() + 1), timeToComplete: '5 min'},
-				{name:'Call the landlord', owner: {name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'}, completed:false, due:new Date().setDate(today.getDate() + 3), timeToComplete: '15 min'}, 
-				{name:'Clean room', owner: {name: 'David', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG'}, completed:false, due:new Date().setDate(today.getDate() + 4), timeToComplete: '30 min' }, ];
+var taskList = [
+	{
+		name:'Take out trash', 
+		owner: {name: 'Michael', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg'},
+		isMyTask: true, 
+		completed:false, 
+		due:new Date().setDate(today.getDate() + 1), 
+		timeToComplete: '5 min'
+	},
+	{
+		name:'Call the landlord', 
+		owner: {name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'}, 
+		completed:false, 
+		due:new Date().setDate(today.getDate() + 3), 
+		timeToComplete: '15 min'
+	},
+	{
+		name:'Clean room',
+		owner: {name: 'David', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG'}, 
+		completed:false, 
+		due:new Date().setDate(today.getDate() + 4), 
+		timeToComplete: '30 min' 
+	}, 
+];
 /* 
 	Task object
 		name: name of the task
