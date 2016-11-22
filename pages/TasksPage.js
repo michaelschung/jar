@@ -18,10 +18,18 @@ import TaskDetailsPage from './TaskDetailsPage.js'
 var moment = require('moment');
 
 var today = new Date();
-var taskList = [{name:'Take out trash', isMyTask: true, completed:false, due:new Date().setDate(today.getDate() + 1)},
-				{name:'Call the landlord', owner: {name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'}, completed:false, due:new Date().setDate(today.getDate() + 3)}, 
-				{name:'Clean room', owner: {name: 'David', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG'}, completed:false, due:new Date().setDate(today.getDate() + 4)}, ];
-
+var taskList = [{name:'Take out trash', isMyTask: true, completed:false, due:new Date().setDate(today.getDate() + 1), timeToComplete: '5 min'},
+				{name:'Call the landlord', owner: {name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'}, completed:false, due:new Date().setDate(today.getDate() + 3), timeToComplete: '15 min'}, 
+				{name:'Clean room', owner: {name: 'David', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG'}, completed:false, due:new Date().setDate(today.getDate() + 4), timeToComplete: '30 min' }, ];
+/* 
+	Task object
+		name: name of the task
+		isMyTask: boolean True if task assigned to current user
+		owner: {name: username of owner, picURL: user's icon URL (from website)}
+		completed: boolean True if task has been completed
+		due: JS Date object representing the day the task is due
+		timeToComplete: string representing expected time to complete task
+*/
 
 const styles = StyleSheet.create({
   row: {
@@ -44,6 +52,10 @@ const styles = StyleSheet.create({
   	width: 40,
   	borderRadius: 20,
   	backgroundColor: '#319bce',
+  },
+  checkBoxIcon: {
+  	height: 40,
+  	width: 40,
   },
   due: {
     textAlign: 'right',
@@ -73,24 +85,36 @@ class TasksPage extends Component {
 	constructor(props) {
 		super(props);
 
-		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+		this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		this.state = {
-			dataSource: ds.cloneWithRows(taskList),
+			dataSource: this.ds.cloneWithRows(taskList),
 		};
+	}
+
+	onCheckboxPressed = (taskItem) => {
+		taskItem.completed = !taskItem.completed;
+		console.log(taskList);
+		this.setState({
+			dataSource: this.ds.cloneWithRows(taskList)
+		});
 	}
 
 	onTaskPressed = (taskItem) => {
 		this.props.navigator.push({
 			title: 'Task Details',
 			component: TaskDetailsPage,
-			passProps: taskItem,
+			passProps: {task: taskItem},
 		});
 	}
+
 
 	renderIcon = (data) => {
 		if (data.isMyTask) {
 			return (
-				<TouchableOpacity style={styles.checkBox} />
+				<TouchableOpacity onPress={() => this.onCheckboxPressed(data)}>
+					<Image source={data.completed ? require('../assets/checked.png') : require('../assets/unchecked.png')} 
+						style={styles.checkBoxIcon} />
+				</TouchableOpacity>
 			);
 		} else {
 			return (
