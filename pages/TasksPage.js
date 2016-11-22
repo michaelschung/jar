@@ -103,7 +103,7 @@ class TasksPage extends Component {
 		this.props.navigator.push({
 			title: 'Task Details',
 			component: TaskDetailsPage,
-			passProps: taskItem,
+			passProps: {task: taskItem},
 		});
 	}
 
