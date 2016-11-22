@@ -132,19 +132,19 @@ const styles = StyleSheet.create({
 
 class TaskDetailsPage extends Component {
 	constructor(props) {
+    console.log(props.picURL);
     super(props);
     this.state = {renderPlaceholderOnly: true};
   }
 
 	render() {
 		console.log('rendering details page');
-		var numDays = moment(this.props.due).fromNow();
+		var numDays = moment(this.props.task.due).fromNow();
     /* Get number of days between now and due date */
-    var dueDate = new Date(this.props.due)
+    var dueDate = new Date(this.props.task.due)
     var now = new Date()
     var timeDiff = Math.abs(now.getTime() - dueDate.getTime())
     var daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    console.log(daysLeft)
 
 		return (
       <TouchableWithoutFeedback onPress = {() => dismissKeyboard()}>
@@ -153,7 +153,7 @@ class TaskDetailsPage extends Component {
   				<View style={styles.detailsContainer}>
             <View style={styles.textDetailsContainer}>
               <View style={styles.taskNameTextContainer}>
-                <Text style={styles.taskNameText}>{this.props.name}</Text>
+                <Text style={styles.taskNameText}>{this.props.task.name}</Text>
               </View>
               <View style={styles.dueAndTimeContainer}>
                 <View style={styles.dueInTextContainer}>
@@ -163,12 +163,12 @@ class TaskDetailsPage extends Component {
                 </View>
                 <View style={styles.timeToCompleteTextContainer}>
                   <Text style={styles.label}>Will Take:</Text>
-                  <Text style={styles.timeToCompleteText}>5 min</Text>
+                  <Text style={styles.timeToCompleteText}>{this.props.task.timeToComplete}</Text>
                 </View>
               </View>
             </View>
             <View style={styles.taskOwnerImageContainer}>
-              <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }} style={styles.ownerImage} />
+              <Image source={{ uri: this.props.task.owner.picURL }} style={styles.ownerImage} />
             </View>
   				</View>
 
