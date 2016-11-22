@@ -18,9 +18,9 @@ import TaskDetailsPage from './TaskDetailsPage.js'
 var moment = require('moment');
 
 var today = new Date();
-var taskList = [{name:'Take out trash', isMyTask: true, completed:false, due:new Date().setDate(today.getDate() + 1)},
-				{name:'Call the landlord', owner: {name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'}, completed:false, due:new Date().setDate(today.getDate() + 3)}, 
-				{name:'Clean room', owner: {name: 'David', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG'}, completed:false, due:new Date().setDate(today.getDate() + 4)}, ];
+var taskList = [{name:'Take out trash', isMyTask: true, completed:false, due:new Date().setDate(today.getDate() + 1), timeToComplete: '5 min'},
+				{name:'Call the landlord', owner: {name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'}, completed:false, due:new Date().setDate(today.getDate() + 3), timeToComplete: '15 min'}, 
+				{name:'Clean room', owner: {name: 'David', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG'}, completed:false, due:new Date().setDate(today.getDate() + 4), timeToComplete: '30 min' }, ];
 /* 
 	Task object
 		name: name of the task
@@ -28,6 +28,7 @@ var taskList = [{name:'Take out trash', isMyTask: true, completed:false, due:new
 		owner: {name: username of owner, picURL: user's icon URL (from website)}
 		completed: boolean True if task has been completed
 		due: JS Date object representing the day the task is due
+		timeToComplete: string representing expected time to complete task
 */
 
 const styles = StyleSheet.create({
