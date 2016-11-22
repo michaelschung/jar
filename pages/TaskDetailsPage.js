@@ -2,19 +2,23 @@
 
 import React, { Component } from 'react'
 import TaskRowItem from '../components/TaskRowItem'
+import NotesInput from '../components/NotesInput'
 import {
 	StyleSheet,
 	Text,
 	TextInput,
 	View,
 	TouchableHighlight,
+  TouchableWithoutFeedback,
 	ActivityIndicator,
 	Image,
 	ListView,
 	TouchableOpacity,
+  Keyboard
 } from 'react-native';
 
 var moment = require('moment');
+const dismissKeyboard = require('dismissKeyboard');
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +33,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     marginTop: 20,
     flexDirection: 'row',
-  	flex: 2,
+  	flex: 1,
   },
   textDetailsContainer: {
     marginLeft: 20,
@@ -88,14 +92,31 @@ const styles = StyleSheet.create({
     width: 100,
     borderRadius: 50,
   },
+
+  notesContainer: {
+    marginTop: -20,
+    marginLeft: 20,
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'stretch',
+  },
+
+  separator: {
+    borderBottomWidth: 2,
+    borderBottomColor: '#C7C7CD',
+    marginLeft: 20,
+    marginRight: 20,
+  },
+
   buttonsContainer: {
+    marginTop: 20,
   	flex: 1,
   	alignItems: 'center',
   },
   button: {
     justifyContent: 'center',
     backgroundColor: '#319bce',
-    marginBottom: 7,
+    marginBottom: 15,
     borderRadius: 15,
     minHeight: 75,
     minWidth: 250,
@@ -126,41 +147,49 @@ class TaskDetailsPage extends Component {
     console.log(daysLeft)
 
 		return (
-			<View style={styles.container}>
-        {/* Details about task */}
-				<View style={styles.detailsContainer}>
-          <View style={styles.textDetailsContainer}>
-            <View style={styles.taskNameTextContainer}>
-              <Text style={styles.taskNameText}>{this.props.name}</Text>
-            </View>
-            <View style={styles.dueAndTimeContainer}>
-              <View style={styles.dueInTextContainer}>
-                <Text style={styles.label}>Due:</Text>
-                {/* Use urgent style if task is due within 24 hours (1 day) */}
-                <Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{numDays}</Text>
+      <TouchableWithoutFeedback onPress = {() => dismissKeyboard()}>
+  			<View style={styles.container}>
+          {/* Details about task */}
+  				<View style={styles.detailsContainer}>
+            <View style={styles.textDetailsContainer}>
+              <View style={styles.taskNameTextContainer}>
+                <Text style={styles.taskNameText}>{this.props.name}</Text>
               </View>
-              <View style={styles.timeToCompleteTextContainer}>
-                <Text style={styles.label}>Will Take:</Text>
-                <Text style={styles.timeToCompleteText}>5 min</Text>
+              <View style={styles.dueAndTimeContainer}>
+                <View style={styles.dueInTextContainer}>
+                  <Text style={styles.label}>Due:</Text>
+                  {/* Use urgent style if task is due within 24 hours (1 day) */}
+                  <Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{numDays}</Text>
+                </View>
+                <View style={styles.timeToCompleteTextContainer}>
+                  <Text style={styles.label}>Will Take:</Text>
+                  <Text style={styles.timeToCompleteText}>5 min</Text>
+                </View>
               </View>
             </View>
-          </View>
-          <View style={styles.taskOwnerImageContainer}>
-            <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }} style={styles.ownerImage} />
-          </View>
-				</View>
+            <View style={styles.taskOwnerImageContainer}>
+              <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }} style={styles.ownerImage} />
+            </View>
+  				</View>
 
-        {/* Action buttons */}
-				<View style={styles.buttonsContainer}>
-					<TouchableOpacity style={styles.button}>
-						<Text style={styles.buttonText}>Transfer Task</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.button}>
-						<Text style={styles.buttonText}>Complete Task</Text>
-					</TouchableOpacity>
-				</View>
+          <View style={styles.notesContainer}>
+            <Text style={styles.label}>Notes:</Text>
+            <NotesInput />
+          </View>
 
-			</View>
+          <View style={styles.separator}></View>
+
+          {/* Action buttons */}
+  				<View style={styles.buttonsContainer}>
+  					<TouchableOpacity style={styles.button}>
+  						<Text style={styles.buttonText}>Transfer Task</Text>
+  					</TouchableOpacity>
+  					<TouchableOpacity style={styles.button}>
+  						<Text style={styles.buttonText}>Complete Task</Text>
+  					</TouchableOpacity>
+  				</View>
+  			</View>
+      </TouchableWithoutFeedback>
 		);
 	}
 }
