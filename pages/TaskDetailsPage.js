@@ -8,6 +8,7 @@ import {
 	Text,
 	TextInput,
 	View,
+  ScrollView,
 	TouchableHighlight,
   TouchableWithoutFeedback,
 	ActivityIndicator,
@@ -27,6 +28,8 @@ const styles = StyleSheet.create({
     paddingTop: 74,
     margin: 12,
   },
+
+  /* Styling for details */
   taskName: {
   	fontSize: 24,
   },
@@ -93,6 +96,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 
+  /* Styling for notes */
   notesContainer: {
     marginTop: -20,
     marginLeft: 20,
@@ -101,6 +105,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
 
+  /* Styling for separator */
   separator: {
     borderBottomWidth: 2,
     borderBottomColor: '#C7C7CD',
@@ -108,6 +113,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 
+  /* Styling for buttons */
   buttonsContainer: {
     marginTop: 20,
   	flex: 1,
@@ -127,8 +133,87 @@ const styles = StyleSheet.create({
   	color: 'white',
   	alignSelf: 'center',
   	fontSize: 24,
-  }
+  },
+
+  /* Styling for carousel */
+  carousel: {
+    height: 50,
+    margin: 20,
+  },
+  userContainer: {
+    flexDirection: 'column',
+    margin: 10,
+    alignItems: 'center',
+  },
+  userImage: {
+    height: 60,
+    width: 60,
+    borderRadius: 30,
+    marginBottom: 5,
+  },
+  userName: {},
+
 });
+
+
+/* Array of users */
+var users = [
+  {
+    name: 'Michael', 
+    picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg',
+    isMe: true, 
+  },
+  {
+    name: 'Evan', 
+    picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg',
+    isMe: false,
+  },
+  {
+    name: 'David', 
+    picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG', 
+    isMe: false,
+  },
+  {
+    name: 'Tessera', 
+    picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Tessera.jpg', 
+    isMe: false,
+  }, 
+];
+
+
+/* Transfer users carousel component */
+class TransferToCarousel extends Component {
+  constructor(props) {
+    super(props);
+    /* Construct list of possible users to transfer task to */
+    this.transferToList = users.filter((user)=>!user.isMe);
+  }
+
+  renderUser = (userData, index) => {
+    return (
+      <TouchableOpacity key={index}>
+        <View style={styles.userContainer}>
+          <Image source={{ uri: userData.picURL }} style={styles.userImage} />
+          <Text style={styles.userName}>{userData.name}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  render() {
+    return (
+      <ScrollView 
+        automaticallyAdjustContentInsets={false}
+        alwaysBounceHorizontal={true} 
+        horizontal={true}
+        centerContent = {true}
+        style={styles.carousel} >
+        {this.transferToList.map(this.renderUser)}
+      </ScrollView>
+    );
+  }
+}
+
 
 class TaskDetailsPage extends Component {
 	constructor(props) {
@@ -172,6 +257,9 @@ class TaskDetailsPage extends Component {
             </View>
   				</View>
 
+          {/*<TransferToCarousel></TransferToCarousel>*/}
+
+          {/* Notes */}
           <View style={styles.notesContainer}>
             <Text style={styles.label}>Notes:</Text>
             <NotesInput />
@@ -188,6 +276,7 @@ class TaskDetailsPage extends Component {
   						<Text style={styles.buttonText}>Complete Task</Text>
   					</TouchableOpacity>
   				</View>
+          
   			</View>
       </TouchableWithoutFeedback>
 		);

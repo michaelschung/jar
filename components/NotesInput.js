@@ -25,14 +25,14 @@ class NotesInput extends Component {
   }
 
   updateTextFocus = () => {
-    console.log("Focus: " + this.state.text)
+    // console.log("Focus: " + this.state.text)
     if (!this.state.hasNote) {
       this.state.text = '';
     }
   }
 
   updateTextBlur = () => {
-    console.log("Blur: " + this.state.text)
+    // console.log("Blur: " + this.state.text)
     if (this.state.text == '') {
       this.state.text = 'Add a note...';
       this.state.hasNote = false;
