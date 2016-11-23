@@ -262,7 +262,9 @@ class TaskDetailsPage extends Component {
     this.state = {
       renderPlaceholderOnly: true,
       selectingTransfer: false,
+      showModal: false,
       showTransferSentModal: false,
+      showTaskCompleteModal: false,
     };
   }
 
@@ -275,7 +277,9 @@ class TaskDetailsPage extends Component {
     this.setState((state) => ({
       renderPlaceholderOnly: state.renderPlaceholderOnly,
       selectingTransfer: true,
+      showModal: false,
       showTransferSentModal: false,
+      showTaskCompleteModal: false,
     }));
   }
 
@@ -284,7 +288,9 @@ class TaskDetailsPage extends Component {
     this.setState((state) => ({
       renderPlaceholderOnly: state.renderPlaceholderOnly,
       selectingTransfer: false,
+      showModal: false,
       showTransferSentModal: false,
+      showTaskCompleteModal: false,
     }));
   }
 
@@ -293,17 +299,32 @@ class TaskDetailsPage extends Component {
     this.setState((state) => ({
       renderPlaceholderOnly: state.renderPlaceholderOnly,
       selectingTransfer: false,
+      showModal: true,
       showTransferSentModal: true,
+      showTaskCompleteModal: false,
       transferSentTo: userData.name,
     }));
   }
 
-  /* For removing modal */
-  _onAcceptModal = () => {
+  /* For showing "Task completed" modal */
+  _onCompleteTask = () => {
     this.setState((state) => ({
       renderPlaceholderOnly: state.renderPlaceholderOnly,
       selectingTransfer: false,
+      showModal: true,
       showTransferSentModal: false,
+      showTaskCompleteModal: true,
+    }));
+  }
+
+  /* For removing modal */
+  _onDismissModal = () => {
+    this.setState((state) => ({
+      renderPlaceholderOnly: state.renderPlaceholderOnly,
+      selectingTransfer: false,
+      showModal: false,
+      showTransferSentModal: false,
+      showTaskCompleteModal: false,
     }));
   }
 
@@ -313,7 +334,7 @@ class TaskDetailsPage extends Component {
       <TouchableOpacity style={styles.button} onPress={this._onPressTransfer} >
         <Text style={styles.buttonText}>Transfer Task</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={this._onCompleteTask} >
         <Text style={styles.buttonText}>Complete Task</Text>
       </TouchableOpacity>
     </View>
@@ -344,10 +365,15 @@ class TaskDetailsPage extends Component {
 
     /* Determine whether to show transfer modal or not */
     var modal;
-    if (this.state.showTransferSentModal) {
+    if (this.state.showModal) {
+      /* Message to show in modal */
+      var message = this.state.showTransferSentModal ? 
+        ('Transfer request sent to ' + this.state.transferSentTo + '!') :
+        ('Task completed!');
+
       modal = (<SimpleModal 
-        message={'Transfer request sent to ' + this.state.transferSentTo + '!'}
-        removeModal={this._onAcceptModal}
+        message={message}
+        removeModal={this._onDismissModal}
         ></SimpleModal>);
     } else {
       modal = null;
