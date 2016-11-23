@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import TaskRowItem from '../components/TaskRowItem'
 import NotesInput from '../components/NotesInput'
+import SimpleModal from '../components/SimpleModal'
 import {
 	StyleSheet,
 	Text,
@@ -221,14 +222,22 @@ class TransferToCarousel extends Component {
     this.transferToList = users.filter((user)=>!user.isMe);
   }
 
+  /* Render modal stating transfer request was sent */
+  _onPressTransferIcon = (userData) => {
+    /* Show modal (done in TaskDetailsPage component)*/
+    this.props.showModal(userData)
+  }
+
   renderUser = (userData, index) => {
     return (
-      <TouchableOpacity key={index}>
-        <View style={styles.userContainer}>
-          <Image source={{ uri: userData.picURL }} style={styles.userImage} />
-          <Text style={styles.userName}>{userData.name}</Text>
-        </View>
-      </TouchableOpacity>
+      <View key={index}>
+        <TouchableOpacity onPress={() => this._onPressTransferIcon(userData)}>
+          <View style={styles.userContainer}>
+            <Image source={{ uri: userData.picURL }} style={styles.userImage} />
+            <Text style={styles.userName}>{userData.name}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -249,11 +258,11 @@ class TransferToCarousel extends Component {
 
 class TaskDetailsPage extends Component {
 	constructor(props) {
-    console.log(props.picURL);
     super(props);
     this.state = {
       renderPlaceholderOnly: true,
       selectingTransfer: false,
+      showTransferSentModal: false,
     };
   }
 
@@ -266,6 +275,7 @@ class TaskDetailsPage extends Component {
     this.setState((state) => ({
       renderPlaceholderOnly: state.renderPlaceholderOnly,
       selectingTransfer: true,
+      showTransferSentModal: false,
     }));
   }
 
@@ -274,6 +284,26 @@ class TaskDetailsPage extends Component {
     this.setState((state) => ({
       renderPlaceholderOnly: state.renderPlaceholderOnly,
       selectingTransfer: false,
+      showTransferSentModal: false,
+    }));
+  }
+
+  /* For showing 'transfer request sent' modal when transfer icon is pressed */
+  _onPressTransferIcon = (userData) => {
+    this.setState((state) => ({
+      renderPlaceholderOnly: state.renderPlaceholderOnly,
+      selectingTransfer: false,
+      showTransferSentModal: true,
+      transferSentTo: userData.name,
+    }));
+  }
+
+  /* For removing modal */
+  _onAcceptModal = () => {
+    this.setState((state) => ({
+      renderPlaceholderOnly: state.renderPlaceholderOnly,
+      selectingTransfer: false,
+      showTransferSentModal: false,
     }));
   }
 
@@ -300,12 +330,11 @@ class TaskDetailsPage extends Component {
           </View>
         </TouchableOpacity>
       </View>
-      <TransferToCarousel></TransferToCarousel>
+      <TransferToCarousel showModal={this._onPressTransferIcon} ></TransferToCarousel>
     </View>
   
 
 	render() {
-		console.log('rendering details page');
 		var numDays = moment(this.props.task.due).fromNow();
     /* Get number of days between now and due date */
     var dueDate = new Date(this.props.task.due)
@@ -313,8 +342,19 @@ class TaskDetailsPage extends Component {
     var timeDiff = Math.abs(now.getTime() - dueDate.getTime())
     var daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
+    /* Determine whether to show transfer modal or not */
+    var modal;
+    if (this.state.showTransferSentModal) {
+      modal = (<SimpleModal 
+        message={'Transfer request sent to ' + this.state.transferSentTo + '!'}
+        removeModal={this._onAcceptModal}
+        ></SimpleModal>);
+    } else {
+      modal = null;
+    }
+
 		return (
-      <TouchableWithoutFeedback onPress = {() => dismissKeyboard()}>
+      <TouchableWithoutFeedback onPress={() => dismissKeyboard()}>
   			<View style={styles.container}>
           {/* Details about task */}
   				<View style={styles.detailsContainer}>
@@ -352,6 +392,11 @@ class TaskDetailsPage extends Component {
             this.state.selectingTransfer ?
             this.Carousel() :
             this.ActionButtons()
+          }
+
+          {/* Show modal if transfer request was sent */}
+          {
+            modal
           }
 
   			</View>
