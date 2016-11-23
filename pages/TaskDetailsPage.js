@@ -15,7 +15,8 @@ import {
 	Image,
 	ListView,
 	TouchableOpacity,
-  Keyboard
+  Keyboard,
+  LayoutAnimation,
 } from 'react-native';
 
 var moment = require('moment');
@@ -137,6 +138,37 @@ const styles = StyleSheet.create({
 
   /* Styling for carousel */
   carousel: {
+    flex: 1,
+    flexDirection: 'column',
+    margin: 20,
+  },
+  carouselHeader: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
+  },
+  carouselHeaderText: {
+    textAlign: 'left',
+    fontSize: 16,
+    fontWeight: '900',
+  },
+  carouselCancel: {
+    justifyContent: 'center',
+  },
+  carouselCancelButton: {
+    alignItems: 'center',
+    backgroundColor: '#D8D8D8',
+    height: 30,
+    width: 30,
+    borderWidth: 1,
+    borderRadius: 60,
+  },
+  cancelText: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  carouselScrollView: {
     height: 50,
     margin: 20,
   },
@@ -206,8 +238,8 @@ class TransferToCarousel extends Component {
         automaticallyAdjustContentInsets={false}
         alwaysBounceHorizontal={true} 
         horizontal={true}
-        centerContent = {true}
-        style={styles.carousel} >
+        centerContent = {false}
+        style={styles.carouselScrollView} >
         {this.transferToList.map(this.renderUser)}
       </ScrollView>
     );
@@ -219,8 +251,58 @@ class TaskDetailsPage extends Component {
 	constructor(props) {
     console.log(props.picURL);
     super(props);
-    this.state = {renderPlaceholderOnly: true};
+    this.state = {
+      renderPlaceholderOnly: true,
+      selectingTransfer: false,
+    };
   }
+
+  componentWillUpdate() {
+      LayoutAnimation.easeInEaseOut();
+  }
+
+  /* For rendering transfer carousel when transfer button pressed */
+  _onPressTransfer = () => {
+    this.setState((state) => ({
+      renderPlaceholderOnly: state.renderPlaceholderOnly,
+      selectingTransfer: true,
+    }));
+  }
+
+  /* For removing transfer carousel and rendering buttons when cancel is pressed */
+  _onPressCancelTransfer = () => {
+    this.setState((state) => ({
+      renderPlaceholderOnly: state.renderPlaceholderOnly,
+      selectingTransfer: false,
+    }));
+  }
+
+  /* Action buttons */
+  ActionButtons = () => 
+    <View style={styles.buttonsContainer}>
+      <TouchableOpacity style={styles.button} onPress={this._onPressTransfer} >
+        <Text style={styles.buttonText}>Transfer Task</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Complete Task</Text>
+      </TouchableOpacity>
+    </View>
+  
+
+  /* Carousel */
+  Carousel = () => 
+    <View style={styles.carousel}>
+      <View style={styles.carouselHeader}>
+        <Text style={styles.carouselHeaderText}>Transfer to...</Text>
+        <TouchableOpacity style={styles.carouselCancel} onPress={this._onPressCancelTransfer}>
+          <View style={styles.carouselCancelButton}>
+            <Text style={styles.cancelText}>x</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <TransferToCarousel></TransferToCarousel>
+    </View>
+  
 
 	render() {
 		console.log('rendering details page');
@@ -257,8 +339,6 @@ class TaskDetailsPage extends Component {
             </View>
   				</View>
 
-          {/*<TransferToCarousel></TransferToCarousel>*/}
-
           {/* Notes */}
           <View style={styles.notesContainer}>
             <Text style={styles.label}>Notes:</Text>
@@ -267,16 +347,13 @@ class TaskDetailsPage extends Component {
 
           <View style={styles.separator}></View>
 
-          {/* Action buttons */}
-  				<View style={styles.buttonsContainer}>
-  					<TouchableOpacity style={styles.button}>
-  						<Text style={styles.buttonText}>Transfer Task</Text>
-  					</TouchableOpacity>
-  					<TouchableOpacity style={styles.button}>
-  						<Text style={styles.buttonText}>Complete Task</Text>
-  					</TouchableOpacity>
-  				</View>
-          
+          {/* Action buttons or carousel (depending on state of page) */}
+          {
+            this.state.selectingTransfer ?
+            this.Carousel() :
+            this.ActionButtons()
+          }
+
   			</View>
       </TouchableWithoutFeedback>
 		);
