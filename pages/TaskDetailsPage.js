@@ -130,6 +130,9 @@ const styles = StyleSheet.create({
     minWidth: 250,
     alignItems: 'center',
   },
+  disabledButton: {
+    backgroundColor: '#979797',
+  },
   buttonText: {
     fontWeight: '500',
   	color: 'white',
@@ -265,6 +268,8 @@ class TaskDetailsPage extends Component {
       showModal: false,
       showTransferSentModal: false,
       showTaskCompleteModal: false,
+      transferSent: false,
+      taskCompleted: false,
     };
   }
 
@@ -280,6 +285,8 @@ class TaskDetailsPage extends Component {
       showModal: false,
       showTransferSentModal: false,
       showTaskCompleteModal: false,
+      transferSent: false,
+      taskCompleted: false,
     }));
   }
 
@@ -291,6 +298,8 @@ class TaskDetailsPage extends Component {
       showModal: false,
       showTransferSentModal: false,
       showTaskCompleteModal: false,
+      transferSent: false,
+      taskCompleted: false,
     }));
   }
 
@@ -303,6 +312,24 @@ class TaskDetailsPage extends Component {
       showTransferSentModal: true,
       showTaskCompleteModal: false,
       transferSentTo: userData.name,
+      transferSent: true,
+      taskCompleted: false,
+    }));
+    /*
+      Send request to other user
+    */
+  }
+
+  /* For canceling transfer */
+  _onCancelTransfer = () => {
+    this.setState((state) => ({
+      renderPlaceholderOnly: state.renderPlaceholderOnly,
+      selectingTransfer: false,
+      showModal: false,
+      showTransferSentModal: false,
+      showTaskCompleteModal: false,
+      transferSent: false,
+      taskCompleted: state.taskCompleted,
     }));
   }
 
@@ -314,7 +341,12 @@ class TaskDetailsPage extends Component {
       showModal: true,
       showTransferSentModal: false,
       showTaskCompleteModal: true,
+      transferSent: false,
+      taskCompleted: true,
     }));
+    /*
+      Set task as completed for other pages
+    */
   }
 
   /* For removing modal */
@@ -325,18 +357,53 @@ class TaskDetailsPage extends Component {
       showModal: false,
       showTransferSentModal: false,
       showTaskCompleteModal: false,
+      transferSent: state.transferSent,
+      taskCompleted: state.taskCompleted,
     }));
+  }
+
+  /* Tansfer button */
+  TransferButton = () => {
+    if (this.state.taskCompleted) {
+      return (
+        <View style={[styles.button, styles.disabledButton]} onPress={this._onPressTransfer} >
+          <Text style={styles.buttonText}>Transfer Task</Text>
+        </View>
+      )
+    }
+    return this.state.transferSent ?
+      (
+        <TouchableOpacity style={[styles.button, styles.disabledButton]} onPress={this._onCancelTransfer} >
+          <Text style={styles.buttonText}>Cancel Transfer</Text>
+        </TouchableOpacity>
+      ) :
+      (
+        <TouchableOpacity style={styles.button} onPress={this._onPressTransfer} >
+          <Text style={styles.buttonText}>Transfer Task</Text>
+        </TouchableOpacity>
+      )
+  }
+
+  /* Complete button */
+  CompleteButton = () => {
+    return this.state.taskCompleted ?
+    (
+      <View style={[styles.button, styles.disabledButton]} >
+        <Text style={styles.buttonText}>Task Completed</Text>
+      </View>
+    ) :
+    (
+      <TouchableOpacity style={styles.button} onPress={this._onCompleteTask} >
+        <Text style={styles.buttonText}>Complete Task</Text>
+      </TouchableOpacity>
+    )
   }
 
   /* Action buttons */
   ActionButtons = () => 
     <View style={styles.buttonsContainer}>
-      <TouchableOpacity style={styles.button} onPress={this._onPressTransfer} >
-        <Text style={styles.buttonText}>Transfer Task</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={this._onCompleteTask} >
-        <Text style={styles.buttonText}>Complete Task</Text>
-      </TouchableOpacity>
+      {this.TransferButton()}
+      {this.CompleteButton()}
     </View>
   
 
