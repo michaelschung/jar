@@ -11,6 +11,7 @@ import {
 	Image,
 	ListView,
 	TouchableOpacity,
+	SegmentedControlIOS,
 } from 'react-native';
 
 import TaskDetailsPage from './TaskDetailsPage.js'
@@ -88,6 +89,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#8E8E8E',
     padding: 0
   },
+  segmentSeparator: {
+  	flex: 1,
+    maxHeight: .5,
+    backgroundColor: '#8E8E8E',
+    padding: 0
+  },
   addButton: {
     backgroundColor: '#319bce',
     marginBottom: 7,
@@ -109,15 +116,22 @@ class TasksPage extends Component {
 		this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		this.state = {
 			dataSource: this.ds.cloneWithRows(taskList),
+			taskView: 'All Tasks',
 		};
 	}
 
 	onCheckboxPressed = (taskItem) => {
 		taskItem.completed = !taskItem.completed;
-		console.log(taskList);
-		this.setState({
-			dataSource: this.ds.cloneWithRows(taskList)
-		});
+		if (this.state.taskView === "All Tasks") {
+			this.setState({
+				dataSource: this.ds.cloneWithRows(taskList)
+			});
+		} else {
+			this.setState({
+				dataSource: this.ds.cloneWithRows(taskList.filter(this.checkTaskIsMine))
+			})
+		}
+
 	}
 
 	onTaskPressed = (taskItem) => {
@@ -128,6 +142,23 @@ class TasksPage extends Component {
 		});
 	}
 
+	checkTaskIsMine = (value) => {
+		return value.isMyTask;
+	}
+
+	onSegmentChanged = (value) => {
+		if (value === 'My Tasks') {
+			this.setState({
+				dataSource: this.ds.cloneWithRows(taskList.filter(this.checkTaskIsMine)),
+				taskView: value,
+			});
+		} else {
+			this.setState({
+				dataSource: this.ds.cloneWithRows(taskList),
+				taskView: value,
+			});
+		}
+	}
 
 	renderIcon = (data) => {
 		if (data.isMyTask) {
@@ -147,7 +178,6 @@ class TasksPage extends Component {
 
 	renderRow = (data) => {
 		var numDays = moment(data.due).fromNow();
-
 		return (
 			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
 			  <View style={styles.row}>
@@ -161,8 +191,17 @@ class TasksPage extends Component {
 
 	render() {
 		return (
-			<View style={{flex: 1}}>
+			<View style={{flex: 1, paddingTop: 62}}>
+				<View style={{margin: 12, backgroundColor: 'white'}}>
+					<SegmentedControlIOS 
+						values={["All Tasks", "My Tasks"]} 
+						selectedIndex={0} 
+						tintColor='#319bce'
+						onValueChange={this.onSegmentChanged}/>
+				</View>
+				<View style={styles.segmentSeparator} />
 				<ListView
+					style={{marginTop: -64, zIndex: -100}}
 				  dataSource={this.state.dataSource}
 				  renderRow={this.renderRow}  
 				  renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
@@ -170,7 +209,6 @@ class TasksPage extends Component {
 					<Text style={styles.buttonText}>+</Text>
 				</TouchableOpacity>
 			</View>
-			
 		);
 	}
 }
