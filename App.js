@@ -122,7 +122,6 @@ class App extends Component {
 				isOpen={this.state.isOpen}
 				onChange={(isOpen) => this.updateMenuState(isOpen)}
 				openMenuOffset={300} >
-				{this.Settings()}
 				<NavigatorIOS
 					ref='nav'
 					barTintColor='#319bce'
@@ -138,6 +137,7 @@ class App extends Component {
 					}}
 					style={styles.container}
 				/>
+				{this.Settings()}
 			</SideMenu>
 		);
 	}
