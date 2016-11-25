@@ -56,6 +56,18 @@ var taskList = [
 */
 
 const styles = StyleSheet.create({
+  container: {
+  	flex: 1,
+  	paddingTop: 62,
+  },
+  segmentedControl: {
+  	margin: 12, 
+  	backgroundColor: 'white'
+  },
+  list: {
+  	marginTop: -64, 
+  	zIndex: -100
+  },
   row: {
     flex: 1,
     flexDirection: 'row',
@@ -130,16 +142,10 @@ class TasksPage extends Component {
 
 	onCheckboxPressed = (taskItem) => {
 		taskItem.completed = !taskItem.completed;
-		if (this.state.taskView === "All Tasks") {
-			this.setState({
-				dataSource: this.ds.cloneWithRows(taskList)
-			});
-		} else {
-			this.setState({
-				dataSource: this.ds.cloneWithRows(taskList.filter(this.checkTaskIsMine))
-			})
-		}
-
+		this.setState({
+			dataSource: this.ds.cloneWithRows(this.state.taskView === "All Tasks" ? 
+				taskList : taskList.filter(this.checkTaskIsMine))
+		});
 	}
 
 	onTaskPressed = (taskItem) => {
@@ -162,17 +168,11 @@ class TasksPage extends Component {
 	}
 
 	onSegmentChanged = (value) => {
-		if (value === 'My Tasks') {
-			this.setState({
-				dataSource: this.ds.cloneWithRows(taskList.filter(this.checkTaskIsMine)),
-				taskView: value,
-			});
-		} else {
-			this.setState({
-				dataSource: this.ds.cloneWithRows(taskList),
-				taskView: value,
-			});
-		}
+		this.setState({
+			dataSource: this.ds.cloneWithRows(value === "All Tasks" ? 
+				taskList : taskList.filter(this.checkTaskIsMine)),
+			taskView: value,
+		});
 	}
 
 	renderIcon = (data) => {
@@ -206,9 +206,10 @@ class TasksPage extends Component {
 
 	render() {
 		return (
-			<View style={{flex: 1, paddingTop: 62}}>
-				<View style={{margin: 12, backgroundColor: 'white'}}>
+			<View style={styles.container}>
+				<View>
 					<SegmentedControlIOS 
+						style={styles.segmentedControl}
 						values={["All Tasks", "My Tasks"]} 
 						selectedIndex={0} 
 						tintColor='#319bce'
@@ -216,7 +217,7 @@ class TasksPage extends Component {
 				</View>
 				<View style={styles.segmentSeparator} />
 				<ListView
-					style={{marginTop: -64, zIndex: -100}}
+					style={styles.list}
 				  dataSource={this.state.dataSource}
 				  renderRow={this.renderRow}  
 				  renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
