@@ -2,7 +2,9 @@
 
 import React, { Component } from 'react'
 import TaskRowItem from '../components/TaskRowItem'
+import CreatePage from '../pages/CreatePage'
 import {
+	Alert,
 	StyleSheet,
 	Text,
 	TextInput,
@@ -148,6 +150,13 @@ class TasksPage extends Component {
 		});
 	}
 
+	onCreatePressed = () => {
+		this.props.navigator.push({
+			title: 'Create Task',
+			component: CreatePage
+		});
+	}
+
 	checkTaskIsMine = (value) => {
 		return value.isMyTask;
 	}
@@ -211,7 +220,7 @@ class TasksPage extends Component {
 				  dataSource={this.state.dataSource}
 				  renderRow={this.renderRow}  
 				  renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
-				<TouchableOpacity style={styles.addButton}>
+				<TouchableOpacity style={styles.addButton} onPress={() => this.onCreatePressed() }>
 					<Text style={styles.buttonText}>+</Text>
 				</TouchableOpacity>
 			</View>
