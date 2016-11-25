@@ -37,14 +37,14 @@ const TaskRowItem = (props) => {
     console.log(props.due);
     var numDays = moment(props.due).fromNow();
     return (
-      <TouchableHighlight style={styles.container}>
-        <View style={styles.container}>
-          <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }} style={styles.photo} />
-          <Text style={styles.taskName}>{props.name}</Text>
-          <Text style={styles.due}>{numDays}</Text>
-        </View>
-      </TouchableHighlight>
+        <TouchableHighlight style={styles.container}>
+            <View style={styles.container}>
+                <Image source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }} style={styles.photo} />
+                <Text style={styles.taskName}>{props.name}</Text>
+                <Text style={styles.due}>{numDays}</Text>
+            </View>
+        </TouchableHighlight>
     );
-  };
+};
 
 export default TaskRowItem;

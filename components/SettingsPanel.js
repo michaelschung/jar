@@ -1,63 +1,78 @@
-
-import React, { Component } from 'react'
+import React from 'react';
 import {
-	View, 
-	Text, 
+	Dimensions,
 	StyleSheet,
+	ScrollView,
+	View,
 	Image,
-	TouchableHighlight,
+	Text,
 } from 'react-native';
-import TaskDetailsPage from '../pages/TaskDetailsPage.js'
+const { Component } = React;
+
+const window = Dimensions.get('window');
+const uri = '../assets/checked.png';
 
 const styles = StyleSheet.create({
-	container: {
+	menu: {
 		flex: 1,
-		padding: 12,
-		flexDirection: 'row',
-		alignItems: 'center',
+		width: window.width,
+		height: window.height,
+		backgroundColor: 'gray',
+		padding: 20,
 	},
-	welcome: {
-		padding: 12,
-		fontSize: 14,
+	avatarContainer: {
+		marginBottom: 20,
+		marginTop: 20,
+	},
+	avatar: {
+		width: 48,
+		height: 48,
+		borderRadius: 24,
+		flex: 1,
+	},
+	name: {
+		position: 'absolute',
+		left: 70,
+		top: 20,
+	},
+	item: {
 		color: 'red',
-	},
-	instructions: {
 		fontSize: 14,
-		textAlign: 'left',
-	},
-	due: {
-		flex: 1,
-		textAlign: 'right',
+		fontWeight: '300',
+		paddingTop: 5,
 	},
 });
 
 class SettingsPanel extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isOpen: false,
-		};
-	}
+	static propTypes = {
+		onItemSelected: React.PropTypes.func.isRequired,
+	};
 
 	render() {
 		console.log('rendering SettingsPanel');
 		return (
-			<View style={styles.container}>
-				<Text>
-					<Text style={styles.welcome}>
-						Welcome to React Native!{'\n'}
-					</Text>
-					<Text style={styles.instructions}>
-						To get started, edit index.ios.js{'\n'}
-					</Text>
-					<Text style={styles.instructions}>
-						Press Cmd+R to reload,{'\n'}
-						Cmd+Control+Z for dev menu
-					</Text>
+			<ScrollView scrollsToTop={false} style={styles.menu}>
+				<View style={styles.avatarContainer}>
+					<Image
+						style={styles.avatar}
+						source={require('../assets/checked.png')}/>
+					<Text style={styles.name}>Your name</Text>
+				</View>
+
+				<Text
+					onPress={() => this.props.onItemSelected('About')}
+					style={styles.item}>
+					About
 				</Text>
-			</View>
+
+				<Text
+					onPress={() => this.props.onItemSelected('Contacts')}
+					style={styles.item}>
+					Contacts
+				</Text>
+			</ScrollView>
 		);
 	}
-}
+};
 
 export default SettingsPanel;
