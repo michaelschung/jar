@@ -15,10 +15,7 @@ import {
 	SegmentedControlIOS,
 } from 'react-native';
 
-import SideMenu from 'react-native-side-menu';
-
 import TaskDetailsPage from './TaskDetailsPage.js'
-import SettingsPanel from '../components/SettingsPanel'
 
 var moment = require('moment');
 
@@ -110,11 +107,6 @@ const styles = StyleSheet.create({
 	color: 'white',
 	alignSelf: 'center',
 	fontSize: 18,
-  },
-  hamburger: {
-  	width: 100,
-  	height: 100,
-  	backgroundColor: 'black',
   }
 });
 
@@ -198,20 +190,9 @@ class TasksPage extends React.Component {
 	}
 
 	render(data) {
-		const menu = () => { return (<Menu navigator={navigator} />) }
 		return (
 			<View style={{flex: 1, paddingTop: 62}}>
-				{ /*
-				<SideMenu menu={menu}>
-					<SettingsPanel/>
-				</SideMenu>
-				*/ }
-
 				<View style={{margin: 12, backgroundColor: 'white'}}>
-					{ /* THIS WAS MICHAEL TESTING IMAGE INSERTION. PLEASE LEAVE ALONE FOR NOW.
-					<Image source={require('../assets/hamburger.png')} 
-						style={styles.hamburger} />
-					*/ }
 					<SegmentedControlIOS 
 						values={["All Tasks", "My Tasks"]} 
 						selectedIndex={0} 
