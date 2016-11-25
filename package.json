@@ -12,6 +12,8 @@
     "babel-preset-react-native-stage-0": "^1.0.1",
     "exponent": "~11.0.2",
     "react": "~15.3.2",
-    "react-native": "git+https://github.com/exponentjs/react-native#sdk-11.0.3"
+    "react-native": "git+https://github.com/exponentjs/react-native#sdk-11.0.3",
+    "react-native-menu": "^0.20.2",
+    "react-native-side-menu": "^0.20.1"
   }
 }
