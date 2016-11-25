@@ -73,10 +73,10 @@ class App extends Component {
 	}
 
 	jarPressed() {
-	    this.refs.nav.push({
-		    title: 'Jar',
-		    component: JarPage,
-	    })
+		this.refs.nav.push({
+			title: 'Jar',
+			component: JarPage,
+		})
 	}
 
 	state = {
@@ -85,21 +85,31 @@ class App extends Component {
 	};
 
 	toggle() {
-		console.log('button pressed');
+		console.log('Settings button pressed');
 		this.setState({
 			isOpen: !this.state.isOpen,
 		});
 	}
 
 	updateMenuState(isOpen) {
+		console.log('isOpen:', isOpen);
 		this.setState({ isOpen, });
 	}
 
 	onMenuItemSelected = (item) => {
+		console.log('onMenuItemSelected');
 		this.setState({
 			isOpen: false,
 			selectedItem: item,
 		});
+	}
+
+	Settings = () => {
+		return this.state.isOpen ? (
+			<SettingsPanel onItemSelected={this.onMenuItemSelected} />
+		) : (
+			null
+		)
 	}
 
 	render() {
@@ -107,27 +117,27 @@ class App extends Component {
 		const menu = () => { <Menu onItemSelected={this.onMenuItemSelected} /> };
 
 		return (
-			
 			<SideMenu
 				menu={menu}
 				isOpen={this.state.isOpen}
 				onChange={(isOpen) => this.updateMenuState(isOpen)}
 				openMenuOffset={300} >
+				{this.Settings()}
 				<NavigatorIOS
-			        ref='nav'
-			        barTintColor='#319bce'
-			        titleTextColor='#fff'
-			        tintColor='#fff'
-			        initialRoute={{
-			          component: TasksPage,
-			          title: 'Tasks Page',
-			          rightButtonTitle: 'Jar',
-			          leftButtonTitle: 'Settings',
-			          onRightButtonPress: () => this.jarPressed(),
-			          onLeftButtonPress: () => this.toggle(),
-			        }}
-			        style={styles.container}
-		    	/>
+					ref='nav'
+					barTintColor='#319bce'
+					titleTextColor='#fff'
+					tintColor='#fff'
+					initialRoute={{
+						component: TasksPage,
+						title: 'Tasks Page',
+						rightButtonTitle: 'Jar',
+						leftButtonTitle: 'Settings',
+						onRightButtonPress: () => this.jarPressed(),
+						onLeftButtonPress: () => this.toggle(),
+					}}
+					style={styles.container}
+				/>
 			</SideMenu>
 		);
 	}
