@@ -97,15 +97,21 @@ const styles = StyleSheet.create({
   },
   addButton: {
     backgroundColor: '#319bce',
-    marginBottom: 7,
-    borderRadius: 25,
+    marginBottom: 20,
+    marginRight: 20,
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+    borderRadius: 35,
     minHeight: 50,
     minWidth: 50,
+    width: 70,
+    height: 70
   },
   buttonText: {
   	color: 'white',
   	alignSelf: 'center',
-  	fontSize: 18,
+  	marginBottom: 5,
+  	fontSize: 50
   }
 });
 
