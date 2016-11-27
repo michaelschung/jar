@@ -405,6 +405,17 @@ class TaskDetailsPage extends Component {
 	  {this.TransferButton()}
 	  {this.CompleteButton()}
 	</View>
+
+	/* Bottom of page */
+	BottomPortion = () => {
+		if (this.props.task.isMyTask) {
+			return (
+				this.state.selectingTransfer ?
+				this.Carousel() :
+				this.ActionButtons()
+			)
+		}
+	}
   
 
   /* Carousel */
@@ -480,11 +491,10 @@ class TaskDetailsPage extends Component {
 
 			  <View style={styles.separator}></View>
 
-			  {/* Action buttons or carousel (depending on state of page) */}
+			  {/* Action buttons, carousel, or nothing (depending on state of page and task owner) */}
 			  {
-				this.state.selectingTransfer ?
-				this.Carousel() :
-				this.ActionButtons()
+
+			  	this.BottomPortion()
 			  }
 
 			  {/* Show modal if transfer request was sent */}
