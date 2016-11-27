@@ -269,7 +269,7 @@ class TaskDetailsPage extends Component {
 	  showTransferSentModal: false,
 	  showTaskCompleteModal: false,
 	  transferSent: false,
-	  taskCompleted: false,
+	  taskCompleted: this.props.task.completed,
 	};
   }
 
@@ -347,6 +347,7 @@ class TaskDetailsPage extends Component {
 	/*
 	  Set task as completed for other pages
 	*/
+	this.props.taskCompleted(this.props.task);
   }
 
   /* For removing modal */

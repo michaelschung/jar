@@ -113,19 +113,21 @@ const styles = StyleSheet.create({
   	flex: 1,
     maxHeight: .5,
     backgroundColor: '#8E8E8E',
-    padding: 0
+    padding: .5
   },
   addButton: {
     backgroundColor: '#319bce',
     marginBottom: 20,
     marginRight: 20,
-    alignSelf: 'flex-end',
+    position: 'absolute',
     justifyContent: 'center',
     borderRadius: 35,
     minHeight: 50,
     minWidth: 50,
     width: 70,
-    height: 70
+    height: 70,
+    bottom: 10,
+    right: 10,
   },
   buttonText: {
   	color: 'white',
@@ -152,7 +154,7 @@ class TasksPage extends Component {
   	}
 
 
-	onCheckboxPressed = (taskItem) => {
+	onTaskCompleted = (taskItem) => {
 		taskItem.completed = !taskItem.completed;
 		this.setState({
 			dataSource: this.ds.cloneWithRows(this.state.taskView === "All Tasks" ? 
@@ -164,7 +166,7 @@ class TasksPage extends Component {
 		this.props.navigator.push({
 			title: 'Task Details',
 			component: TaskDetailsPage,
-			passProps: {task: taskItem},
+			passProps: {taskCompleted: this.onTaskCompleted, task: taskItem},
 		});
 	}
 
@@ -200,7 +202,7 @@ class TasksPage extends Component {
 	renderIcon = (data) => {
 		if (data.isMyTask) {
 			return (
-				<TouchableOpacity onPress={() => this.onCheckboxPressed(data)}>
+				<TouchableOpacity onPress={() => this.onTaskCompleted(data)}>
 					<Image source={data.completed ? require('../assets/checked.png') : require('../assets/unchecked.png')} 
 						style={styles.checkBoxIcon} />
 				</TouchableOpacity>
@@ -229,7 +231,7 @@ class TasksPage extends Component {
 	render() {
 		return (
 			<View style={styles.container}>					
-				<View>
+				<View style={{backgroundColor:'white'}}>
 					<SegmentedControlIOS 
 						style={styles.segmentedControl}
 						values={["All Tasks", "My Tasks"]} 
