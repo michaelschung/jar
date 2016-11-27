@@ -11,7 +11,7 @@ import {
 	View,
 } from 'react-native';
 
-import DeadlinePage from '../pages/DeadlinePage'
+import OverviewPage from '../pages/OverviewPage'
 
 
 const styles = StyleSheet.create({
@@ -59,22 +59,21 @@ const styles = StyleSheet.create({
 });
 
 
-class CreatePage extends Component {
+class DurationPage extends Component {
 	constructor(props) {
 	    super(props);
 	    this.state = {renderPlaceholderOnly: true};
 	}
 
 	onPressNext() {
-
-		this.props.currentTask.name = this.state.text;
-		this.props.currentTask.completed = false;
+		this.props.currentTask.timeToComplete = '5 min';
 
 		this.props.navigator.push({
-			title: 'Deadline',
-			component: DeadlinePage,
+			title: 'Overview',
+			component: OverviewPage,
 			passProps: {addTask: this.props.addTask, currentTask: this.props.currentTask}
 		});
+
 	}
 
 	render() {
@@ -82,7 +81,7 @@ class CreatePage extends Component {
 		return (
 			<View style={styles.container}>
 
-				<Text style={styles.textPrompt}>What's the task?</Text>
+				<Text style={styles.textPrompt}>How long will it take?</Text>
 				<View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
 					<TextInput
 				    	style={styles.textInput}
@@ -103,6 +102,6 @@ class CreatePage extends Component {
 }
 
 
-export default CreatePage;
+export default DurationPage;
 
 

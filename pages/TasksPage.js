@@ -5,9 +5,12 @@ import TaskRowItem from '../components/TaskRowItem'
 import CreatePage from '../pages/CreatePage'
 import {
 	Alert,
+	Modal,
+	NavigatorIOS,
 	StyleSheet,
 	Text,
 	TextInput,
+	TouchableHighlight,
 	View,
 	ActivityIndicator,
 	Image,
@@ -59,6 +62,9 @@ const styles = StyleSheet.create({
   container: {
   	flex: 1,
   	paddingTop: 62,
+  },
+  modal: {
+
   },
   segmentedControl: {
   	margin: 12, 
@@ -137,8 +143,14 @@ class TasksPage extends Component {
 		this.state = {
 			dataSource: this.ds.cloneWithRows(taskList),
 			taskView: 'All Tasks',
+			modalVisible: false
 		};
 	}
+
+	setModalVisible(visible) {
+    	this.setState({modalVisible: visible});
+  	}
+
 
 	onCheckboxPressed = (taskItem) => {
 		taskItem.completed = !taskItem.completed;
@@ -157,10 +169,12 @@ class TasksPage extends Component {
 	}
 
 	onCreatePressed = () => {
+		// this.setModalVisible(true);
 		this.props.navigator.push({
-			title: 'Create Task',
-			component: CreatePage
-		});
+			title: 'Task Name',
+			component: CreatePage,
+			passProps: {addTask: this.addTask, currentTask: {}}
+		})
 	}
 
 	checkTaskIsMine = (value) => {
@@ -172,6 +186,14 @@ class TasksPage extends Component {
 			dataSource: this.ds.cloneWithRows(value === "All Tasks" ? 
 				taskList : taskList.filter(this.checkTaskIsMine)),
 			taskView: value,
+		});
+	}
+
+	addTask = (task) => {
+		taskList.push(task);
+		// double check to see this works
+		this.setState({
+			dataSource: this.ds.cloneWithRows(taskList)
 		});
 	}
 
@@ -206,7 +228,7 @@ class TasksPage extends Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
+			<View style={styles.container}>					
 				<View>
 					<SegmentedControlIOS 
 						style={styles.segmentedControl}
