@@ -55,7 +55,7 @@ class SettingsPanel extends Component {
 				<View style={styles.avatarContainer}>
 					<Image
 						style={styles.avatar}
-						source={require('../assets/checked.png')}/>
+						source={require('../assets/unchecked.png')}/>
 					<Text style={styles.name}>Your name</Text>
 				</View>
 

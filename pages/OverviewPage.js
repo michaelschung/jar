@@ -247,6 +247,11 @@ class OverviewPage extends Component {
 		this.props.navigator.popToTop(0);
 	}
 
+	// small grammar correction
+	dayOrDays(daysRemaining) {
+		return daysRemaining <= 1 ? "day" : "days";
+	}
+
 	render() {
 		console.log('rendering jar page');
 		return (
@@ -262,7 +267,7 @@ class OverviewPage extends Component {
 								<View style={styles.dueInTextContainer}>
 							  		<Text style={styles.label}>Due:</Text>
 							  		{/* Use urgent style if task is due within 24 hours (1 day) */}
-							  		<Text style={this.daysRemaining() > 1 ? styles.dueInText : styles.dueInTextUrgent}>{this.daysRemaining()} days</Text>
+							  		<Text style={this.daysRemaining() > 1 ? styles.dueInText : styles.dueInTextUrgent}>{this.daysRemaining()} {this.dayOrDays(this.daysRemaining())}</Text>
 								</View>
 								<View style={styles.timeToCompleteTextContainer}>
 							  		<Text style={styles.label}>Will Take:</Text>

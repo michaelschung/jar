@@ -97,7 +97,7 @@ class App extends Component {
 	}
 
 	onMenuItemSelected = (item) => {
-		console.log('onMenuItemSelected');
+		console.log('onMenuItemSelected', this.onMenuItemSelected);
 		this.setState({
 			isOpen: false,
 			selectedItem: item,
