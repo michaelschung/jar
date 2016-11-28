@@ -130,8 +130,9 @@ class App extends Component {
 					initialRoute={{
 						component: TasksPage,
 						title: 'Tasks Page',
-						rightButtonTitle: 'Jar',
-						leftButtonTitle: 'Settings',
+						titleImage: require('./assets/jar_title.png'),
+						rightButtonIcon: require('./assets/jar_logo_resized.png'),
+						leftButtonIcon: require('./assets/hamburger_cropped.png'),
 						onRightButtonPress: () => this.jarPressed(),
 						onLeftButtonPress: () => this.toggle(),
 					}}
