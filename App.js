@@ -114,11 +114,10 @@ class App extends Component {
 
 	render() {
 		console.log('rendering app');
-		const menu = () => { <Menu onItemSelected={this.onMenuItemSelected} /> };
 
 		return (
 			<SideMenu
-				menu={menu}
+				menu={this.Settings()}
 				isOpen={this.state.isOpen}
 				onChange={(isOpen) => this.updateMenuState(isOpen)}
 				openMenuOffset={300} >
@@ -138,7 +137,7 @@ class App extends Component {
 					}}
 					style={styles.container}
 				/>
-				{this.Settings()}
+				
 			</SideMenu>
 		);
 	}
