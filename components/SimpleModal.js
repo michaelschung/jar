@@ -6,7 +6,7 @@ import {
 	StyleSheet,
 	Modal,
 	TouchableOpacity,
-	 } from 'react-native';
+} from 'react-native';
 
 const styles = StyleSheet.create({
 	modalContainer: {

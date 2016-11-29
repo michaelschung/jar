@@ -6,11 +6,11 @@ import {
 	View,
 	Image,
 	Text,
+	TouchableOpacity,
 } from 'react-native';
 const { Component } = React;
 
 const window = Dimensions.get('window');
-const uri = '../assets/checked.png';
 
 const styles = StyleSheet.create({
 	menu: {
