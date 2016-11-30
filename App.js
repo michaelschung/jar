@@ -92,16 +92,14 @@ class App extends Component {
 	}
 
 	Settings = () => {
-		return this.state.isOpen ? (
+		return (
 			<SettingsPanel
 				onItemSelected={this.onMenuItemSelected}
 				user={this.state}
 				navigator={this.refs.nav}
 				isOpen={this.state.isOpen}
 				updateMenuState={(isOpen) => this.updateMenuState()}
-				/>
-		) : (
-			null
+			/>
 		)
 	}
 

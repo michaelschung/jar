@@ -105,15 +105,43 @@ class SettingsPanel extends Component {
 		};
 	}
 
-	static propTypes = {
-		onItemSelected: React.PropTypes.func.isRequired,
-	};
+	// no idea what this variable is for. everything seems to work fine without it, but
+	// I'm leaving it here just in case.
+
+	// static propTypes = {
+	// 	onItemSelected: React.PropTypes.func.isRequired,
+	// };
+
+	fetchOption = (data) => {
+		var nextComponent;
+
+		switch(data.name) {
+			case 'My House':
+				nextComponent = JarPage;
+				break;
+			case 'Profile':
+				nextComponent = JarPage;
+				break;
+			case 'Bank Account':
+				nextComponent = JarPage;
+				break;
+			case 'Settings':
+				nextComponent = CreatePage;
+				break;
+			case 'Logout':
+				nextComponent = CreatePage;
+				break;
+			default:
+				nextComponent = TasksPage;
+		}
+		return {
+			title: data.name,
+			component: nextComponent,
+		};
+	}
 
 	onOptionPressed = (data) => {
-		this.props.navigator.push({
-			title: 'Jar',
-			component: JarPage,
-		});
+		this.props.navigator.push(this.fetchOption(data));
 		this.props.updateMenuState(this.props.isOpen);
 	}
 
