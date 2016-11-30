@@ -64,6 +64,7 @@ class App extends Component {
 		};
 	}
 
+	/* What to do if the Jar icon is pressed */
 	jarPressed() {
 		this.refs.nav.push({
 			title: 'Jar',
@@ -71,6 +72,7 @@ class App extends Component {
 		});
 	}
 
+	/* Toggle the state of the SettingsPanel (open or closed) */
 	toggle() {
 		console.log('Settings button pressed');
 		this.setState({
@@ -78,11 +80,13 @@ class App extends Component {
 		});
 	}
 
+	/* Also toggles the state of the SettingsPanel, but uses isOpen field to do so */
 	updateMenuState(isOpen) {
 		console.log('isOpen:', isOpen);
 		this.setState({ isOpen, });
 	}
 
+	/* Determines which item in the menu is selected */
 	onMenuItemSelected = (item) => {
 		console.log('onMenuItemSelected', this.onMenuItemSelected);
 		this.setState({
@@ -91,6 +95,7 @@ class App extends Component {
 		});
 	}
 
+	/* Returns the SettingsPanel */
 	Settings = () => {
 		return (
 			<SettingsPanel
@@ -98,11 +103,15 @@ class App extends Component {
 				user={this.state}
 				navigator={this.refs.nav}
 				isOpen={this.state.isOpen}
-				updateMenuState={(isOpen) => this.updateMenuState()}
+				// Make sure that SettingsPanel has reference to toggle() method
+				// (must be passed as anonymous function to avoid automatic function call)
+				toggle={() => this.toggle()} // OR:
+				// updateMenuState={(isOpen) => this.updateMenuState()}
 			/>
 		)
 	}
 
+	/* Returns the NavigatorIOS */
 	Navigator = () => {
 		return (
 			<NavigatorIOS
@@ -124,6 +133,7 @@ class App extends Component {
 		)
 	}
 
+	/* Render everything */
 	render() {
 		console.log('rendering app');
 

@@ -112,10 +112,11 @@ class SettingsPanel extends Component {
 	// 	onItemSelected: React.PropTypes.func.isRequired,
 	// };
 
-	fetchOption = (data) => {
+	/* Use the name of the selected option to determine which page to display next */
+	fetchOption = (dataName) => {
 		var nextComponent;
 
-		switch(data.name) {
+		switch(dataName) {
 			case 'My House':
 				nextComponent = JarPage;
 				break;
@@ -135,22 +136,27 @@ class SettingsPanel extends Component {
 				nextComponent = TasksPage;
 		}
 		return {
-			title: data.name,
+			title: dataName,
 			component: nextComponent,
 		};
 	}
 
+	/* When an option is pressed, navigate to the proper page */
 	onOptionPressed = (data) => {
-		this.props.navigator.push(this.fetchOption(data));
-		this.props.updateMenuState(this.props.isOpen);
+		this.props.navigator.push(this.fetchOption(data.name));
+		// close the settings menu
+		this.props.toggle(); // OR:
+		// this.props.updateMenuState(this.props.isOpen);
 	}
 
+	/* Grab the proper icon to display, based on the image stored in data */
 	renderIcon = (data) => {
 		return (
 			<Image source={ data.image } style={styles.image} />
 		);
 	}
 
+	/* Render each row according to the data point (coming from the variable called 'options') */
 	renderRow = (data) => {
 		return (
 			<TouchableOpacity onPress={() => this.onOptionPressed(data)}>
@@ -162,6 +168,7 @@ class SettingsPanel extends Component {
 		);
 	}
 
+	/* Render everything in the SettingsPanel. */
 	render() {
 		console.log('rendering SettingsPanel');
 		return (
