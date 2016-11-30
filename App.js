@@ -120,7 +120,7 @@ class App extends Component {
 					component: TasksPage,
 					title: 'Tasks Page',
 					titleImage: require('./assets/jar_title.png'),
-					rightButtonIcon: require('./assets/jar_logo_resized.png'),
+					rightButtonIcon: require('./assets/jar_transparent_resized.png'),
 					leftButtonIcon: require('./assets/hamburger_cropped.png'),
 					onRightButtonPress: () => this.jarPressed(),
 					onLeftButtonPress: () => this.toggle(),
