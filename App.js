@@ -70,19 +70,25 @@ class Button extends Component {
 class App extends Component {
 	constructor(props) {
 		super(props);
-	}
 
-	jarPressed() {
-		this.refs.nav.push({
+		this.state = {
+			name: 'Michael',
+			picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg',
+			isMe: true,
+			isOpen: false,
+			selectedItem: 'Contacts',
+		};
+
+		this.page = {
 			title: 'Jar',
 			component: JarPage,
-		})
+		};
 	}
 
-	state = {
-		isOpen: false,
-		selectedItem: 'About',
-	};
+	jarPressed(params) {
+		this.refs.nav.push(params);
+		this.setState({isOpen: false,});
+	}
 
 	toggle() {
 		console.log('Settings button pressed');
@@ -106,9 +112,34 @@ class App extends Component {
 
 	Settings = () => {
 		return this.state.isOpen ? (
-			<SettingsPanel onItemSelected={this.onMenuItemSelected} />
+			<SettingsPanel
+				onItemSelected={this.onMenuItemSelected}
+				user={this.state}
+				navIOS={() => this.jarPressed(this.page)}
+				/>
 		) : (
 			null
+		)
+	}
+
+	Navigator = () => {
+		return (
+			<NavigatorIOS
+				ref='nav'
+				barTintColor='#319bce'
+				titleTextColor='#fff'
+				tintColor='#fff'
+				initialRoute={{
+					component: TasksPage,
+					title: 'Tasks Page',
+					titleImage: require('./assets/jar_title.png'),
+					rightButtonIcon: require('./assets/jar_logo_resized.png'),
+					leftButtonIcon: require('./assets/settings_icon.png'),
+					onRightButtonPress: () => this.jarPressed(this.page),
+					onLeftButtonPress: () => this.toggle(),
+				}}
+				style={styles.container}
+			/>
 		)
 	}
 
@@ -121,23 +152,7 @@ class App extends Component {
 				isOpen={this.state.isOpen}
 				onChange={(isOpen) => this.updateMenuState(isOpen)}
 				openMenuOffset={300} >
-				<NavigatorIOS
-					ref='nav'
-					barTintColor='#319bce'
-					titleTextColor='#fff'
-					tintColor='#fff'
-					initialRoute={{
-						component: TasksPage,
-						title: 'Tasks Page',
-						titleImage: require('./assets/jar_title.png'),
-						rightButtonIcon: require('./assets/jar_logo_resized.png'),
-						leftButtonIcon: require('./assets/settings_icon.png'),
-						onRightButtonPress: () => this.jarPressed(),
-						onLeftButtonPress: () => this.toggle(),
-					}}
-					style={styles.container}
-				/>
-				
+				{this.Navigator()}
 			</SideMenu>
 		);
 	}

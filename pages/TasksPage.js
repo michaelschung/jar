@@ -242,9 +242,9 @@ class TasksPage extends Component {
 				<View style={styles.segmentSeparator} />
 				<ListView
 					style={styles.list}
-				  dataSource={this.state.dataSource}
-				  renderRow={this.renderRow}  
-				  renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
+				  	dataSource={this.state.dataSource}
+				  	renderRow={this.renderRow}  
+				  	renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
 				<TouchableOpacity style={styles.addButton} onPress={() => this.onCreatePressed() }>
 					<Text style={styles.buttonText}>+</Text>
 				</TouchableOpacity>

@@ -8,6 +8,10 @@ import {
 	Text,
 	TouchableOpacity,
 } from 'react-native';
+
+import JarPage from '../pages/JarPage.js'
+import CreatePage from '../pages/CreatePage'
+
 const { Component } = React;
 
 const window = Dimensions.get('window');
@@ -25,9 +29,9 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 	},
 	avatar: {
-		width: 48,
-		height: 48,
-		borderRadius: 24,
+		width: 100,
+		height: 100,
+		borderRadius: 50,
 		flex: 1,
 	},
 	name: {
@@ -44,10 +48,14 @@ const styles = StyleSheet.create({
 });
 
 class SettingsPanel extends Component {
+	constructor(props) {
+		super(props);
+	}
+
 	static propTypes = {
 		onItemSelected: React.PropTypes.func.isRequired,
 	};
-
+	
 	render() {
 		console.log('rendering SettingsPanel');
 		return (
@@ -55,20 +63,21 @@ class SettingsPanel extends Component {
 				<View style={styles.avatarContainer}>
 					<Image
 						style={styles.avatar}
-						source={require('../assets/unchecked.png')}/>
+						source={{ uri: this.props.user.picURL }} />
 					<Text style={styles.name}>Your name</Text>
 				</View>
 
 				<Text
-					onPress={() => this.props.onItemSelected('About')}
+					/*onPress={() => this.props.onItemSelected('About')}*/
+					onPress={() => this.props.navIOS({title: 'Jar', component: JarPage,})}
 					style={styles.item}>
-					About
+					Jar
 				</Text>
 
 				<Text
-					onPress={() => this.props.onItemSelected('Contacts')}
+					onPress={() => this.props.navIOS({title: 'Task Name', component: CreatePage,})}
 					style={styles.item}>
-					Contacts
+					Create
 				</Text>
 			</ScrollView>
 		);
