@@ -23,41 +23,51 @@ const styles = StyleSheet.create({
 		width: window.width,
 		height: window.height,
 		backgroundColor: 'white',
-		padding: 20,
 	},
 	avatarContainer: {
-		marginBottom: 20,
-		marginTop: 20,
+		backgroundColor: '#319bce',
+		width: window.width,
+		height: 170,
 	},
 	avatar: {
-		width: 100,
-		height: 100,
-		borderRadius: 50,
-		flex: 1,
+		marginLeft: 20,
+		marginTop: 35,
+		width: 120,
+		height: 120,
+		borderRadius: 60,
 	},
 	name: {
+		fontSize: 20,
 		position: 'absolute',
-		left: 130,
-		top: 40,
+		left: 160,
+		top: 85,
 	},
-	item: {
-		color: 'red',
-		fontSize: 14,
+	list: {
+		
+	},
+	row: {
+		width: window.width,
+		height: 60,
+	},
+	optionTitle: {
+		color: '#319bce',
+		fontSize: 20,
 		fontWeight: '300',
-		paddingTop: 5,
+		position: 'absolute',
+		left: 85,
+		top: 19,
+	},
+	image: {
+		marginLeft: 15,
+		width: 40,
+		height: 40,
+		top: 10,
 	},
 	separator: {
 	  	flex: 1,
-	    height: .5,
+	    height: 1,
 	    backgroundColor: '#8E8E8E',
 	    padding: 0
-	},
-	image: {
-		flex: 1,
-		width: 50,
-		height: 50,
-		left: 25,
-		top: 25,
 	},
 });
 
@@ -110,7 +120,7 @@ class SettingsPanel extends Component {
 			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
 			  	<View style={styles.row}>
 			  		{this.renderIcon(data)}
-			    	<Text style={styles.taskName}>{data.name}</Text>
+			    	<Text style={styles.optionTitle}>{data.name}</Text>
 			  	</View>
 			</TouchableOpacity>
 		);
@@ -127,6 +137,7 @@ class SettingsPanel extends Component {
 					<Text style={styles.name}>{this.props.user.name}</Text>
 				</View>
 
+				<View style={styles.separator} />
 				<ListView
 					style={styles.list}
 					dataSource={this.state.dataSource}
