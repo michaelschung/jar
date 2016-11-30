@@ -78,15 +78,13 @@ class App extends Component {
 			isOpen: false,
 			selectedItem: 'Contacts',
 		};
-
-		this.page = {
-			title: 'Jar',
-			component: JarPage,
-		};
 	}
 
-	jarPressed(params) {
-		this.refs.nav.push(params);
+	jarPressed() {
+		this.refs.nav.push({
+			title: 'Jar',
+			component: JarPage,
+		});
 		this.setState({isOpen: false,});
 	}
 
@@ -115,7 +113,7 @@ class App extends Component {
 			<SettingsPanel
 				onItemSelected={this.onMenuItemSelected}
 				user={this.state}
-				navIOS={() => this.jarPressed(this.page)}
+				jarPressed={() => this.jarPressed()}
 				/>
 		) : (
 			null
@@ -135,7 +133,7 @@ class App extends Component {
 					titleImage: require('./assets/jar_title.png'),
 					rightButtonIcon: require('./assets/jar_logo_resized.png'),
 					leftButtonIcon: require('./assets/settings_icon.png'),
-					onRightButtonPress: () => this.jarPressed(this.page),
+					onRightButtonPress: () => this.jarPressed(),
 					onLeftButtonPress: () => this.toggle(),
 				}}
 				style={styles.container}

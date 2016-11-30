@@ -55,7 +55,7 @@ class SettingsPanel extends Component {
 	static propTypes = {
 		onItemSelected: React.PropTypes.func.isRequired,
 	};
-	
+
 	render() {
 		console.log('rendering SettingsPanel');
 		return (
@@ -69,13 +69,13 @@ class SettingsPanel extends Component {
 
 				<Text
 					/*onPress={() => this.props.onItemSelected('About')}*/
-					onPress={() => this.props.navIOS({title: 'Jar', component: JarPage,})}
+					onPress={() => this.props.jarPressed()}
 					style={styles.item}>
 					Jar
 				</Text>
 
 				<Text
-					onPress={() => this.props.navIOS({title: 'Task Name', component: CreatePage,})}
+					onPress={() => this.props.onItemSelected('Create')}
 					style={styles.item}>
 					Create
 				</Text>
