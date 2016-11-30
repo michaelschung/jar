@@ -7,6 +7,7 @@ import {
 	NavigatorIOS,
 	TouchableOpacity,
 	Image,
+	Dimensions,
 } from 'react-native';
 
 import TasksPage from '../jar/pages/TasksPage.js'
@@ -16,6 +17,7 @@ import SettingsPanel from './components/SettingsPanel.js'
 import SideMenu from 'react-native-side-menu'
 
 const { Component } = React;
+const window = Dimensions.get('window');
 
 const styles = StyleSheet.create({
 	button: {
@@ -132,7 +134,7 @@ class App extends Component {
 					title: 'Tasks Page',
 					titleImage: require('./assets/jar_title.png'),
 					rightButtonIcon: require('./assets/jar_logo_resized.png'),
-					leftButtonIcon: require('./assets/settings_icon.png'),
+					leftButtonIcon: require('./assets/hamburger_cropped.png'),
 					onRightButtonPress: () => this.jarPressed(),
 					onLeftButtonPress: () => this.toggle(),
 				}}
@@ -149,7 +151,7 @@ class App extends Component {
 				menu={this.Settings()}
 				isOpen={this.state.isOpen}
 				onChange={(isOpen) => this.updateMenuState(isOpen)}
-				openMenuOffset={300} >
+				openMenuOffset={window.width*4/5} >
 				{this.Navigator()}
 			</SideMenu>
 		);
