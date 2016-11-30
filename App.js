@@ -30,24 +30,11 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		alignItems: 'center',
 	},
-	settingsContainer: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#F5FCFF',
-	},
-	welcome: {
-		fontSize: 20,
-		textAlign: 'center',
-		margin: 10,
-	},
-	instructions: {
-		textAlign: 'center',
-		color: '#333333',
-		marginBottom: 5,
-	},
 	container: {
 		flex: 1,
+		backgroundColor: '#319bce',
+		borderLeftWidth: 1,
+		borderColor: '#8E8E8E',
 	},
 });
 

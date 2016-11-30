@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 		top: 85,
 	},
 	list: {
-		
+		zIndex: -100,
 	},
 	row: {
 		width: window.width,
@@ -109,7 +109,6 @@ class SettingsPanel extends Component {
 	};
 
 	renderIcon = (data) => {
-		console.log("DATA: ", data.picURL);
 		return (
 			<Image source={ data.image } style={styles.image} />
 		);
