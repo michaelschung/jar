@@ -8,6 +8,7 @@ import {
 	Text,
 	TouchableOpacity,
 	ListView,
+	NavigatorIOS,
 } from 'react-native';
 
 import JarPage from '../pages/JarPage.js'
@@ -108,6 +109,14 @@ class SettingsPanel extends Component {
 		onItemSelected: React.PropTypes.func.isRequired,
 	};
 
+	onOptionPressed = (data) => {
+		this.props.navigator.push({
+			title: 'Jar',
+			component: JarPage,
+		});
+		this.props.updateMenuState(this.props.isOpen);
+	}
+
 	renderIcon = (data) => {
 		return (
 			<Image source={ data.image } style={styles.image} />
@@ -116,7 +125,7 @@ class SettingsPanel extends Component {
 
 	renderRow = (data) => {
 		return (
-			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
+			<TouchableOpacity onPress={() => this.onOptionPressed(data)}>
 			  	<View style={styles.row}>
 			  		{this.renderIcon(data)}
 			    	<Text style={styles.optionTitle}>{data.name}</Text>

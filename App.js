@@ -25,14 +25,8 @@ const styles = StyleSheet.create({
 		top: 20,
 		padding: 10,
 	},
-	caption: {
-		fontSize: 20,
-		fontWeight: 'bold',
-		alignItems: 'center',
-	},
 	container: {
 		flex: 1,
-		backgroundColor: '#319bce',
 		borderLeftWidth: 1,
 		borderColor: '#8E8E8E',
 	},
@@ -75,7 +69,6 @@ class App extends Component {
 			title: 'Jar',
 			component: JarPage,
 		});
-		this.setState({isOpen: false,});
 	}
 
 	toggle() {
@@ -103,7 +96,9 @@ class App extends Component {
 			<SettingsPanel
 				onItemSelected={this.onMenuItemSelected}
 				user={this.state}
-				jarPressed={() => this.jarPressed()}
+				navigator={this.refs.nav}
+				isOpen={this.state.isOpen}
+				updateMenuState={(isOpen) => this.updateMenuState()}
 				/>
 		) : (
 			null
