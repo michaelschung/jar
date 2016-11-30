@@ -61,7 +61,8 @@ class App extends Component {
 		super(props);
 
 		this.state = {
-			name: 'Michael',
+			firstname: 'Michael',
+			lastname: 'Chung',
 			picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg',
 			isMe: true,
 			isOpen: false,

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		position: 'absolute',
 		left: 160,
-		top: 85,
+		top: 70,
 	},
 	list: {
 		zIndex: -100,
@@ -133,7 +133,10 @@ class SettingsPanel extends Component {
 					<Image
 						style={styles.avatar}
 						source={{ uri: this.props.user.picURL }} />
-					<Text style={styles.name}>{this.props.user.name}</Text>
+					<Text style={styles.name}>
+						{this.props.user.firstname}{'\n'}
+						{this.props.user.lastname}
+					</Text>
 				</View>
 
 				<View style={styles.separator} />
