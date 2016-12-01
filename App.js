@@ -13,7 +13,7 @@ import {
 import TasksPage from '../jar/pages/TasksPage.js'
 import JarPage from '../jar/pages/JarPage.js'
 
-import SettingsPanel from './components/SettingsPanel.js'
+import HamburgerPanel from './components/HamburgerPanel.js'
 import SideMenu from 'react-native-side-menu'
 
 const { Component } = React;
@@ -72,7 +72,7 @@ class App extends Component {
 		});
 	}
 
-	/* Toggle the state of the SettingsPanel (open or closed) */
+	/* Toggle the state of the HamburgerPanel (open or closed) */
 	toggle() {
 		console.log('Settings button pressed');
 		this.setState({
@@ -80,7 +80,7 @@ class App extends Component {
 		});
 	}
 
-	/* Also toggles the state of the SettingsPanel, but uses isOpen field to do so */
+	/* Also toggles the state of the HamburgerPanel, but uses isOpen field to do so */
 	updateMenuState(isOpen) {
 		console.log('isOpen:', isOpen);
 		this.setState({ isOpen, });
@@ -95,15 +95,15 @@ class App extends Component {
 		});
 	}
 
-	/* Returns the SettingsPanel */
-	Settings = () => {
+	/* Returns the HamburgerPanel */
+	Hamburger = () => {
 		return (
-			<SettingsPanel
+			<HamburgerPanel
 				onItemSelected={this.onMenuItemSelected}
 				user={this.state}
 				navigator={this.refs.nav}
 				isOpen={this.state.isOpen}
-				// Make sure that SettingsPanel has reference to toggle() method
+				// Make sure that HamburgerPanel has reference to toggle() method
 				// (must be passed as anonymous function to avoid automatic function call)
 				toggle={() => this.toggle()} // OR:
 				// updateMenuState={(isOpen) => this.updateMenuState()}
@@ -139,7 +139,7 @@ class App extends Component {
 
 		return (
 			<SideMenu
-				menu={this.Settings()}
+				menu={this.Hamburger()}
 				isOpen={this.state.isOpen}
 				onChange={(isOpen) => this.updateMenuState(isOpen)}
 				openMenuOffset={window.width*4/5} >

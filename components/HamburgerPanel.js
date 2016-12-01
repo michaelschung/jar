@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
 		borderRadius: 60,
 	},
 	name: {
+		color: 'white',
 		fontSize: 20,
 		position: 'absolute',
 		left: 160,
@@ -99,7 +100,7 @@ var options = [
 	},
 ];
 
-class SettingsPanel extends Component {
+class HamburgerPanel extends Component {
 	constructor(props) {
 		super(props);
 
@@ -172,9 +173,9 @@ class SettingsPanel extends Component {
 		);
 	}
 
-	/* Render everything in the SettingsPanel. */
+	/* Render everything in the HamburgerPanel. */
 	render() {
-		console.log('rendering SettingsPanel');
+		console.log('rendering HamburgerPanel');
 		return (
 			<ScrollView scrollsToTop={false} style={styles.menu}>
 				<View style={styles.avatarContainer}>
@@ -199,4 +200,4 @@ class SettingsPanel extends Component {
 	}
 };
 
-export default SettingsPanel;
+export default HamburgerPanel;
