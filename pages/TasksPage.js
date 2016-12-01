@@ -3,6 +3,9 @@
 import React, { Component } from 'react'
 import TaskRowItem from '../components/TaskRowItem'
 import CreatePage from '../pages/CreatePage'
+import TitleBodyButtonsModal from '../components/TitleBodyButtonsModal'
+import TransferRequestBody from '../components/TransferRequestBody'
+import Button from '../components/Button'
 import {
 	Alert,
 	Modal,
@@ -229,6 +232,17 @@ class TasksPage extends Component {
 	}
 
 	render() {
+		// var button1 = () => { return (<Button text='Deny' color='red' size='medium' onPress={()=>{console.log('deny pressed')}}/>) }
+		// var button2 = () => { return (<Button text='Accept' color='green' size='medium' onPress={()=>{console.log('accept pressed')}}/>) }
+		// var task = {
+		// 	name:'Call the landlord', 
+		// 	owner: {name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'}, 
+		// 	completed:false, 
+		// 	due:new Date().setDate(today.getDate() + 3), 
+		// 	timeToComplete: '15 min'
+		// }
+		// var body = () => { return (<TransferRequestBody fromName='Evan' task={task} />) }
+
 		return (
 			<View style={styles.container}>					
 				<View style={{backgroundColor:'white'}}>
@@ -248,6 +262,7 @@ class TasksPage extends Component {
 				<TouchableOpacity style={styles.addButton} onPress={() => this.onCreatePressed() }>
 					<Text style={styles.buttonText}>+</Text>
 				</TouchableOpacity>
+				{/*<TitleBodyButtonsModal title='Transfer request from:' bodyView={body} buttonViews={[button1, button2]} />*/}
 			</View>
 		);
 	}

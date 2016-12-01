@@ -115,6 +115,10 @@ const styles = StyleSheet.create({
 	marginRight: 20,
   },
 
+  bottomPortionContainer: {
+  	minHeight: 200,
+  },
+
   /* Styling for buttons */
   buttonsContainer: {
 	marginTop: 20,
@@ -129,6 +133,9 @@ const styles = StyleSheet.create({
 	minHeight: 75,
 	minWidth: 250,
 	alignItems: 'center',
+  },
+  warnButton: {
+  	backgroundColor: '#f0ad4e',
   },
   disabledButton: {
 	backgroundColor: '#979797',
@@ -174,7 +181,7 @@ const styles = StyleSheet.create({
   },
   carouselScrollView: {
 	height: 50,
-	margin: 20,
+	margin: 10, 
   },
   userContainer: {
 	flexDirection: 'column',
@@ -325,9 +332,10 @@ class TaskDetailsPage extends Component {
 	this.setState((state) => ({
 	  renderPlaceholderOnly: state.renderPlaceholderOnly,
 	  selectingTransfer: false,
-	  showModal: false,
+	  showModal: true,
 	  showTransferSentModal: false,
 	  showTaskCompleteModal: false,
+	  showCancelTransferModal: true,
 	  transferSent: false,
 	  taskCompleted: state.taskCompleted,
 	}));
@@ -358,6 +366,7 @@ class TaskDetailsPage extends Component {
 	  showModal: false,
 	  showTransferSentModal: false,
 	  showTaskCompleteModal: false,
+	  showCancelTransferModal: false,
 	  transferSent: state.transferSent,
 	  taskCompleted: state.taskCompleted,
 	}));
@@ -374,7 +383,7 @@ class TaskDetailsPage extends Component {
 	}
 	return this.state.transferSent ?
 	  (
-		<TouchableOpacity style={[styles.button, styles.disabledButton]} onPress={this._onCancelTransfer} >
+		<TouchableOpacity style={[styles.button, styles.warnButton]} onPress={this._onCancelTransfer} >
 		  <Text style={styles.buttonText}>Cancel Transfer</Text>
 		</TouchableOpacity>
 	  ) :
@@ -448,7 +457,8 @@ class TaskDetailsPage extends Component {
 			/* Message to show in modal */
 			var message = this.state.showTransferSentModal ? 
 			('Transfer request sent to ' + this.state.transferSentTo + '!') :
-			('Task completed!');
+			(this.state.showTaskCompleteModal ? ('Task completed!') :
+			('Transfer canceled'));
 
 			modal = (<SimpleModal 
 			message={message}
@@ -493,10 +503,12 @@ class TaskDetailsPage extends Component {
 			  <View style={styles.separator}></View>
 
 			  {/* Action buttons, carousel, or nothing (depending on state of page and task owner) */}
-			  {
+				<View style={styles.bottomPortionContainer}>
+				  {
 
-			  	this.BottomPortion()
-			  }
+				  	this.BottomPortion()
+				  }
+				</View>
 
 			  {/* Show modal if transfer request was sent */}
 			  {
