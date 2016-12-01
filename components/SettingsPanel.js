@@ -13,6 +13,10 @@ import {
 
 import JarPage from '../pages/JarPage.js'
 import CreatePage from '../pages/CreatePage'
+import MyHousePage from '../pages/MyHousePage'
+import ProfilePage from '../pages/ProfilePage'
+import BankAccountPage from '../pages/BankAccountPage'
+import SettingsPage from '../pages/SettingsPage'
 
 const { Component } = React;
 
@@ -118,16 +122,16 @@ class SettingsPanel extends Component {
 
 		switch(dataName) {
 			case 'My House':
-				nextComponent = JarPage;
+				nextComponent = MyHousePage;
 				break;
 			case 'Profile':
-				nextComponent = JarPage;
+				nextComponent = ProfilePage;
 				break;
 			case 'Bank Account':
-				nextComponent = JarPage;
+				nextComponent = BankAccountPage;
 				break;
 			case 'Settings':
-				nextComponent = CreatePage;
+				nextComponent = SettingsPage;
 				break;
 			case 'Logout':
 				nextComponent = CreatePage;
