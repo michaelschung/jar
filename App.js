@@ -16,8 +16,6 @@ import JarPage from './pages/JarPage.js'
 import HamburgerPanel from './components/HamburgerPanel.js'
 import SideMenu from 'react-native-side-menu'
 
-import ProfilePage from './pages/ProfilePage.js'
-
 const { Component } = React;
 const window = Dimensions.get('window');
 
@@ -150,10 +148,8 @@ class App extends Component {
 				titleTextColor='#fff'
 				tintColor='#fff'
 				initialRoute={{
-					// component: TasksPage,
-					// title: 'Home',
-					component: ProfilePage,
-					title: 'Profile',
+					component: TasksPage,
+					title: 'Home',
 					passProps: {house: house,},
 					// uncomment the next line for the Jar title logo
 					//titleImage: require('./assets/jar_title.png'),
