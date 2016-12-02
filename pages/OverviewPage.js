@@ -262,6 +262,19 @@ class OverviewPage extends Component {
 		return daysRemaining <= 1 ? "day" : "days";
 	}
 
+	setNotes = (text) => {
+	  	// console.log("NOTES:", text);
+	  	this.props.currentTask.notes = text;
+	}
+
+	getPlaceholderNotes() {
+	  	return this.props.currentTask.notes == '' ? 'Add a note...' : this.props.currentTask.notes;
+	}
+
+	getDefaultNotes() {
+	  	return this.props.currentTask.notes == '' ? '' : this.props.currentTask.notes;
+	}
+
 	render() {
 		console.log('rendering jar page');
 		return (
@@ -289,7 +302,16 @@ class OverviewPage extends Component {
 
 					<View style={styles.notesContainer}>
 						<Text style={styles.label}>Notes:</Text>
-						<NotesInput />
+						<TextInput
+				          style={styles.notes}
+				          autoCorrect={true}
+				          multiline={true}
+				          numberOfLines={6}
+				          defaultValue={this.getDefaultNotes()}
+				          onChangeText={this.setNotes}
+				          placeholder={this.getPlaceholderNotes()}
+				          value={this.state.text}
+				        />
 					</View>
 
 				  	<View style={styles.separator}></View>

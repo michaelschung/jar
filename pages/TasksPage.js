@@ -234,7 +234,7 @@ class TasksPage extends Component {
 			component: CreatePage,
 			passProps: {
 				addTask: this.addTask,
-				currentTask: {}
+				currentTask: {notes: '',}
 			},
 			leftButtonTitle: 'Cancel',
 			onLeftButtonPress: () => this.props.navigator.popToTop(0)
