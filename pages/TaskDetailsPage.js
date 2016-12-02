@@ -519,13 +519,15 @@ class TaskDetailsPage extends Component {
 				confirmCallback = this._onConfirmCancelTransferRequest;
 			}
 
-			modal = (<ConfirmationModal 
-			title={title}
-			confirmText={confirmText}
-			confirmCallback={confirmCallback}
-			cancelText={cancelText}
-			cancelCallback={cancelCallback}
-			></ConfirmationModal>);
+			modal = (
+				<ConfirmationModal
+					title={title}
+					confirmText={confirmText}
+					confirmCallback={confirmCallback}
+					cancelText={cancelText}
+					cancelCallback={cancelCallback}
+				/>
+			);
 		} else {
 			modal = null;
 		}
