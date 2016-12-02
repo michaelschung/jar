@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
 
   minutePicker: {
-    fontFamily: 'Avenir',
+  	
   }
 
 });

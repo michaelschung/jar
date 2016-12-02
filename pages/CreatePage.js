@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingTop: 85,
     paddingLeft: 40,
-    marginTop: 80
+    marginTop: 80,
   },
 
   textPrompt: {
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
   	flex: 1,
   	flexDirection: 'row',
-  	marginTop: 290
+  	marginTop: 290,
   },
 
   backButton: {
