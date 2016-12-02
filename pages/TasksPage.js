@@ -129,7 +129,8 @@ class TasksPage extends Component {
 				completed: boolean True if task has been completed
 				due: JS Date object representing the day the task is due
 				timeToComplete: string representing expected time to complete task
-				isAwaitingTransfer: user object to whom we requested a transfer
+				isAwaitingTransfer: user object to whom we requested a transfer, 
+									or null if no transfer is requested
 		*/
 
 		this.taskList = [
@@ -203,6 +204,7 @@ class TasksPage extends Component {
 				taskCompleted: this.onTaskCompleted, 
 				task: taskItem,
 				requestTransfer: this.requestTransfer,
+				cancelTransfer: this.cancelTransfer,
 				house: this.props.house,
 			},
 		});
@@ -245,6 +247,18 @@ class TasksPage extends Component {
 	requestTransfer = (task, user) => {
 		task.isAwaitingTransfer = user;
 		this.updateDataSource();
+	}
+
+	cancelTransfer = (task) => {
+		task.isAwaitingTransfer = null;
+		this.updateDataSource();
+	}
+
+	acceptTransferRequest = (task) => {
+		task.owner = this.props.house.filter((value) => value.isMe)[0];
+		task.isAwaitingTransfer = null;
+		this.updateDataSource();
+		// send a notification to transfer requester
 	}
 
 	renderIcon = (data) => {
