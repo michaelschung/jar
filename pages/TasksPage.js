@@ -179,7 +179,6 @@ class TasksPage extends Component {
 
 		this.sortTaskList();
 
-
 		this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		this.state = {
 			dataSource: this.ds.cloneWithRows(this.taskList.filter(this.checkTaskIsMine)),
@@ -190,8 +189,8 @@ class TasksPage extends Component {
 
 	sortTaskList = () => {
 		this.taskList.sort((value1, value2) => {
-			console.log(value1.due);
-			console.log(value2.due);
+			// console.log(value1.due);
+			// console.log(value2.due);
 			if (value1.due > value2.due.getTime)
 				return 1;
 			if (value1.due < value2.due)

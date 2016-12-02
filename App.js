@@ -10,11 +10,13 @@ import {
 	Dimensions,
 } from 'react-native';
 
-import TasksPage from '../jar/pages/TasksPage.js'
-import JarPage from '../jar/pages/JarPage.js'
+import TasksPage from './pages/TasksPage.js'
+import JarPage from './pages/JarPage.js'
 
 import HamburgerPanel from './components/HamburgerPanel.js'
 import SideMenu from 'react-native-side-menu'
+
+import ProfilePage from './pages/ProfilePage.js'
 
 const { Component } = React;
 const window = Dimensions.get('window');
@@ -25,24 +27,28 @@ var house = [
 		lastName: 'Chung',
 		isMe: true,
 		picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg',
+		totalTime: 0,
 	},
 	{
 		firstName: 'Evan',
 		lastName: 'Lin',
 		isMe: false,
 		picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg',
+		totalTime: 0,
 	},
 	{
 		firstName: 'Tessera',
 		lastName: 'Chin',
 		isMe: false,
 		picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Tessera.jpg',
+		totalTime: 0,
 	},
 	{
 		firstName: 'David',
 		lastName: 'Morales',
 		isMe: false,
 		picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG',
+		totalTime: 0,
 	},
 ];
 
@@ -144,9 +150,11 @@ class App extends Component {
 				titleTextColor='#fff'
 				tintColor='#fff'
 				initialRoute={{
-					component: TasksPage,
+					// component: TasksPage,
+					// title: 'Home',
+					component: ProfilePage,
+					title: 'Profile',
 					passProps: {house: house,},
-					title: 'Home',
 					// uncomment the next line for the Jar title logo
 					//titleImage: require('./assets/jar_title.png'),
 					rightButtonIcon: require('./assets/jar_transparent_resized.png'),
