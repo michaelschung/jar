@@ -19,6 +19,33 @@ import SideMenu from 'react-native-side-menu'
 const { Component } = React;
 const window = Dimensions.get('window');
 
+var house = [
+	{
+		firstName: 'Michael',
+		lastName: 'Chung',
+		isMe: true,
+		picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg',
+	},
+	{
+		firstName: 'Evan',
+		lastName: 'Lin',
+		isMe: false,
+		picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg',
+	},
+	{
+		firstName: 'Tessera',
+		lastName: 'Chin',
+		isMe: false,
+		picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Tessera.jpg',
+	},
+	{
+		firstName: 'David',
+		lastName: 'Morales',
+		isMe: false,
+		picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.jpg',
+	},
+];
+
 const styles = StyleSheet.create({
 	button: {
 		position: 'absolute',
@@ -55,8 +82,8 @@ class App extends Component {
 		super(props);
 
 		this.state = {
-			firstname: 'Michael',
-			lastname: 'Chung',
+			firstName: 'Michael',
+			lastName: 'Chung',
 			picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg',
 			isMe: true,
 			isOpen: false,
@@ -107,6 +134,7 @@ class App extends Component {
 				// (must be passed as anonymous function to avoid automatic function call)
 				toggle={() => this.toggle()} // OR:
 				// updateMenuState={(isOpen) => this.updateMenuState()}
+				house={house}
 			/>
 		)
 	}
@@ -121,6 +149,7 @@ class App extends Component {
 				tintColor='#fff'
 				initialRoute={{
 					component: TasksPage,
+					passProps: {house: house,},
 					title: 'Tasks Page',
 					titleImage: require('./assets/jar_title.png'),
 					rightButtonIcon: require('./assets/jar_transparent_resized.png'),
@@ -139,6 +168,7 @@ class App extends Component {
 
 		return (
 			<SideMenu
+				disableGestures={this.state.isOpen?false:true}
 				menu={this.Hamburger()}
 				isOpen={this.state.isOpen}
 				onChange={(isOpen) => this.updateMenuState(isOpen)}
