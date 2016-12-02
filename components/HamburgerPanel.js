@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 25,
 		fontWeight: '500',
-    	fontFamily: 'Avenir',
+		fontFamily: 'Avenir',
 		position: 'absolute',
 		left: 160,
 		top: 60,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 		color: '#319bce',
 		fontSize: 20,
 		fontWeight: '500',
-    	fontFamily: 'Avenir',
+		fontFamily: 'Avenir',
 		position: 'absolute',
 		left: 85,
 		top: 19,
@@ -74,10 +74,10 @@ const styles = StyleSheet.create({
 		top: 10,
 	},
 	separator: {
-	  	flex: 1,
-	    height: 1,
-	    backgroundColor: '#8E8E8E',
-	    padding: 0
+		flex: 1,
+		height: 1,
+		backgroundColor: '#8E8E8E',
+		padding: 0
 	},
 });
 
@@ -184,10 +184,10 @@ class HamburgerPanel extends Component {
 	renderRow = (data) => {
 		return (
 			<TouchableOpacity onPress={() => this.onOptionPressed(data)}>
-			  	<View style={styles.row}>
-			  		{this.renderIcon(data)}
-			    	<Text style={styles.optionTitle}>{data.name}</Text>
-			  	</View>
+				<View style={styles.row}>
+					{this.renderIcon(data)}
+					<Text style={styles.optionTitle}>{data.name}</Text>
+				</View>
 			</TouchableOpacity>
 		);
 	}

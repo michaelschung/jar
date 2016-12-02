@@ -15,78 +15,78 @@ import {
 
 
 const styles = StyleSheet.create({
-  	container: {
-	    flex: 1,
-	    flexDirection: 'column',
-	    justifyContent: 'flex-end',
-	    alignItems: 'center',
-	    paddingTop: 74,
-	    margin: 12,
-  	},
+	container: {
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+		paddingTop: 74,
+		margin: 12,
+	},
 
-  	jarTotal: {
-	  	color: '#319bce',
-	  	fontSize: 55,
-	  	fontWeight: '500',
-	    fontFamily: 'Avenir',
-	    fontWeight: '500',
-	  	marginBottom: 20
-  	},
+	jarTotal: {
+		color: '#319bce',
+		fontSize: 55,
+		fontWeight: '500',
+		fontFamily: 'Avenir',
+		fontWeight: '500',
+		marginBottom: 20
+	},
 
-  	jarLogo: {
-  		marginBottom: 55,
-  	},
+	jarLogo: {
+		marginBottom: 55,
+	},
 
-  	useNowButton: {
-	    backgroundColor: '#319bce',
-	    justifyContent: 'center',
-	    marginBottom: 50,
-	    borderRadius: 10,
-	    minHeight: 50,
-	    minWidth: 50,
-	    height: 60,
-	    width: 250,
-	    bottom: 5,
-  	},
+	useNowButton: {
+		backgroundColor: '#319bce',
+		justifyContent: 'center',
+		marginBottom: 50,
+		borderRadius: 10,
+		minHeight: 50,
+		minWidth: 50,
+		height: 60,
+		width: 250,
+		bottom: 5,
+	},
 
-  	buttonText: {
-	  	color: 'white',
-	  	alignSelf: 'center',
-	  	fontSize: 35,
-	  	fontWeight: '500',
-	    fontFamily: 'Avenir',
-  	}
+	buttonText: {
+		color: 'white',
+		alignSelf: 'center',
+		fontSize: 35,
+		fontWeight: '500',
+		fontFamily: 'Avenir',
+	}
 });
 
 
 class JarPage extends Component {
 	constructor(props) {
-	    super(props);
-	    this.state = {
-	        renderPlaceholderOnly: true,
-	        showModal: false
-      	};
+		super(props);
+		this.state = {
+			renderPlaceholderOnly: true,
+			showModal: false
+		};
 	}
 
 	onPressUseNow = () => {
 		this.setState({
-      		showModal: true,
-    	});
+			showModal: true,
+		});
 	}
 
-  	removeModal = () => {
-    	this.setState({
-      		showModal: false,
-    	});
-  	}
+	removeModal = () => {
+		this.setState({
+			showModal: false,
+		});
+	}
 
 	render() {
-	    var modal;
-	    if (this.state.showModal) {
-	      	modal = (<SimpleModal message='Hold near reader to pay!' removeModal={this.removeModal} />);
-	    } else {
-	      	modal = null;
-	    }
+		var modal;
+		if (this.state.showModal) {
+			modal = (<SimpleModal message='Hold near reader to pay!' removeModal={this.removeModal} />);
+		} else {
+			modal = null;
+		}
 		console.log('rendering jar page');
 		return (
 			<View style={styles.container}>
@@ -95,7 +95,7 @@ class JarPage extends Component {
 				<TouchableOpacity onPress={() => this.onPressUseNow()} style={styles.useNowButton}>
 					<Text style={styles.buttonText}>Use</Text>
 				</TouchableOpacity>
-	    		{modal}
+				{modal}
 			</View>
 		);
 	}

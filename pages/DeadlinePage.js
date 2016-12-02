@@ -18,89 +18,88 @@ import DurationPage from '../pages/DurationPage'
 import Calendar from 'react-native-calendar'
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    marginTop: 78
-  },
+  	container: {
+	    flex: 1,
+	    flexDirection: 'column',
+	    justifyContent: 'flex-start',
+	    marginTop: 78
+  	},
 
-  textPrompt: {
-  	color: 'black',
-  	fontSize: 30,
-  	fontWeight: '500',
-    fontFamily: 'Avenir',
-  	paddingLeft: 40,
-  },
+  	textPrompt: {
+	  	color: 'black',
+	  	fontSize: 30,
+	  	fontWeight: '500',
+	    fontFamily: 'Avenir',
+	  	paddingLeft: 40,
+  	},
 
-  textInput: {
-  	height: 30,
-  	width: 300,
-  	fontSize: 20,
-    fontFamily: 'Avenir',
-  },
+  	textInput: {
+	  	height: 30,
+	  	width: 300,
+	  	fontSize: 20,
+	    fontFamily: 'Avenir',
+  	},
 
-  nextButton: {
-    backgroundColor: '#319bce',
-    justifyContent: 'center',
-    top: 50,
-    borderRadius: 10,
-    minHeight: 50,
-    minWidth: 50,
-    height: 40,
-    width: 100
-  },
+  	nextButton: {
+	    backgroundColor: '#319bce',
+	    justifyContent: 'center',
+	    top: 50,
+	    borderRadius: 10,
+	    minHeight: 50,
+	    minWidth: 50,
+	    height: 40,
+	    width: 100
+  	},
 
-  calendarContainer: {
-  	borderBottomColor: '#d3d3d3',
-  	borderBottomWidth: 1,
-  	marginLeft: 15,
-  	marginRight: 15
-  },
+  	calendarContainer: {
+	  	borderBottomColor: '#d3d3d3',
+	  	borderBottomWidth: 1,
+	  	marginLeft: 15,
+	  	marginRight: 15
+  	},
 
-  calendar: {
-  	marginTop: 0
-  },
+  	calendar: {
+  		marginTop: 0
+  	},
 
-  buttonContainer: {
-  	flex: 1,
-  	flexDirection: 'row',
-  	marginTop: 0,
-  	paddingLeft: 40
-  },
+  	buttonContainer: {
+	  	flex: 1,
+	  	flexDirection: 'row',
+	  	marginTop: 0,
+	  	paddingLeft: 40
+  	},
 
-  backButton: {
-    backgroundColor: '#319bce',
-    justifyContent: 'center',
-    borderRadius: 10,
-    minHeight: 50,
-    minWidth: 50,
-    height: 40,
-    width: 100,
-    alignSelf: 'flex-start'
-  },
+  	backButton: {
+	    backgroundColor: '#319bce',
+	    justifyContent: 'center',
+	    borderRadius: 10,
+	    minHeight: 50,
+	    minWidth: 50,
+	    height: 40,
+	    width: 100,
+	    alignSelf: 'flex-start'
+  	},
 
-  nextButton: {
-    backgroundColor: '#319bce',
-    justifyContent: 'center',
-    marginBottom: 0,
-    borderRadius: 10,
-    minHeight: 50,
-    minWidth: 50,
-    height: 40,
-    width: 100,
-    marginLeft: 95,
-    alignSelf: 'flex-start'
-  },
+  	nextButton: {
+	    backgroundColor: '#319bce',
+	    justifyContent: 'center',
+	    marginBottom: 0,
+	    borderRadius: 10,
+	    minHeight: 50,
+	    minWidth: 50,
+	    height: 40,
+	    width: 100,
+	    marginLeft: 95,
+	    alignSelf: 'flex-start'
+  	},
 
-  buttonText: {
-  	color: 'white',
-  	alignSelf: 'center',
-  	fontSize: 25,
-  	fontFamily: 'Avenir',
-  	marginTop: 7,
-  }
-
+  	buttonText: {
+	  	color: 'white',
+	  	alignSelf: 'center',
+	  	fontSize: 25,
+	  	fontFamily: 'Avenir',
+	  	marginTop: 7,
+  	}
 });
 
 const calendarStyle = {
@@ -112,7 +111,7 @@ const calendarStyle = {
   	},
 	dayButtonFiller: {
 		width:(Dimensions.get('window').width-30) / 7
-	}
+	},
 }
 
 
@@ -200,26 +199,19 @@ class DeadlinePage extends Component {
         		/>
 
 				<View style={styles.buttonContainer}>
-
 					<TouchableOpacity style={styles.backButton} onPress={() => this.onPressBack()}>
 						<Text style={styles.buttonText}>Back</Text>
 					</TouchableOpacity>
 
-
 					<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
 						<Text style={styles.buttonText}>Next</Text>
 					</TouchableOpacity>
-
 				</View>
 
-				
 			</View>
-
 		);
 	}
 }
 
 
 export default DeadlinePage;
-
-

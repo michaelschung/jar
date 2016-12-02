@@ -71,13 +71,12 @@ class TitleBodyButtonsModal extends Component {
 
 	renderButtons = () => {
 		var buttons = this.props.buttonViews.map((render, index) => {
-								return (
-									<View key={index} style={styles.buttonContainer}>
-										{render()}
-									</View>
-								);
-							});
-
+			return (
+				<View key={index} style={styles.buttonContainer}>
+					{render()}
+				</View>
+			);
+		});
 		return (
 			<View style={styles.modalButtonsContainer}>
 				{
@@ -95,7 +94,7 @@ class TitleBodyButtonsModal extends Component {
 					transparent={true}
 					visible={this.state.modalVisible}
 					supportedOrientations={['portrait']}
-					>
+				>
 					<TouchableOpacity style={styles.modalContainer} onPress={this._removeModal} >
 						<View style={styles.innerModalContainer}>
 							{/* Title */}
