@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   /* Styling for details */
   taskName: {
 		fontSize: 24,
+    	fontFamily: 'Avenir',
   },
   detailsContainer: {
 		marginTop: 20,
@@ -52,12 +53,15 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
   },
   taskNameText: {
-		fontSize: 24,
+		fontSize: 28,
 		fontWeight: '500',
+    	fontFamily: 'Avenir',
   },
   label: {
 		textAlign: 'left',
 		fontSize: 20,
+		fontWeight: '500',
+    	fontFamily: 'Avenir',
   },
   dueAndTimeContainer: {
 		flexDirection: 'column',
@@ -72,11 +76,15 @@ const styles = StyleSheet.create({
 		color: '#319bce',
 		textAlign: 'right',
 		fontSize: 20,
+		fontWeight: '400',
+    	fontFamily: 'Avenir',
   },
   dueInTextUrgent: {
 		color: 'red',
 		textAlign: 'right',
 		fontSize: 20,
+		fontWeight: '400',
+    	fontFamily: 'Avenir',
   },
   timeToCompleteTextContainer: {
 		justifyContent: 'space-between',
@@ -87,6 +95,8 @@ const styles = StyleSheet.create({
   timeToCompleteText: {
 		textAlign: 'right',
 		fontSize: 20,
+		fontWeight: '400',
+    	fontFamily: 'Avenir',
   },
   taskOwnerImageContainer: {
   	flexDirection: 'column',
@@ -95,9 +105,9 @@ const styles = StyleSheet.create({
   },
   ownerImage: {
 		marginRight: 20,
-		height: 100,
-		width: 100,
-		borderRadius: 50,
+		height: 120,
+		width: 120,
+		borderRadius: 60,
   },
   transferImage: {
   	marginRight: 20,
@@ -166,6 +176,7 @@ const styles = StyleSheet.create({
 		color: 'white',
 		alignSelf: 'center',
 		fontSize: 24,
+    	fontFamily: 'Avenir',
   },
 
   /* Styling for carousel */
@@ -182,7 +193,8 @@ const styles = StyleSheet.create({
   carouselHeaderText: {
 		textAlign: 'left',
 		fontSize: 16,
-		fontWeight: '900',
+		fontWeight: '600',
+    	fontFamily: 'Avenir',
   },
   carouselCancel: {
 		justifyContent: 'center',
@@ -195,6 +207,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontSize: 20,
 		fontWeight: 'bold',
+    	fontFamily: 'Avenir',
   },
   carouselScrollView: {
 		height: 50,
@@ -211,7 +224,10 @@ const styles = StyleSheet.create({
 		borderRadius: 30,
 		marginBottom: 5,
   },
-  userName: {},
+  userName: {
+  		fontWeight: '500',
+  		fontFamily: 'Avenir',
+  },
 
 });
 
@@ -471,7 +487,7 @@ class TaskDetailsPage extends Component {
 		if (this.state.showModal) {
 			/* Modal properties */
 			var title, confirmText, confirmCallback, cancelText, cancelCallback;
-			confirmText = 'Ok';
+			confirmText = 'Confirm';
 			cancelText = 'Cancel';
 			cancelCallback = this._onDismissModal;
 			if (this.state.showConfirmTransferModal) {

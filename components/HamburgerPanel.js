@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
 	name: {
 		color: 'white',
 		fontSize: 20,
+    	fontFamily: 'Avenir',
 		position: 'absolute',
 		left: 160,
 		top: 70,
@@ -59,6 +60,7 @@ const styles = StyleSheet.create({
 		color: '#319bce',
 		fontSize: 20,
 		fontWeight: '300',
+    	fontFamily: 'Avenir',
 		position: 'absolute',
 		left: 85,
 		top: 19,

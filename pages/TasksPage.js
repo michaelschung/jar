@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
   },
   taskName: {
     marginLeft: 12,
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: '500',
     fontFamily: 'Avenir',
   },
   photo: {
@@ -79,12 +80,16 @@ const styles = StyleSheet.create({
   dueInText: {
     textAlign: 'right',
     flex: 1,
+    fontSize: 16,
+    fontWeight: '400',
     fontFamily: 'Avenir',
   },
   dueInTextUrgent: {
     textAlign: 'right',
     flex: 1,
     color: 'red',
+    fontSize: 16,
+    fontWeight: '400',
     fontFamily: 'Avenir',
   },
   separator: {

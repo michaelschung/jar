@@ -28,13 +28,17 @@ const styles = StyleSheet.create({
   textPrompt: {
   	color: 'black',
   	fontSize: 30,
-  	marginBottom: 20
+  	fontWeight: '500',
+    fontFamily: 'Avenir',
+  	marginBottom: 20,
   },
 
   textInput: {
   	height: 30,
   	width: 300,
   	fontSize: 20,
+  	fontWeight: '400',
+    fontFamily: 'Avenir',
   },
 
   buttonContainer: {
@@ -74,7 +78,9 @@ const styles = StyleSheet.create({
   	color: 'white',
   	alignSelf: 'center',
   	fontSize: 25,
-  	marginTop: 7
+  	marginTop: 7,
+  	fontWeight: '500',
+    fontFamily: 'Avenir',
   }
 
 });

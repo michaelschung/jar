@@ -32,20 +32,23 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     paddingTop: 74,
-    marginTop: 80
+    marginTop: 80,
   },
 
   textPrompt: {
   	color: 'black',
   	fontSize: 30,
   	marginBottom: 20,
-  	marginLeft: 40
+  	marginLeft: 40,
+  	fontWeight: 'bold',
+    fontFamily: 'Avenir',
   },
 
   textInput: {
   	height: 30,
   	width: 300,
   	fontSize: 20,
+    fontFamily: 'Avenir',
   },
 
   nextButton: {
@@ -57,7 +60,7 @@ const styles = StyleSheet.create({
     minHeight: 50,
     minWidth: 50,
     height: 40,
-    width: 100
+    width: 100,
   },
 
   buttonText: {
@@ -71,7 +74,7 @@ const styles = StyleSheet.create({
   },
 
   minutePicker: {
-
+    fontFamily: 'Avenir',
   }
 
 });

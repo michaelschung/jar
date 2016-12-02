@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
   	color: 'black',
   	fontSize: 30,
   	fontWeight: 'bold',
+    fontFamily: 'Avenir',
   	marginBottom: 20
   },
 });

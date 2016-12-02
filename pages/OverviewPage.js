@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   	color: 'black',
   	fontSize: 30,
   	fontWeight: 'bold',
+    fontFamily: 'Avenir',
   	marginBottom: 20
   },
 
@@ -53,10 +54,12 @@ const styles = StyleSheet.create({
   	color: 'white',
   	alignSelf: 'center',
   	fontSize: 25,
+    fontFamily: 'Avenir',
   },
 
   taskName: {
 	fontSize: 24,
+    fontFamily: 'Avenir',
   },
   detailsContainer: {
 	marginTop: 20,
@@ -76,6 +79,7 @@ const styles = StyleSheet.create({
   taskNameText: {
 	fontSize: 24,
 	fontWeight: '500',
+    fontFamily: 'Avenir',
   },
   label: {
 	textAlign: 'left',
@@ -94,11 +98,13 @@ const styles = StyleSheet.create({
 	color: '#319bce',
 	textAlign: 'right',
 	fontSize: 20,
+    fontFamily: 'Avenir',
   },
   dueInTextUrgent: {
 	color: 'red',
 	textAlign: 'right',
 	fontSize: 20,
+    fontFamily: 'Avenir',
   },
   timeToCompleteTextContainer: {
 	justifyContent: 'space-between',
@@ -109,6 +115,7 @@ const styles = StyleSheet.create({
   timeToCompleteText: {
 	textAlign: 'right',
 	fontSize: 20,
+    fontFamily: 'Avenir',
   },
   taskOwnerImageContainer: {
 	flex: 1,
@@ -161,6 +168,7 @@ const styles = StyleSheet.create({
 	color: 'white',
 	alignSelf: 'center',
 	fontSize: 24,
+    fontFamily: 'Avenir',
   },
 
   /* Styling for carousel */
@@ -178,6 +186,7 @@ const styles = StyleSheet.create({
 	textAlign: 'left',
 	fontSize: 16,
 	fontWeight: '900',
+    fontFamily: 'Avenir',
   },
   carouselCancel: {
 	justifyContent: 'center',
@@ -194,6 +203,7 @@ const styles = StyleSheet.create({
 	textAlign: 'center',
 	fontSize: 20,
 	fontWeight: 'bold',
+    fontFamily: 'Avenir',
   },
   carouselScrollView: {
 	height: 50,
