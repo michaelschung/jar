@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
 		fontSize: 24,
   },
   detailsContainer: {
+  	minHeight: 50,
 		marginTop: 20,
 		flexDirection: 'row',
 		flex: 1,
