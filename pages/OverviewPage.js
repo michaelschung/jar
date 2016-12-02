@@ -244,16 +244,35 @@ class OverviewPage extends Component {
 	onPressAssign() {
 
 		var members = [
-			{name: 'Michael', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg'},
-			{name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'},
-			{name: 'David', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG'},
-			{name: 'Tessera', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Tessera.jpg'}
+			{
+				firstName: 'Michael',
+				lastName: 'Chung',
+				isMe: true,
+				picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg',
+			},
+			{
+				firstName: 'Evan',
+				lastName: 'Lin',
+				isMe: false,
+				picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg',
+			},
+			{
+				firstName: 'Tessera',
+				lastName: 'Chin',
+				isMe: false,
+				picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Tessera.jpg',
+			},
+			{
+				firstName: 'David',
+				lastName: 'Morales',
+				isMe: false,
+				picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG',
+			},
 		]
 
 		var numMembers = members.length;
 
 		this.props.currentTask.owner = members[Math.floor(Math.random() * numMembers)];
-		this.props.currentTask.isMyTask = this.props.currentTask.owner.name === 'Michael';
 		this.props.addTask(this.props.currentTask);
 
 		this.props.navigator.popToTop(0);
