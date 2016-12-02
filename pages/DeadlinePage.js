@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginTop: 80
+    marginTop: 78
   },
 
   textPrompt: {
@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
   	fontSize: 30,
   	fontWeight: '500',
     fontFamily: 'Avenir',
-  	marginBottom: 20,
   	paddingLeft: 40,
   },
 
@@ -45,7 +44,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#319bce',
     justifyContent: 'center',
     top: 50,
-    marginBottom: 0,
     borderRadius: 10,
     minHeight: 50,
     minWidth: 50,
@@ -68,14 +66,12 @@ const styles = StyleSheet.create({
   	flex: 1,
   	flexDirection: 'row',
   	marginTop: 0,
-  	paddingBottom: 4,
   	paddingLeft: 40
   },
 
   backButton: {
     backgroundColor: '#319bce',
     justifyContent: 'center',
-    marginBottom: 0,
     borderRadius: 10,
     minHeight: 50,
     minWidth: 50,
