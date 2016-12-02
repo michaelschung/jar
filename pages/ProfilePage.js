@@ -12,30 +12,54 @@ import {
 } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    paddingTop: 74,
-    paddingLeft: 40,
-    marginTop: 80
-  },
-  textPrompt: {
-  	color: 'black',
-  	fontSize: 30,
-  	fontWeight: 'bold',
-    fontFamily: 'Avenir',
-  	marginBottom: 20
-  },
+  	container: {
+		flex: 1,
+		flexDirection: 'column',
+		alignItems: 'center',
+  	},
+  	textPrompt: {
+		color: 'black',
+		fontSize: 30,
+		fontWeight: 'bold',
+		fontFamily: 'Avenir',
+		marginBottom: 20
+  	},
+  	profilePic: {
+  		position: 'relative',
+  		top: 100,
+		width: 150,
+		height: 150,
+		borderRadius: 75,
+  	},
+  	name: {
+  		position: 'relative',
+  		top: 120,
+  		fontSize: 22,
+  		fontFamily: 'Avenir',
+  		fontWeight: '500',
+  		color: '#319bce',
+  	},
 });
 
 class ProfilePage extends Component {
+	constructor(props) {
+		super(props);
+	}
+
+	getUser = () => {
+		return this.props.house.filter(this.checkTaskIsMine);
+	}
+
+	checkTaskIsMine = (value) => {
+		return value.isMe;
+	}
+
 	render() {
 		console.log('rendering MyHousePage');
 		return (
 			<View style={styles.container}>
-				<Text style={styles.textPrompt}>Profile</Text>
+				<Image style={styles.profilePic} source={{ uri: this.getUser()[0].picURL }} />
+				<Text style={styles.name}>{this.getUser()[0].firstName} {this.getUser()[0].lastName}</Text>
 			</View>
 		);
 	}
