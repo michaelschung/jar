@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     	fontFamily: 'Avenir',
   },
   detailsContainer: {
+  	minHeight: 50,
 		marginTop: 20,
 		flexDirection: 'row',
 		flex: 1,
