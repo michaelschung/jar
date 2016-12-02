@@ -43,11 +43,12 @@ const styles = StyleSheet.create({
 	},
 	name: {
 		color: 'white',
-		fontSize: 20,
+		fontSize: 25,
+		fontWeight: '500',
     	fontFamily: 'Avenir',
 		position: 'absolute',
 		left: 160,
-		top: 70,
+		top: 60,
 	},
 	list: {
 		zIndex: -100,
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
 	optionTitle: {
 		color: '#319bce',
 		fontSize: 20,
-		fontWeight: '300',
+		fontWeight: '500',
     	fontFamily: 'Avenir',
 		position: 'absolute',
 		left: 85,
