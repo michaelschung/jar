@@ -10,10 +10,12 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     View,
+    Dimensions,
 } from 'react-native';
 
 import NotesInput from '../components/NotesInput'
 
+const window = Dimensions.get('window');
 const dismissKeyboard = require('dismissKeyboard');
 
 const styles = StyleSheet.create({
@@ -41,12 +43,13 @@ const styles = StyleSheet.create({
     assignButton: {
 		backgroundColor: '#319bce',
 		justifyContent: 'center',
-		marginBottom: 0,
+		marginBottom: 30,
 		borderRadius: 10,
 		minHeight: 50,
 		minWidth: 50,
 		height: 80,
-		width: 250
+		width: 250,
+		left: window.width/2 - 125,
     },
 
     buttonText: {
@@ -138,6 +141,8 @@ const styles = StyleSheet.create({
 
     /* Styling for separator */
     separator: {
+    	position: 'relative',
+    	top: -50,
 		borderBottomWidth: 2,
 		borderBottomColor: '#C7C7CD',
 		marginLeft: 20,
@@ -291,6 +296,7 @@ class OverviewPage extends Component {
 
 					<View style={styles.notesContainer}>
 						<Text style={styles.label}>Notes:</Text>
+						{/*
 						<TextInput
 							style={styles.notes}
 							autoCorrect={true}
@@ -300,6 +306,10 @@ class OverviewPage extends Component {
 							placeholder={'Add a note...'}
 							value={this.state.text}
 						/>
+						*/}
+						<NotesInput
+							task={this.props.currentTask}
+						/>
 					</View>
 
 					<View style={styles.separator}></View>
@@ -307,8 +317,6 @@ class OverviewPage extends Component {
 					<TouchableOpacity style={styles.assignButton} onPress={() => this.onPressAssign()}>
 						<Text style={styles.buttonText}>Assign Task</Text>
 					</TouchableOpacity>
-
-
 				</View>
 			</TouchableWithoutFeedback>
 		);
