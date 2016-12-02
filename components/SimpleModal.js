@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		marginBottom: 10,
 		marginTop: 10,
+		fontFamily:'Avenir',
 	},
 	modalButton: {
 		justifyContent: 'center',
@@ -40,7 +41,8 @@ const styles = StyleSheet.create({
 	buttonText: {
 		color: '#fff',
 		fontSize: 18,
-		fontWeight: '500',    
+		fontWeight: '500',  
+		fontFamily:'Avenir',  
 	},
 });
 
