@@ -22,25 +22,29 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingTop: 85,
     paddingLeft: 40,
-    marginTop: 80
+    marginTop: 80,
   },
 
   textPrompt: {
   	color: 'black',
   	fontSize: 30,
-  	marginBottom: 20
+  	fontWeight: '500',
+    fontFamily: 'Avenir',
+  	marginBottom: 20,
   },
 
   textInput: {
   	height: 30,
   	width: 300,
   	fontSize: 20,
+  	fontWeight: '400',
+    fontFamily: 'Avenir',
   },
 
   buttonContainer: {
   	flex: 1,
   	flexDirection: 'row',
-  	marginTop: 290
+  	marginTop: 290,
   },
 
   backButton: {
@@ -74,7 +78,9 @@ const styles = StyleSheet.create({
   	color: 'white',
   	alignSelf: 'center',
   	fontSize: 25,
-  	marginTop: 7
+  	marginTop: 7,
+  	fontWeight: '500',
+    fontFamily: 'Avenir',
   }
 
 });

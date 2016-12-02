@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react'
+import SimpleModal from '../components/SimpleModal'
 import {
 	Alert,
 	Image,
@@ -27,6 +28,7 @@ const styles = StyleSheet.create({
   	color: '#319bce',
   	fontSize: 55,
   	fontWeight: 'bold',
+    fontFamily: 'Avenir',
   	marginBottom: 20
   },
 
@@ -52,6 +54,7 @@ const styles = StyleSheet.create({
   	color: 'white',
   	alignSelf: 'center',
   	fontSize: 35,
+    fontFamily: 'Avenir',
   }
 
 });
@@ -60,14 +63,31 @@ const styles = StyleSheet.create({
 class JarPage extends Component {
 	constructor(props) {
 	    super(props);
-	    this.state = {renderPlaceholderOnly: true};
+	    this.state = {
+        renderPlaceholderOnly: true,
+        showModal: false
+      };
 	}
 
 	onPressUseNow = () => {
-		Alert.alert("Hold near reader to pay!");
+		this.setState({
+      showModal: true,
+    });
 	}
 
+  removeModal = () => {
+    this.setState({
+      showModal: false,
+    });
+  }
+
 	render() {
+    var modal;
+    if (this.state.showModal) {
+      modal = (<SimpleModal message='Hold near reader to pay!' removeModal={this.removeModal} />);
+    } else {
+      modal = null;
+    }
 		console.log('rendering jar page');
 		return (
 			<View style={styles.container}>
@@ -77,6 +97,7 @@ class JarPage extends Component {
 				<TouchableOpacity onPress={() => this.onPressUseNow()} style={styles.useNowButton}>
 					<Text style={styles.buttonText}>Use</Text>
 				</TouchableOpacity>
+        {modal}
 			</View>
 		);
 	}

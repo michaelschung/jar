@@ -52,39 +52,44 @@ const styles = StyleSheet.create({
   },
   taskName: {
     marginLeft: 12,
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: '500',
     fontFamily: 'Avenir',
   },
   photo: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
+    height: 45,
+    width: 45,
+    borderRadius: 22.5,
   },
   transferPhoto: {
-  	height: 40,
-  	width: 40,
-  	borderRadius: 20,
+  	height: 45,
+  	width: 45,
+  	borderRadius: 22.5,
   	opacity: .5,
   },
   checkBox: {
-  	height: 40,
-  	width: 40,
-  	borderRadius: 20,
+  	height: 45,
+  	width: 45,
+  	borderRadius: 22.5,
   	backgroundColor: '#319bce',
   },
   checkBoxIcon: {
-  	height: 40,
-  	width: 40,
+  	height: 45,
+  	width: 45,
   },
   dueInText: {
     textAlign: 'right',
     flex: 1,
+    fontSize: 16,
+    fontWeight: '400',
     fontFamily: 'Avenir',
   },
   dueInTextUrgent: {
     textAlign: 'right',
     flex: 1,
     color: 'red',
+    fontSize: 16,
+    fontWeight: '400',
     fontFamily: 'Avenir',
   },
   separator: {
@@ -158,6 +163,13 @@ class TasksPage extends Component {
 				due:new Date().setDate(today.getDate() + 4), 
 				timeToComplete: '30 min' 
 			},
+			{
+				name:'Wash dishes',
+				owner: props.house[2],
+				completed:false,
+				due:new Date().setMinutes(today.getMinutes() + 12),
+				timeToComplete: '15 min,'
+			}
 		];
 
 		this.taskList.sort((value1, value2) => {
