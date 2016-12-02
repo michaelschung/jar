@@ -28,9 +28,6 @@ var moment = require('moment');
 
 var today = new Date();
 
-
-
-
 const styles = StyleSheet.create({
   container: {
   	flex: 1,

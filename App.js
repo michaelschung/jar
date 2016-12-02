@@ -80,15 +80,11 @@ class Button extends Component {
 class App extends Component {
 	constructor(props) {
 		super(props);
+	}
 
-		this.state = {
-			firstName: 'Michael',
-			lastName: 'Chung',
-			picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg',
-			isMe: true,
-			isOpen: false,
-			selectedItem: 'Contacts',
-		};
+	state = {
+		isOpen: false,
+		selectedItem: 'My House',
 	}
 
 	/* What to do if the Jar icon is pressed */
@@ -127,13 +123,13 @@ class App extends Component {
 		return (
 			<HamburgerPanel
 				onItemSelected={this.onMenuItemSelected}
-				user={this.state}
 				navigator={this.refs.nav}
 				isOpen={this.state.isOpen}
 				// Make sure that HamburgerPanel has reference to toggle() method
 				// (must be passed as anonymous function to avoid automatic function call)
 				toggle={() => this.toggle()} // OR:
 				// updateMenuState={(isOpen) => this.updateMenuState()}
+				jarPressed={() => this.jarPressed()}
 				house={house}
 			/>
 		)
@@ -150,8 +146,9 @@ class App extends Component {
 				initialRoute={{
 					component: TasksPage,
 					passProps: {house: house,},
-					title: 'Tasks Page',
-					titleImage: require('./assets/jar_title.png'),
+					title: 'Home',
+					// uncomment the next line for the Jar title logo
+					//titleImage: require('./assets/jar_title.png'),
 					rightButtonIcon: require('./assets/jar_transparent_resized.png'),
 					leftButtonIcon: require('./assets/hamburger_cropped.png'),
 					onRightButtonPress: () => this.jarPressed(),
