@@ -174,12 +174,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
   },
   carouselCancelButton: {
-		alignItems: 'center',
-		backgroundColor: '#D8D8D8',
-		height: 30,
-		width: 30,
-		borderWidth: 1,
-		borderRadius: 60,
+		height: 17,
+		width: 17,
   },
   cancelText: {
 		textAlign: 'center',
@@ -437,9 +433,7 @@ class TaskDetailsPage extends Component {
 		  <View style={styles.carouselHeader}>
 			<Text style={styles.carouselHeaderText}>Transfer to...</Text>
 			<TouchableOpacity style={styles.carouselCancel} onPress={this._onPressCancelTransfer}>
-			  <View style={styles.carouselCancelButton}>
-				<Text style={styles.cancelText}>x</Text>
-			  </View>
+			  <Image style={styles.carouselCancelButton} source={require('../assets/x.png')}/>
 			</TouchableOpacity>
 		  </View>
 		  <TransferToCarousel showModal={this._onPressTransferIcon} house={this.props.house}></TransferToCarousel>

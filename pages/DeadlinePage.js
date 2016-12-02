@@ -79,7 +79,7 @@ class DeadlinePage extends Component {
 	}
 
 	render() {
-		console.log('rendering jar page');
+		console.log('rendering Deadline page');
 		return (
 			<View style={styles.container}>
 
@@ -92,7 +92,7 @@ class DeadlinePage extends Component {
 						customStyle={{dayButton:{width:(Dimensions.get('window').width-20) / 7},
 										dayButtonFiller:{width:(Dimensions.get('window').width-20) / 7}}} // Customize any pre-defined styles
 						weekStart={0} // Day on which week starts 0 - Sunday, 1 - Monday, 2 - Tuesday, etc, Default: 1
-						/>
+					/>
 				</View>
 
 				<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>

@@ -13,7 +13,7 @@ import {
 
 import JarPage from '../pages/JarPage.js'
 import CreatePage from '../pages/CreatePage'
-import MyHousePage from '../pages/MyHousePage'
+import TasksPage from '../pages/TasksPage'
 import ProfilePage from '../pages/ProfilePage'
 import BankAccountPage from '../pages/BankAccountPage'
 import SettingsPage from '../pages/SettingsPage'
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
 
 var options = [
 	{
-		name: 'My House',
+		name: 'Home',
 		image: require('../assets/myhouse_icon.png'),
 	},
 	{
@@ -122,8 +122,8 @@ class HamburgerPanel extends Component {
 		var nextComponent;
 
 		switch(dataName) {
-			case 'My House':
-				nextComponent = MyHousePage;
+			case 'Home':
+				nextComponent = TasksPage;
 				break;
 			case 'Profile':
 				nextComponent = ProfilePage;
@@ -143,16 +143,14 @@ class HamburgerPanel extends Component {
 		return {
 			title: dataName,
 			component: nextComponent,
+			passProps: {
+				house: this.props.house,
+			},
+			leftButtonIcon: require('../assets/hamburger_cropped.png'),
+			rightButtonIcon: require('../assets/jar_transparent_resized.png'),
+			onLeftButtonPress: () => this.props.toggle(),
+			onRightButtonPress: () => this.props.navigator.push({title: 'Jar', component: JarPage}),
 		};
-	}
-
-	MyHouse = () => {
-		return (
-			<MyHousePage
-				user={this.props.user}
-
-			/>
-		)
 	}
 
 	/* When an option is pressed, navigate to the proper page */
