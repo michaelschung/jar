@@ -11,6 +11,7 @@ import {
 	View,
 } from 'react-native';
 
+
 import DurationPage from '../pages/DurationPage'
 
 const styles = StyleSheet.create({
@@ -72,7 +73,12 @@ class DeadlinePage extends Component {
 		this.props.navigator.push({
 			title: 'Duration',
 			component: DurationPage,
-			passProps: {addTask: this.props.addTask, currentTask: this.props.currentTask}
+			passProps: {
+				addTask: this.props.addTask,
+				currentTask: this.props.currentTask,
+				date: new Date(),
+	    		timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60
+	    	}
 		})
 	}
 
@@ -89,6 +95,7 @@ class DeadlinePage extends Component {
 				    	onChangeText={(text) => this.setState({text})}
 				    />
 				</View>
+				<CalendarPicker></CalendarPicker>
 
 				<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
 					<Text style={styles.buttonText}>Next</Text>

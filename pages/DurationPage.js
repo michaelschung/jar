@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import {
 	Alert,
 	Image,
+	DatePickerIOS,
 	StyleSheet,
 	Text,
 	TextInput,
@@ -54,15 +55,36 @@ const styles = StyleSheet.create({
   	color: 'white',
   	alignSelf: 'center',
   	fontSize: 25,
+  },
+
+  datePicker: {
+  	height: 40
   }
 
 });
+
+class Heading extends React.Component {
+  render() {
+    return (
+      <View style={styles.headingContainer}>
+        <Text style={styles.heading}>
+          {this.props.label}
+        </Text>
+      </View>
+    );
+  }
+}
 
 
 class DurationPage extends Component {
 	constructor(props) {
 	    super(props);
-	    this.state = {renderPlaceholderOnly: true};
+	    this.state = {
+	    	renderPlaceholderOnly: true,
+	    	duration: 0,
+	    	date: this.props.date,
+    		timeZoneOffsetInHours: this.props.timeZoneOffsetInHours
+	   	};
 	}
 
 	onPressNext() {
@@ -76,11 +98,14 @@ class DurationPage extends Component {
 
 	}
 
+	onDurationChange = (duration) => {
+    	this.setState({duration: duration});
+  	};
+
 	render() {
 		console.log('rendering jar page');
 		return (
 			<View style={styles.container}>
-
 				<Text style={styles.textPrompt}>How long will it take?</Text>
 				<View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
 					<TextInput
@@ -89,6 +114,17 @@ class DurationPage extends Component {
 				    	onChangeText={(text) => this.setState({text})}
 				    />
 				</View>
+
+				<Heading label="Date picker" />
+
+		        <DatePickerIOS
+		        	style={styles.datePicker}
+		        	date={this.state.date}
+		        	mode="time"
+		        	timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
+		        	onDateChange={this.onDurationChange}
+		        	minuteInterval={10}
+		        />
 
 				<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
 					<Text style={styles.buttonText}>Next</Text>

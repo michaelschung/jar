@@ -175,7 +175,10 @@ class TasksPage extends Component {
 		this.props.navigator.push({
 			title: 'Task Name',
 			component: CreatePage,
-			passProps: {addTask: this.addTask, currentTask: {}}
+			passProps: {
+				addTask: this.addTask,
+				currentTask: {}
+			}
 		})
 	}
 
