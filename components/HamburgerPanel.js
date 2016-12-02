@@ -177,7 +177,7 @@ class HamburgerPanel extends Component {
 	render() {
 		console.log('rendering HamburgerPanel');
 		return (
-			<ScrollView scrollsToTop={false} style={styles.menu}>
+			<ScrollView scrollEnabled={false} scrollsToTop={false} style={styles.menu}>
 				<View style={styles.avatarContainer}>
 					<Image
 						style={styles.avatar}
@@ -190,6 +190,7 @@ class HamburgerPanel extends Component {
 
 				<View style={styles.separator} />
 				<ListView
+					scrollEnabled={false}
 					style={styles.list}
 					dataSource={this.state.dataSource}
 					renderRow={this.renderRow}

@@ -232,8 +232,8 @@ class TasksPage extends Component {
 	}
 
 	render() {
-		// var button1 = () => { return (<Button text='Deny' color='red' size='medium' onPress={()=>{console.log('deny pressed')}}/>) }
-		// var button2 = () => { return (<Button text='Accept' color='green' size='medium' onPress={()=>{console.log('accept pressed')}}/>) }
+		// var button1 = () => { return (<Button text='Deny' color='#C55254' size='medium' onPress={()=>{console.log('deny pressed')}}/>) }
+		// var button2 = () => { return (<Button text='Accept' color='#6BAC4E' size='medium' onPress={()=>{console.log('accept pressed')}}/>) }
 		// var task = {
 		// 	name:'Call the landlord', 
 		// 	owner: {name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'}, 
