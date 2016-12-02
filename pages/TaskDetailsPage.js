@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
   },
   taskOwnerImageContainer: {
+  	flexDirection: 'column',
 		flex: 1,
 		alignItems: 'flex-end',
   },
@@ -105,6 +106,19 @@ const styles = StyleSheet.create({
   	borderRadius: 50,
   	opacity: .5,
   },
+  taskStatusContainer: {
+  	height: 100,
+  	width: 100,
+  	marginTop: 5,
+  	marginRight: 6,
+  },
+  status: {
+  	color: '#f0ad4e',
+  	fontSize: 18,
+  	fontWeight: '500',
+  },
+
+
   /* Styling for notes */
   notesContainer: {
 		marginTop: -20,
@@ -261,6 +275,7 @@ class TaskDetailsPage extends Component {
 		  showTransferSentMessage: false,
 		  showTaskCompletedMessage: false,
 		  transferSent: this.props.task.isAwaitingTransfer,
+		  disableComplete: this.props.task.isAwaitingTransfer,
 		  taskCompleted: this.props.task.completed,
 		};
   }
@@ -506,6 +521,13 @@ class TaskDetailsPage extends Component {
 						  <Image 
 						  	source={{ uri: this.props.task.isAwaitingTransfer ? this.props.task.isAwaitingTransfer.picURL : this.props.task.owner.picURL }} 
 						  	style={this.props.task.isAwaitingTransfer ? styles.transferImage : styles.ownerImage} />
+						  <View style={styles.taskStatusContainer}> 
+						  	{
+						  		this.props.task.isAwaitingTransfer ?
+						  			(<Text style={styles.status}>Awaiting Transfer</Text>) :
+						  			null
+						  	}
+						  </View>
 						</View>
 					</View>
 
