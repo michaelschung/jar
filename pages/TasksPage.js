@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   segmentedControl: {
   	margin: 12, 
-  	backgroundColor: 'white'
+  	backgroundColor: 'white',
   },
   list: {
   	marginTop: -64, 
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
   taskName: {
     marginLeft: 12,
     fontSize: 16,
+    fontFamily: 'Avenir',
   },
   photo: {
     height: 40,
@@ -78,11 +79,13 @@ const styles = StyleSheet.create({
   dueInText: {
     textAlign: 'right',
     flex: 1,
+    fontFamily: 'Avenir',
   },
   dueInTextUrgent: {
     textAlign: 'right',
     flex: 1,
     color: 'red',
+    fontFamily: 'Avenir',
   },
   separator: {
   	flex: 1,
@@ -96,8 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#8E8E8E',
     padding: .5
   },
-  addButton: {
-    backgroundColor: '#319bce',
+  button: {
     marginBottom: 20,
     marginRight: 20,
     position: 'absolute',
@@ -105,17 +107,11 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     minHeight: 50,
     minWidth: 50,
-    width: 70,
-    height: 70,
-    bottom: 10,
-    right: 10,
+    width: 80,
+    height: 80,
+    bottom: 20,
+    right: 20,
   },
-  buttonText: {
-  	color: 'white',
-  	alignSelf: 'center',
-  	marginBottom: 5,
-  	fontSize: 50
-  }
 });
 
 class TasksPage extends Component {
@@ -327,8 +323,8 @@ class TasksPage extends Component {
 				  	dataSource={this.state.dataSource}
 				  	renderRow={this.renderRow}  
 				  	renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
-				<TouchableOpacity style={styles.addButton} onPress={() => this.onCreatePressed() }>
-					<Text style={styles.buttonText}>+</Text>
+				<TouchableOpacity onPress={() => this.onCreatePressed() }>
+					<Image style={styles.button} source={require('../assets/create_task_button.png')} />
 				</TouchableOpacity>
 				{/*<TitleBodyButtonsModal title='Transfer request from:' bodyView={body} buttonViews={[button1, button2]} />*/}
 			</View>
