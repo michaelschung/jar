@@ -99,12 +99,14 @@ const styles = StyleSheet.create({
     dueInText: {
 		color: '#319bce',
 		textAlign: 'right',
+		right: 20,
 		fontSize: 20,
 		fontFamily: 'Avenir',
     },
     dueInTextUrgent: {
 		color: 'red',
 		textAlign: 'right',
+		right: 20,
 		fontSize: 20,
 		fontFamily: 'Avenir',
     },
@@ -116,6 +118,7 @@ const styles = StyleSheet.create({
     },
     timeToCompleteText: {
 		textAlign: 'right',
+		right: 20,
 		fontSize: 20,
 		fontFamily: 'Avenir',
     },
