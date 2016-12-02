@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   jarTotal: {
   	color: '#319bce',
   	fontSize: 55,
-  	fontWeight: 'bold',
+  	fontWeight: '500',
     fontFamily: 'Avenir',
   	marginBottom: 20
   },
