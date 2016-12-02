@@ -131,7 +131,6 @@ class DurationPage extends Component {
 	    super(props);
 	    this.state = {
 	    	renderPlaceholderOnly: true,
-	    	hours: 0,
 	    	minutes: 0,
 	    	date: this.props.date,
     		timeZoneOffsetInHours: this.props.timeZoneOffsetInHours
@@ -143,7 +142,7 @@ class DurationPage extends Component {
 	}
 
 	onPressNext() {
-		this.props.currentTask.timeToComplete = '5 min';
+		this.props.currentTask.timeToComplete = this.state.minutes + ' min';
 
 		this.props.navigator.push({
 			title: 'Overview',

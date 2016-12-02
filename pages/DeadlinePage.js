@@ -128,6 +128,7 @@ class DeadlinePage extends Component {
 	    this.state = {
 	    	renderPlaceholderOnly: true,
 	    	date: new Date(),
+	    	dueDate: new Date(),
 	    	timeZoneOffsetInHours: this.props.timeZoneOffsetInHours
 	    };
 	}
@@ -138,8 +139,16 @@ class DeadlinePage extends Component {
 
 	onPressNext() {
 
-		var today = new Date();
-		this.props.currentTask.due = new Date().setDate(today.getDate() + 1);
+		var newDate = new Date(
+			this.state.dueDate.getFullYear(),
+			this.state.dueDate.getMonth(),
+			this.state.dueDate.getDate(),
+			this.state.date.getHours(),
+			this.state.date.getMinutes(),
+			this.state.date.getSeconds(),
+			this.state.date.getMilliseconds());
+
+		this.props.currentTask.due = newDate;
 
 		this.props.navigator.push({
 			title: 'Duration',
@@ -156,7 +165,12 @@ class DeadlinePage extends Component {
 	}
 
 	onDateChange = (date) => {
+		// Alert.alert(date.getMinutes())
 		this.setState({date: date});
+	}
+
+	onDateSelect(date) {
+		this.setState({dueDate: new Date(date)})
 	}
 
 	render() {
@@ -173,6 +187,7 @@ class DeadlinePage extends Component {
 						nextButtonText={'Next'}           // Text for next button. Default: 'Next'
 						customStyle={calendarStyle} // Customize any pre-defined styles
 						weekStart={0} // Day on which week starts 0 - Sunday, 1 - Monday, 2 - Tuesday, etc, Default: 1
+						onDateSelect={(date) => this.onDateSelect(date)}
 					/>
 				</View>
 
