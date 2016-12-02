@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 
 class LogoutPage extends Component {
 	render() {
-		console.log('rendering MyHousePage');
+		console.log('rendering LogoutPage');
 		return (
 			<View style={styles.container}>
 				<Text style={styles.textPrompt}>Logged out!</Text>

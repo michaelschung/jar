@@ -12,6 +12,7 @@ class AvenirText extends Component {
 	}
 
 	render() {
+		console.log('rendering AvenirText');
 		return (
 			<Text style={{fontFamily:'Avenir', fontWeight:'bold'}}>{this.props.children}</Text>
 		);

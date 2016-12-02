@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 
 class SettingsPage extends Component {
 	render() {
-		console.log('rendering MyHousePage');
+		console.log('rendering SettingsPage');
 		return (
 			<View style={styles.container}>
 				<Text style={styles.textPrompt}>Settings</Text>

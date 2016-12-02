@@ -33,6 +33,7 @@ class NotesInput extends Component {
 	}
 
 	render() {
+		console.log('rendering NotesInput');
 		return (
 			<View>
 				<TextInput

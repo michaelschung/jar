@@ -173,7 +173,7 @@ class DeadlinePage extends Component {
 	}
 
 	render() {
-		console.log('rendering Deadline page');
+		console.log('rendering DeadlinePage');
 		return (
 			<View style={styles.container}>
 

@@ -332,7 +332,7 @@ class TasksPage extends Component {
 		// 	timeToComplete: '15 min'
 		// }
 		// var body = () => { return (<TransferRequestBody fromName='Evan' task={task} />) }
-		// console.log('rendering task page');
+		// console.log('rendering TasksPage');
 		return (
 			<View style={styles.container}>					
 				<View style={{backgroundColor:'white'}}>
@@ -359,4 +359,3 @@ class TasksPage extends Component {
 }
 
 export default TasksPage;
-

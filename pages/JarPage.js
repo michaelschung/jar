@@ -81,13 +81,15 @@ class JarPage extends Component {
 	}
 
 	render() {
+		console.log('rendering JarPage');
+
 		var modal;
 		if (this.state.showModal) {
 			modal = (<SimpleModal message='Hold near reader to pay!' removeModal={this.removeModal} />);
 		} else {
 			modal = null;
 		}
-		console.log('rendering jar page');
+
 		return (
 			<View style={styles.container}>
 				<Text style={styles.jarTotal}>$50</Text>

@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 
 class BankAccountPage extends Component {
 	render() {
-		console.log('rendering MyHousePage');
+		console.log('rendering BankAccountPage');
 		return (
 			<View style={styles.container}>
 				<Text style={styles.textPrompt}>Bank Account</Text>

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 		fontSize: 30,
 		fontWeight: 'bold',
 		fontFamily: 'Avenir',
-		marginBottom: 20
+		marginBottom: 20,
   	},
   	profilePic: {
   		position: 'relative',
@@ -55,7 +55,7 @@ class ProfilePage extends Component {
 	}
 
 	render() {
-		console.log('rendering MyHousePage');
+		console.log('rendering ProfilePage');
 		return (
 			<View style={styles.container}>
 				<Image style={styles.profilePic} source={{ uri: this.getUser()[0].picURL }} />

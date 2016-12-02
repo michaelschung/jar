@@ -31,6 +31,7 @@ class ConfirmationModal extends Component {
 	}
 
 	render() {
+		console.log('rendering ConfirmationModal');
 
 		var confirmButton = () => { return (<Button text={this.props.confirmText} color='#6BAC4E' size='medium' onPress={this.props.confirmCallback }/>) }
 		var cancelButton = () => { return (<Button text={this.props.cancelText} color='#C55254' size='medium' onPress={this.props.cancelCallback }/>) }

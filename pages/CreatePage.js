@@ -110,7 +110,7 @@ class CreatePage extends Component {
 	}
 
 	render() {
-		console.log('rendering jar page');
+		console.log('rendering CreatePage');
 		return (
 			<View style={styles.container}>
 

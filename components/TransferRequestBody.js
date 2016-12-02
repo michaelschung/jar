@@ -76,6 +76,7 @@ class TransferRequestBody extends Component {
 
 
 	render() {
+		console.log('rendering TransferRequestBody');
 		var numDays = moment(this.props.task.due).fromNow();
 		/* Get number of days between now and due date */
 		var dueDate = new Date(this.props.task.due)

@@ -156,7 +156,7 @@ class DurationPage extends Component {
 	};
 
 	render() {
-		console.log('rendering jar page');
+		console.log('rendering DurationPage');
 		return (
 			<View style={styles.container}>
 				<Text style={styles.textPrompt}>How long will it take?</Text>

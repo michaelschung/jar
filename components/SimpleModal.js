@@ -59,6 +59,7 @@ class SimpleModal extends Component {
 	}
 
 	render() {
+		console.log('rendering SimpleModal');
 		return (
 			<View>
 				<Modal

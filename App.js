@@ -161,7 +161,7 @@ class App extends Component {
 
 	/* Render everything */
 	render() {
-		console.log('rendering app');
+		console.log('rendering App');
 
 		return (
 			<SideMenu

@@ -36,6 +36,8 @@ class Button extends Component {
 	}
 
 	render() {
+		console.log('rendering Button');
+		
 		// Default sizes are those for medium button
 		buttonStyles = {minHeight: 42, minWidth: 150, borderRadius: 8};
 		if (this.props.size == 'small') {

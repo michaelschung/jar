@@ -292,7 +292,7 @@ class OverviewPage extends Component {
 	}
 
 	render() {
-		console.log('rendering jar page');
+		console.log('rendering OverviewPage');
 		return (
 			<TouchableWithoutFeedback onPress={() => dismissKeyboard()}>
 				<View style={styles.container}>
