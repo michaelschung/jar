@@ -146,12 +146,29 @@ class HamburgerPanel extends Component {
 		};
 	}
 
+	MyHouse = () => {
+		return (
+			<MyHousePage
+				user={this.props.user}
+
+			/>
+		)
+	}
+
 	/* When an option is pressed, navigate to the proper page */
 	onOptionPressed = (data) => {
 		this.props.navigator.push(this.fetchOption(data.name));
 		// close the settings menu
 		this.props.toggle(); // OR:
 		// this.props.updateMenuState(this.props.isOpen);
+	}
+
+	getUser = () => {
+		return this.props.house.filter(this.checkTaskIsMine);
+	}
+
+	checkTaskIsMine = (value) => {
+		return value.isMe;
 	}
 
 	/* Grab the proper icon to display, based on the image stored in data */
@@ -181,10 +198,10 @@ class HamburgerPanel extends Component {
 				<View style={styles.avatarContainer}>
 					<Image
 						style={styles.avatar}
-						source={{ uri: this.props.user.picURL }} />
+						source={{ uri: this.getUser()[0].picURL }} />
 					<Text style={styles.name}>
-						{this.props.user.firstname}{'\n'}
-						{this.props.user.lastname}
+						{this.getUser()[0].firstName}{'\n'}
+						{this.getUser()[0].lastName}
 					</Text>
 				</View>
 

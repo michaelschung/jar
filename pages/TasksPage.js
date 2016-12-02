@@ -27,6 +27,7 @@ import TaskDetailsPage from './TaskDetailsPage.js'
 var moment = require('moment');
 
 var today = new Date();
+
 var taskList = [
 	{
 		name:'Take out trash', 
@@ -49,8 +50,9 @@ var taskList = [
 		completed:false, 
 		due:new Date().setDate(today.getDate() + 4), 
 		timeToComplete: '30 min' 
-	}, 
+	},
 ];
+
 /* 
 	Task object
 		name: name of the task
