@@ -16,11 +16,11 @@ import DeadlinePage from '../pages/DeadlinePage'
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    paddingTop: 74,
+    paddingTop: 85,
     paddingLeft: 40,
     marginTop: 80
   },
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
   textPrompt: {
   	color: 'black',
   	fontSize: 30,
-  	fontWeight: 'bold',
   	marginBottom: 20
   },
 
@@ -36,6 +35,25 @@ const styles = StyleSheet.create({
   	height: 30,
   	width: 300,
   	fontSize: 20,
+  },
+
+  buttonContainer: {
+  	flex: 1,
+  	flexDirection: 'row',
+  	marginTop: 290
+  },
+
+  backButton: {
+    backgroundColor: '#319bce',
+    justifyContent: 'center',
+    top: 50,
+    marginBottom: 0,
+    borderRadius: 10,
+    minHeight: 50,
+    minWidth: 50,
+    height: 40,
+    width: 100,
+    alignSelf: 'flex-start'
   },
 
   nextButton: {
@@ -47,13 +65,16 @@ const styles = StyleSheet.create({
     minHeight: 50,
     minWidth: 50,
     height: 40,
-    width: 100
+    width: 100,
+    marginLeft: 95,
+    alignSelf: 'flex-start'
   },
 
   buttonText: {
   	color: 'white',
   	alignSelf: 'center',
   	fontSize: 25,
+  	marginTop: 7
   }
 
 });
@@ -65,6 +86,10 @@ class CreatePage extends Component {
 	    this.state = {renderPlaceholderOnly: true};
 	}
 
+	onPressBack() {
+		this.props.navigator.pop()
+	}
+
 	onPressNext() {
 
 		this.props.currentTask.name = this.state.text;
@@ -73,7 +98,9 @@ class CreatePage extends Component {
 		this.props.navigator.push({
 			title: 'Deadline',
 			component: DeadlinePage,
-			passProps: {addTask: this.props.addTask, currentTask: this.props.currentTask}
+			passProps: {addTask: this.props.addTask, currentTask: this.props.currentTask},
+			leftButtonTitle: 'Cancel',
+			onLeftButtonPress: () => this.props.navigator.popToTop(0)
 		});
 	}
 
@@ -91,9 +118,18 @@ class CreatePage extends Component {
 				    />
 				</View>
 
-				<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
-					<Text style={styles.buttonText}>Next</Text>
-				</TouchableOpacity>
+				<View style={styles.buttonContainer}>
+
+					<TouchableOpacity style={styles.backButton} onPress={() => this.onPressBack()}>
+						<Text style={styles.buttonText}>Back</Text>
+					</TouchableOpacity>
+
+
+					<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
+						<Text style={styles.buttonText}>Next</Text>
+					</TouchableOpacity>
+
+				</View>
 
 				
 			</View>

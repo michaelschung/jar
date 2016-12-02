@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import {
 	Alert,
 	Image,
-	DatePickerIOS,
+	PickerIOS,
 	StyleSheet,
 	Text,
 	TextInput,
@@ -12,25 +12,34 @@ import {
 	View,
 } from 'react-native';
 
+var PickerItemIOS = PickerIOS.Item;
+
 import OverviewPage from '../pages/OverviewPage'
+
+
+
+const hours = [0, 1, 2, 3, 4, 5]
+
+var minutes = []
+
+for (var i = 0; i <= 60; i++) {
+	minutes.push(i);
+}
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    flexDirection: 'row',
     paddingTop: 74,
-    paddingLeft: 40,
     marginTop: 80
   },
 
   textPrompt: {
   	color: 'black',
   	fontSize: 30,
-  	fontWeight: 'bold',
-  	marginBottom: 20
+  	marginBottom: 20,
+  	marginLeft: 40
   },
 
   textInput: {
@@ -57,8 +66,12 @@ const styles = StyleSheet.create({
   	fontSize: 25,
   },
 
-  datePicker: {
-  	height: 40
+  hourPicker: {
+
+  },
+
+  minutePicker: {
+
   }
 
 });
@@ -81,7 +94,8 @@ class DurationPage extends Component {
 	    super(props);
 	    this.state = {
 	    	renderPlaceholderOnly: true,
-	    	duration: 0,
+	    	hours: 0,
+	    	minutes: 0,
 	    	date: this.props.date,
     		timeZoneOffsetInHours: this.props.timeZoneOffsetInHours
 	   	};
@@ -93,7 +107,9 @@ class DurationPage extends Component {
 		this.props.navigator.push({
 			title: 'Overview',
 			component: OverviewPage,
-			passProps: {addTask: this.props.addTask, currentTask: this.props.currentTask}
+			passProps: {addTask: this.props.addTask, currentTask: this.props.currentTask},
+			leftButtonTitle: 'Cancel',
+			onLeftButtonPress: () => this.props.navigator.popToTop(0)
 		});
 
 	}
@@ -107,24 +123,20 @@ class DurationPage extends Component {
 		return (
 			<View style={styles.container}>
 				<Text style={styles.textPrompt}>How long will it take?</Text>
-				<View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
-					<TextInput
-				    	style={styles.textInput}
-				    	multiline={false}
-				    	onChangeText={(text) => this.setState({text})}
-				    />
-				</View>
 
-				<Heading label="Date picker" />
+		        <PickerIOS
+		        	style={styles.minutePicker}
+		        	selectedValue={this.state.minutes}
+		        	onValueChange={(minute) => this.setState({minutes: minute})}>
+		        	{hours.map((num) => (
+			        	<PickerItemIOS
+			            	key={num}
+			            	value={num}
+			            	label={"" + num}
+			            />
+		          	))}
+		        </PickerIOS>
 
-		        <DatePickerIOS
-		        	style={styles.datePicker}
-		        	date={this.state.date}
-		        	mode="time"
-		        	timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
-		        	onDateChange={this.onDurationChange}
-		        	minuteInterval={10}
-		        />
 
 				<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
 					<Text style={styles.buttonText}>Next</Text>

@@ -207,7 +207,9 @@ class TasksPage extends Component {
 			passProps: {
 				addTask: this.addTask,
 				currentTask: {}
-			}
+			},
+			leftButtonTitle: 'Cancel',
+			onLeftButtonPress: () => this.props.navigator.popToTop(0)
 		})
 	}
 
