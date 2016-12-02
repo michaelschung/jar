@@ -255,9 +255,9 @@ class TransferToCarousel extends Component {
 	return (
 	  <ScrollView 
 		automaticallyAdjustContentInsets={false}
-		alwaysBounceHorizontal={true} 
+		alwaysBounceHorizontal={false} 
 		horizontal={true}
-		centerContent = {false}
+		centerContent = {true}
 		style={styles.carouselScrollView} >
 		{this.transferToList.map(this.renderUser)}
 	  </ScrollView>

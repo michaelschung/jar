@@ -168,6 +168,7 @@ class App extends Component {
 
 		return (
 			<SideMenu
+				disableGestures={this.state.isOpen?false:true}
 				menu={this.Hamburger()}
 				isOpen={this.state.isOpen}
 				onChange={(isOpen) => this.updateMenuState(isOpen)}
