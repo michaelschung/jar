@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
   	fontSize: 55,
   	fontWeight: '500',
     fontFamily: 'Avenir',
+    fontWeight: '500',
   	marginBottom: 20
   },
 
-
   jarLogo: {
-  	marginBottom: 55
+  	marginBottom: 55,
   },
 
   useNowButton: {
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     minWidth: 50,
     height: 60,
     width: 250,
-    bottom: 5
+    bottom: 5,
   },
 
   buttonText: {
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   	color: 'white',
   	alignSelf: 'center',
   	fontSize: 35,
+  	fontWeight: '500',
     fontFamily: 'Avenir',
   }
 

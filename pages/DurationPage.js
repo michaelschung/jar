@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   	flexDirection: 'row',
   	marginTop: 0,
   	paddingBottom: 4,
-  	paddingLeft: 40
+  	paddingLeft: 40,
   },
 
   backButton: {
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     minWidth: 50,
     height: 40,
     width: 100,
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
   },
 
   nextButton: {
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 100,
     marginLeft: 95,
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
   },
 
   buttonText: {
