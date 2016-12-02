@@ -97,7 +97,13 @@ const styles = StyleSheet.create({
 	width: 100,
 	borderRadius: 50,
   },
-
+  transferImage: {
+  	marginRight: 20,
+  	height: 100,
+  	width: 100,
+  	borderRadius: 50,
+  	opacity: .5,
+  },
   /* Styling for notes */
   notesContainer: {
 	marginTop: -20,
@@ -199,29 +205,6 @@ const styles = StyleSheet.create({
 });
 
 
-/* Array of users */
-var users = [
-  {
-	name: 'Michael', 
-	picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg',
-	isMe: true, 
-  },
-  {
-	name: 'Evan', 
-	picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg',
-	isMe: false,
-  },
-  {
-	name: 'David', 
-	picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG', 
-	isMe: false,
-  },
-  {
-	name: 'Tessera', 
-	picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Tessera.jpg', 
-	isMe: false,
-  }, 
-];
 
 
 /* Transfer users carousel component */
@@ -229,7 +212,7 @@ class TransferToCarousel extends Component {
   constructor(props) {
 	super(props);
 	/* Construct list of possible users to transfer task to */
-	this.transferToList = users.filter((user)=>!user.isMe);
+	this.transferToList = props.house.filter((user)=>!user.isMe);
   }
 
   /* Render modal stating transfer request was sent */
@@ -244,7 +227,7 @@ class TransferToCarousel extends Component {
 		<TouchableOpacity onPress={() => this._onPressTransferIcon(userData)}>
 		  <View style={styles.userContainer}>
 			<Image source={{ uri: userData.picURL }} style={styles.userImage} />
-			<Text style={styles.userName}>{userData.name}</Text>
+			<Text style={styles.userName}>{userData.firstName}</Text>
 		  </View>
 		</TouchableOpacity>
 	  </View>
@@ -318,13 +301,15 @@ class TaskDetailsPage extends Component {
 	  showModal: true,
 	  showTransferSentModal: true,
 	  showTaskCompleteModal: false,
-	  transferSentTo: userData.name,
+	  transferSentTo: userData.firstName,
 	  transferSent: true,
 	  taskCompleted: false,
 	}));
 	/*
 	  Send request to other user
 	*/
+	console.log('transfer pressed')
+	this.props.requestTransfer(this.props.task, userData);
   }
 
   /* For canceling transfer */
@@ -418,7 +403,7 @@ class TaskDetailsPage extends Component {
 
 	/* Bottom of page */
 	BottomPortion = () => {
-		if (this.props.task.isMyTask) {
+		if (this.props.task.owner.isMe) {
 			return (
 				this.state.selectingTransfer ?
 				this.Carousel() :
@@ -439,7 +424,7 @@ class TaskDetailsPage extends Component {
 		  </View>
 		</TouchableOpacity>
 	  </View>
-	  <TransferToCarousel showModal={this._onPressTransferIcon} ></TransferToCarousel>
+	  <TransferToCarousel showModal={this._onPressTransferIcon} house={this.props.house} ></TransferToCarousel>
 	</View>
   
 
@@ -490,7 +475,9 @@ class TaskDetailsPage extends Component {
 				  </View>
 				</View>
 				<View style={styles.taskOwnerImageContainer}>
-				  <Image source={{ uri: this.props.task.owner.picURL }} style={styles.ownerImage} />
+				  <Image 
+				  	source={{ uri: this.props.task.isAwaitingTransfer ? this.props.task.isAwaitingTransfer.picURL : this.props.task.owner.picURL }} 
+				  	style={this.props.task.isAwaitingTransfer ? styles.transferImage : styles.ownerImage} />
 				</View>
 					</View>
 
