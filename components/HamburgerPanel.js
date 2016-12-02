@@ -17,6 +17,7 @@ import TasksPage from '../pages/TasksPage'
 import ProfilePage from '../pages/ProfilePage'
 import BankAccountPage from '../pages/BankAccountPage'
 import SettingsPage from '../pages/SettingsPage'
+import LogoutPage from '../pages/LogoutPage'
 
 const { Component } = React;
 
@@ -138,7 +139,7 @@ class HamburgerPanel extends Component {
 				nextComponent = SettingsPage;
 				break;
 			case 'Logout':
-				nextComponent = CreatePage;
+				nextComponent = LogoutPage;
 				break;
 			default:
 				nextComponent = TasksPage;
