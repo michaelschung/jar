@@ -28,9 +28,6 @@ var moment = require('moment');
 
 var today = new Date();
 
-
-
-
 const styles = StyleSheet.create({
   container: {
   	flex: 1,
@@ -41,7 +38,7 @@ const styles = StyleSheet.create({
   },
   segmentedControl: {
   	margin: 12, 
-  	backgroundColor: 'white'
+  	backgroundColor: 'white',
   },
   list: {
   	marginTop: -64, 
@@ -56,11 +53,18 @@ const styles = StyleSheet.create({
   taskName: {
     marginLeft: 12,
     fontSize: 16,
+    fontFamily: 'Avenir',
   },
   photo: {
     height: 40,
     width: 40,
     borderRadius: 20,
+  },
+  transferPhoto: {
+  	height: 40,
+  	width: 40,
+  	borderRadius: 20,
+  	opacity: .5,
   },
   checkBox: {
   	height: 40,
@@ -75,11 +79,13 @@ const styles = StyleSheet.create({
   dueInText: {
     textAlign: 'right',
     flex: 1,
+    fontFamily: 'Avenir',
   },
   dueInTextUrgent: {
     textAlign: 'right',
     flex: 1,
     color: 'red',
+    fontFamily: 'Avenir',
   },
   separator: {
   	flex: 1,
@@ -93,8 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#8E8E8E',
     padding: .5
   },
-  addButton: {
-    backgroundColor: '#319bce',
+  button: {
     marginBottom: 20,
     marginRight: 20,
     position: 'absolute',
@@ -102,17 +107,11 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     minHeight: 50,
     minWidth: 50,
-    width: 70,
-    height: 70,
-    bottom: 10,
-    right: 10,
+    width: 80,
+    height: 80,
+    bottom: 20,
+    right: 20,
   },
-  buttonText: {
-  	color: 'white',
-  	alignSelf: 'center',
-  	marginBottom: 5,
-  	fontSize: 50
-  }
 });
 
 class TasksPage extends Component {
@@ -126,6 +125,8 @@ class TasksPage extends Component {
 				completed: boolean True if task has been completed
 				due: JS Date object representing the day the task is due
 				timeToComplete: string representing expected time to complete task
+				isAwaitingTransfer: user object to whom we requested a transfer, 
+									or null if no transfer is requested
 		*/
 
 		this.taskList = [
@@ -195,7 +196,13 @@ class TasksPage extends Component {
 		this.props.navigator.push({
 			title: 'Task Details',
 			component: TaskDetailsPage,
-			passProps: {taskCompleted: this.onTaskCompleted, task: taskItem},
+			passProps: {
+				taskCompleted: this.onTaskCompleted, 
+				task: taskItem,
+				requestTransfer: this.requestTransfer,
+				cancelTransfer: this.cancelTransfer,
+				house: this.props.house,
+			},
 		});
 	}
 
@@ -225,28 +232,55 @@ class TasksPage extends Component {
 		});
 	}
 
+	updateDataSource = () => {
+		this.setState({
+			dataSource: this.ds.cloneWithRows(this.state.taskView === "All Tasks" ? 
+				this.taskList : this.taskList.filter(this.checkTaskIsMine)),
+		});
+	}
+
 	addTask = (task) => {
 		this.taskList.push(task);
 		// double check to see this works
-		this.setState({
-			dataSource: this.ds.cloneWithRows(this.taskList)
-		});
+		this.updateDataSource();
+	}
+
+	requestTransfer = (task, user) => {
+		task.isAwaitingTransfer = user;
+		this.updateDataSource();
+	}
+
+	cancelTransfer = (task) => {
+		task.isAwaitingTransfer = null;
+		this.updateDataSource();
+	}
+
+	acceptTransferRequest = (task) => {
+		task.owner = this.props.house.filter((value) => value.isMe)[0];
+		task.isAwaitingTransfer = null;
+		this.updateDataSource();
+		// send a notification to transfer requester
 	}
 
 	renderIcon = (data) => {
 		if (data.owner.isMe) {
-			return (
-				<TouchableOpacity onPress={() => this.onTaskCompleted(data)}>
-					<Image source={data.completed ? require('../assets/checked.png') : require('../assets/unchecked.png')} 
-						style={styles.checkBoxIcon} />
-				</TouchableOpacity>
-			);
+			if (!data.isAwaitingTransfer)
+				return (
+					<TouchableOpacity onPress={() => this.onTaskCompleted(data)}>
+						<Image source={data.completed ? require('../assets/checked.png') : require('../assets/unchecked.png')} 
+							style={styles.checkBoxIcon} />
+					</TouchableOpacity>
+				);
+			else {
+				return (
+					<Image source={{ uri: data.isAwaitingTransfer.picURL }} style={styles.transferPhoto} />
+				);
+			}
 		} else {
 			return (
 				<Image source={{ uri: data.owner.picURL }} style={styles.photo} />
 			);
 		}
-
 	}
 
 	renderRow = (data) => {
@@ -277,7 +311,7 @@ class TasksPage extends Component {
 		// 	timeToComplete: '15 min'
 		// }
 		// var body = () => { return (<TransferRequestBody fromName='Evan' task={task} />) }
-
+		// console.log('rendering task page');
 		return (
 			<View style={styles.container}>					
 				<View style={{backgroundColor:'white'}}>
@@ -294,8 +328,8 @@ class TasksPage extends Component {
 				  	dataSource={this.state.dataSource}
 				  	renderRow={this.renderRow}  
 				  	renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
-				<TouchableOpacity style={styles.addButton} onPress={() => this.onCreatePressed() }>
-					<Text style={styles.buttonText}>+</Text>
+				<TouchableOpacity onPress={() => this.onCreatePressed() }>
+					<Image style={styles.button} source={require('../assets/create_task_button.png')} />
 				</TouchableOpacity>
 				{/*<TitleBodyButtonsModal title='Transfer request from:' bodyView={body} buttonViews={[button1, button2]} />*/}
 			</View>

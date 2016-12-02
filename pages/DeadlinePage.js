@@ -159,7 +159,7 @@ class DeadlinePage extends Component {
 	}
 
 	render() {
-		console.log('rendering jar page');
+		console.log('rendering Deadline page');
 		return (
 			<View style={styles.container}>
 
@@ -172,7 +172,7 @@ class DeadlinePage extends Component {
 						nextButtonText={'Next'}           // Text for next button. Default: 'Next'
 						customStyle={calendarStyle} // Customize any pre-defined styles
 						weekStart={0} // Day on which week starts 0 - Sunday, 1 - Monday, 2 - Tuesday, etc, Default: 1
-						/>
+					/>
 				</View>
 
 				<DatePickerIOS
