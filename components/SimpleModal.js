@@ -53,6 +53,7 @@ class SimpleModal extends Component {
 	}
 
 	_removeModal = () => {
+		console.log('removing modal from simplemodal')
 		this.props.removeModal();
 	}
 
