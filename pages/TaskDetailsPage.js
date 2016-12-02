@@ -229,6 +229,12 @@ const styles = StyleSheet.create({
   		fontWeight: '500',
   		fontFamily: 'Avenir',
   },
+  notes: {
+    height: 120,
+    color: '#8F8E94',
+    fontSize: 16,
+    fontFamily: 'Avenir',
+  },
 
 });
 
@@ -294,6 +300,7 @@ class TaskDetailsPage extends Component {
 		  transferSent: this.props.task.isAwaitingTransfer,
 		  disableComplete: this.props.task.isAwaitingTransfer,
 		  taskCompleted: this.props.task.completed,
+		  notes: '',
 		};
   }
 
@@ -395,6 +402,19 @@ class TaskDetailsPage extends Component {
 		  showConfirmCancelTransferModal: false,
 		  showConfirmCompleteModal: false,
 		}));
+  }
+
+  setNotes = (text) => {
+  	// console.log("NOTES:", text);
+  	this.props.task.notes = text;
+  }
+
+  getPlaceholderNotes() {
+  	return this.props.task.notes == '' ? 'Add a note...' : this.props.task.notes;
+  }
+
+  getDefaultNotes() {
+  	return this.props.task.notes == '' ? '' : this.props.task.notes;
   }
 
   /* Transfer button */
@@ -551,7 +571,16 @@ class TaskDetailsPage extends Component {
 				  {/* Notes */}
 				  <View style={styles.notesContainer}>
 						<Text style={styles.label}>Notes:</Text>
-						<NotesInput />
+						<TextInput
+				          style={styles.notes}
+				          autoCorrect={true}
+				          multiline={true}
+				          numberOfLines={6}
+				          defaultValue={this.getDefaultNotes()}
+				          onChangeText={this.setNotes}
+				          placeholder={this.getPlaceholderNotes()}
+				          value={this.state.text}
+				        />
 				  </View>
 
 				  <View style={styles.separator}></View>
