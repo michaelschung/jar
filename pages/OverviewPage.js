@@ -264,6 +264,14 @@ class OverviewPage extends Component {
 		this.props.currentTask.notes = text;
 	}
 
+	getPlaceholderNotes() {
+		return this.props.currentTask.notes == '' ? 'Add a note...' : this.props.currentTask.notes;
+	}
+
+	getDefaultNotes() {
+		return this.props.currentTask.notes == '' ? '' : this.props.currentTask.notes;
+	}
+
 	render() {
 		console.log('rendering jar page');
 		return (
@@ -296,8 +304,9 @@ class OverviewPage extends Component {
 							autoCorrect={true}
 							multiline={true}
 							numberOfLines={6}
+							defaultValue={this.getDefaultNotes()}
 							onChangeText={this.setNotes}
-							placeholder={'Add a note...'}
+							placeholder={this.getPlaceholderNotes()}
 							value={this.state.text}
 						/>
 					</View>
