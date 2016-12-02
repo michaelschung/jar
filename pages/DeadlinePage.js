@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   textPrompt: {
   	color: 'black',
   	fontSize: 30,
-  	fontWeight: 'bold',
+  	fontWeight: '500',
     fontFamily: 'Avenir',
   	marginBottom: 20,
   	paddingLeft: 40,
