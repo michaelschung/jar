@@ -13,6 +13,10 @@ import {
 
 import JarPage from '../pages/JarPage.js'
 import CreatePage from '../pages/CreatePage'
+import MyHousePage from '../pages/MyHousePage'
+import ProfilePage from '../pages/ProfilePage'
+import BankAccountPage from '../pages/BankAccountPage'
+import SettingsPage from '../pages/SettingsPage'
 
 const { Component } = React;
 
@@ -38,6 +42,7 @@ const styles = StyleSheet.create({
 		borderRadius: 60,
 	},
 	name: {
+		color: 'white',
 		fontSize: 20,
 		position: 'absolute',
 		left: 160,
@@ -95,7 +100,7 @@ var options = [
 	},
 ];
 
-class SettingsPanel extends Component {
+class HamburgerPanel extends Component {
 	constructor(props) {
 		super(props);
 
@@ -118,16 +123,16 @@ class SettingsPanel extends Component {
 
 		switch(dataName) {
 			case 'My House':
-				nextComponent = JarPage;
+				nextComponent = MyHousePage;
 				break;
 			case 'Profile':
-				nextComponent = JarPage;
+				nextComponent = ProfilePage;
 				break;
 			case 'Bank Account':
-				nextComponent = JarPage;
+				nextComponent = BankAccountPage;
 				break;
 			case 'Settings':
-				nextComponent = CreatePage;
+				nextComponent = SettingsPage;
 				break;
 			case 'Logout':
 				nextComponent = CreatePage;
@@ -141,12 +146,29 @@ class SettingsPanel extends Component {
 		};
 	}
 
+	MyHouse = () => {
+		return (
+			<MyHousePage
+				user={this.props.user}
+
+			/>
+		)
+	}
+
 	/* When an option is pressed, navigate to the proper page */
 	onOptionPressed = (data) => {
 		this.props.navigator.push(this.fetchOption(data.name));
 		// close the settings menu
 		this.props.toggle(); // OR:
 		// this.props.updateMenuState(this.props.isOpen);
+	}
+
+	getUser = () => {
+		return this.props.house.filter(this.checkTaskIsMine);
+	}
+
+	checkTaskIsMine = (value) => {
+		return value.isMe;
 	}
 
 	/* Grab the proper icon to display, based on the image stored in data */
@@ -168,23 +190,24 @@ class SettingsPanel extends Component {
 		);
 	}
 
-	/* Render everything in the SettingsPanel. */
+	/* Render everything in the HamburgerPanel. */
 	render() {
-		console.log('rendering SettingsPanel');
+		console.log('rendering HamburgerPanel');
 		return (
-			<ScrollView scrollsToTop={false} style={styles.menu}>
+			<ScrollView scrollEnabled={false} scrollsToTop={false} style={styles.menu}>
 				<View style={styles.avatarContainer}>
 					<Image
 						style={styles.avatar}
-						source={{ uri: this.props.user.picURL }} />
+						source={{ uri: this.getUser()[0].picURL }} />
 					<Text style={styles.name}>
-						{this.props.user.firstname}{'\n'}
-						{this.props.user.lastname}
+						{this.getUser()[0].firstName}{'\n'}
+						{this.getUser()[0].lastName}
 					</Text>
 				</View>
 
 				<View style={styles.separator} />
 				<ListView
+					scrollEnabled={false}
 					style={styles.list}
 					dataSource={this.state.dataSource}
 					renderRow={this.renderRow}
@@ -195,4 +218,4 @@ class SettingsPanel extends Component {
 	}
 };
 
-export default SettingsPanel;
+export default HamburgerPanel;

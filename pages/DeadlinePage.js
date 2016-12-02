@@ -9,10 +9,12 @@ import {
 	TextInput,
 	TouchableOpacity,
 	View,
+	Dimensions
 } from 'react-native';
 
 
 import DurationPage from '../pages/DurationPage'
+import Calendar from 'react-native-calendar'
 
 const styles = StyleSheet.create({
   container: {
@@ -21,7 +23,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingTop: 74,
-    paddingLeft: 40,
     marginTop: 80
   },
 
@@ -29,7 +30,8 @@ const styles = StyleSheet.create({
   	color: 'black',
   	fontSize: 30,
   	fontWeight: 'bold',
-  	marginBottom: 20
+  	marginBottom: 20,
+  	paddingLeft: 40,
   },
 
   textInput: {
@@ -88,12 +90,15 @@ class DeadlinePage extends Component {
 			<View style={styles.container}>
 
 				<Text style={styles.textPrompt}>When's the deadline?</Text>
-				<View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
-					<TextInput
-				    	style={styles.textInput}
-				    	multiline={false}
-				    	onChangeText={(text) => this.setState({text})}
-				    />
+				<View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1, margin:10}}>
+					<Calendar
+						showControls={true}               // False hides prev/next buttons. Default: False
+						prevButtonText={'Prev'}           // Text for previous button. Default: 'Prev'
+						nextButtonText={'Next'}           // Text for next button. Default: 'Next'
+						customStyle={{dayButton:{width:(Dimensions.get('window').width-20) / 7},
+										dayButtonFiller:{width:(Dimensions.get('window').width-20) / 7}}} // Customize any pre-defined styles
+						weekStart={0} // Day on which week starts 0 - Sunday, 1 - Monday, 2 - Tuesday, etc, Default: 1
+						/>
 				</View>
 				<CalendarPicker></CalendarPicker>
 
