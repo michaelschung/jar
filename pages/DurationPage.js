@@ -30,7 +30,7 @@ for (var i = 0; i <= 60; i++) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     paddingTop: 74,
     marginTop: 80
   },
@@ -38,6 +38,8 @@ const styles = StyleSheet.create({
   textPrompt: {
   	color: 'black',
   	fontSize: 30,
+  	fontWeight: '500',
+  	fontFamily: 'Avenir',
   	marginBottom: 20,
   	marginLeft: 40
   },
@@ -58,6 +60,39 @@ const styles = StyleSheet.create({
     minWidth: 50,
     height: 40,
     width: 100
+  },
+
+  buttonContainer: {
+  	flex: 1,
+  	flexDirection: 'row',
+  	marginTop: 0,
+  	paddingBottom: 4,
+  	paddingLeft: 40
+  },
+
+  backButton: {
+    backgroundColor: '#319bce',
+    justifyContent: 'center',
+    marginBottom: 0,
+    borderRadius: 10,
+    minHeight: 50,
+    minWidth: 50,
+    height: 40,
+    width: 100,
+    alignSelf: 'flex-start'
+  },
+
+  nextButton: {
+    backgroundColor: '#319bce',
+    justifyContent: 'center',
+    marginBottom: 0,
+    borderRadius: 10,
+    minHeight: 50,
+    minWidth: 50,
+    height: 40,
+    width: 100,
+    marginLeft: 95,
+    alignSelf: 'flex-start'
   },
 
   buttonText: {
@@ -101,6 +136,10 @@ class DurationPage extends Component {
 	   	};
 	}
 
+	onPressBack() {
+		this.props.navigator.pop();
+	}
+
 	onPressNext() {
 		this.props.currentTask.timeToComplete = '5 min';
 
@@ -138,9 +177,18 @@ class DurationPage extends Component {
 		        </PickerIOS>
 
 
-				<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
-					<Text style={styles.buttonText}>Next</Text>
-				</TouchableOpacity>
+				<View style={styles.buttonContainer}>
+
+					<TouchableOpacity style={styles.backButton} onPress={() => this.onPressBack()}>
+						<Text style={styles.buttonText}>Back</Text>
+					</TouchableOpacity>
+
+
+					<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
+						<Text style={styles.buttonText}>Next</Text>
+					</TouchableOpacity>
+
+				</View>
 
 				
 			</View>
