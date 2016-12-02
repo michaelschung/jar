@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import {
 	Alert,
 	Image,
+	PickerIOS,
 	StyleSheet,
 	Text,
 	TextInput,
@@ -11,25 +12,34 @@ import {
 	View,
 } from 'react-native';
 
+var PickerItemIOS = PickerIOS.Item;
+
 import OverviewPage from '../pages/OverviewPage'
+
+
+
+const hours = [0, 1, 2, 3, 4, 5]
+
+var minutes = []
+
+for (var i = 0; i <= 60; i++) {
+	minutes.push(i);
+}
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    flexDirection: 'row',
     paddingTop: 74,
-    paddingLeft: 40,
     marginTop: 80
   },
 
   textPrompt: {
   	color: 'black',
   	fontSize: 30,
-  	fontWeight: 'bold',
-  	marginBottom: 20
+  	marginBottom: 20,
+  	marginLeft: 40
   },
 
   textInput: {
@@ -54,15 +64,41 @@ const styles = StyleSheet.create({
   	color: 'white',
   	alignSelf: 'center',
   	fontSize: 25,
+  },
+
+  hourPicker: {
+
+  },
+
+  minutePicker: {
+
   }
 
 });
+
+class Heading extends React.Component {
+  render() {
+    return (
+      <View style={styles.headingContainer}>
+        <Text style={styles.heading}>
+          {this.props.label}
+        </Text>
+      </View>
+    );
+  }
+}
 
 
 class DurationPage extends Component {
 	constructor(props) {
 	    super(props);
-	    this.state = {renderPlaceholderOnly: true};
+	    this.state = {
+	    	renderPlaceholderOnly: true,
+	    	hours: 0,
+	    	minutes: 0,
+	    	date: this.props.date,
+    		timeZoneOffsetInHours: this.props.timeZoneOffsetInHours
+	   	};
 	}
 
 	onPressNext() {
@@ -71,24 +107,36 @@ class DurationPage extends Component {
 		this.props.navigator.push({
 			title: 'Overview',
 			component: OverviewPage,
-			passProps: {addTask: this.props.addTask, currentTask: this.props.currentTask}
+			passProps: {addTask: this.props.addTask, currentTask: this.props.currentTask},
+			leftButtonTitle: 'Cancel',
+			onLeftButtonPress: () => this.props.navigator.popToTop(0)
 		});
 
 	}
+
+	onDurationChange = (duration) => {
+    	this.setState({duration: duration});
+  	};
 
 	render() {
 		console.log('rendering jar page');
 		return (
 			<View style={styles.container}>
-
 				<Text style={styles.textPrompt}>How long will it take?</Text>
-				<View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
-					<TextInput
-				    	style={styles.textInput}
-				    	multiline={false}
-				    	onChangeText={(text) => this.setState({text})}
-				    />
-				</View>
+
+		        <PickerIOS
+		        	style={styles.minutePicker}
+		        	selectedValue={this.state.minutes}
+		        	onValueChange={(minute) => this.setState({minutes: minute})}>
+		        	{hours.map((num) => (
+			        	<PickerItemIOS
+			            	key={num}
+			            	value={num}
+			            	label={"" + num}
+			            />
+		          	))}
+		        </PickerIOS>
+
 
 				<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
 					<Text style={styles.buttonText}>Next</Text>

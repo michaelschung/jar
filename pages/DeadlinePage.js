@@ -9,8 +9,10 @@ import {
 	TextInput,
 	TouchableOpacity,
 	View,
-	Dimensions
+	Dimensions,
+	DatePickerIOS
 } from 'react-native';
+
 
 import DurationPage from '../pages/DurationPage'
 import Calendar from 'react-native-calendar'
@@ -20,16 +22,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    paddingTop: 74,
     marginTop: 80
   },
 
   textPrompt: {
   	color: 'black',
   	fontSize: 30,
-  	fontWeight: 'bold',
-  	marginBottom: 20,
   	paddingLeft: 40,
   },
 
@@ -51,19 +49,90 @@ const styles = StyleSheet.create({
     width: 100
   },
 
+  calendarContainer: {
+  	borderBottomColor: '#d3d3d3',
+  	borderBottomWidth: 1,
+  	marginLeft: 15,
+  	marginRight: 15
+  },
+
+  calendar: {
+  	marginTop: 0
+  },
+
+  buttonContainer: {
+  	flex: 1,
+  	flexDirection: 'row',
+  	marginTop: 0,
+  	paddingBottom: 4,
+  	paddingLeft: 40
+  },
+
+  backButton: {
+    backgroundColor: '#319bce',
+    justifyContent: 'center',
+    marginBottom: 0,
+    borderRadius: 10,
+    minHeight: 50,
+    minWidth: 50,
+    height: 40,
+    width: 100,
+    alignSelf: 'flex-start'
+  },
+
+  nextButton: {
+    backgroundColor: '#319bce',
+    justifyContent: 'center',
+    marginBottom: 0,
+    borderRadius: 10,
+    minHeight: 50,
+    minWidth: 50,
+    height: 40,
+    width: 100,
+    marginLeft: 95,
+    alignSelf: 'flex-start'
+  },
+
   buttonText: {
   	color: 'white',
   	alignSelf: 'center',
   	fontSize: 25,
-  }
+  	marginTop: 7
+  },
 
 });
 
+const calendarStyle = {
+	calendarContainer: {
+		backgroundColor: 'white'
+	},
+  	dayButton: {
+  		width:(Dimensions.get('window').width-30) / 7
+  	},
+	dayButtonFiller: {
+		width:(Dimensions.get('window').width-30) / 7
+	}
+}
+
 
 class DeadlinePage extends Component {
+
+	static defaultProps = {
+    	date: new Date(),
+    	timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
+  	};
+
 	constructor(props) {
 	    super(props);
-	    this.state = {renderPlaceholderOnly: true};
+	    this.state = {
+	    	renderPlaceholderOnly: true,
+	    	date: new Date(),
+	    	timeZoneOffsetInHours: this.props.timeZoneOffsetInHours
+	    };
+	}
+
+	onPressBack() {
+		this.props.navigator.pop()
 	}
 
 	onPressNext() {
@@ -74,8 +143,19 @@ class DeadlinePage extends Component {
 		this.props.navigator.push({
 			title: 'Duration',
 			component: DurationPage,
-			passProps: {addTask: this.props.addTask, currentTask: this.props.currentTask}
+			passProps: {
+				addTask: this.props.addTask,
+				currentTask: this.props.currentTask,
+				date: new Date(),
+	    		timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
+	    	},
+	    	leftButtonTitle: 'Cancel',
+			onLeftButtonPress: () => this.props.navigator.popToTop(0)
 		})
+	}
+
+	onDateChange = (date) => {
+		this.setState({date: date});
 	}
 
 	render() {
@@ -84,20 +164,37 @@ class DeadlinePage extends Component {
 			<View style={styles.container}>
 
 				<Text style={styles.textPrompt}>When's the deadline?</Text>
-				<View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1, margin:10}}>
+				<View style={styles.calendarContainer}>
 					<Calendar
+						style={styles.calendar}
 						showControls={true}               // False hides prev/next buttons. Default: False
 						prevButtonText={'Prev'}           // Text for previous button. Default: 'Prev'
 						nextButtonText={'Next'}           // Text for next button. Default: 'Next'
-						customStyle={{dayButton:{width:(Dimensions.get('window').width-20) / 7},
-										dayButtonFiller:{width:(Dimensions.get('window').width-20) / 7}}} // Customize any pre-defined styles
+						customStyle={calendarStyle} // Customize any pre-defined styles
 						weekStart={0} // Day on which week starts 0 - Sunday, 1 - Monday, 2 - Tuesday, etc, Default: 1
 					/>
 				</View>
 
-				<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
-					<Text style={styles.buttonText}>Next</Text>
-				</TouchableOpacity>
+				<DatePickerIOS
+	        		date={this.state.date}
+			        mode="time"
+			        timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
+			        onDateChange={this.onDateChange}
+			        minuteInterval={10}
+        		/>
+
+				<View style={styles.buttonContainer}>
+
+					<TouchableOpacity style={styles.backButton} onPress={() => this.onPressBack()}>
+						<Text style={styles.buttonText}>Back</Text>
+					</TouchableOpacity>
+
+
+					<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
+						<Text style={styles.buttonText}>Next</Text>
+					</TouchableOpacity>
+
+				</View>
 
 				
 			</View>
