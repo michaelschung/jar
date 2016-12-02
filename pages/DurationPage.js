@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
   	flex: 1,
   	flexDirection: 'row',
-  	marginTop: 0,
+  	marginTop: 165,
   	paddingBottom: 4,
   	paddingLeft: 40,
   },
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   	color: 'white',
   	alignSelf: 'center',
   	fontSize: 25,
+  	marginTop: 7
   },
 
   hourPicker: {
@@ -168,11 +169,11 @@ class DurationPage extends Component {
 		        	style={styles.minutePicker}
 		        	selectedValue={this.state.minutes}
 		        	onValueChange={(minute) => this.setState({minutes: minute})}>
-		        	{hours.map((num) => (
+		        	{minutes.map((num) => (
 			        	<PickerItemIOS
 			            	key={num}
 			            	value={num}
-			            	label={"" + num}
+			            	label={"" + num + " min"}
 			            />
 		          	))}
 		        </PickerIOS>
