@@ -28,40 +28,8 @@ var moment = require('moment');
 
 var today = new Date();
 
-var taskList = [
-	{
-		name:'Take out trash', 
-		owner: {name: 'Michael', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Michael.jpg'},
-		isMyTask: true, 
-		completed:false, 
-		due:new Date().setDate(today.getDate() + 1), 
-		timeToComplete: '5 min'
-	},
-	{
-		name:'Call the landlord', 
-		owner: {name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'}, 
-		completed:false, 
-		due:new Date().setDate(today.getDate() + 3), 
-		timeToComplete: '15 min'
-	},
-	{
-		name:'Clean room',
-		owner: {name: 'David', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG'}, 
-		completed:false, 
-		due:new Date().setDate(today.getDate() + 4), 
-		timeToComplete: '30 min' 
-	},
-];
 
-/* 
-	Task object
-		name: name of the task
-		isMyTask: boolean True if task assigned to current user
-		owner: {name: username of owner, picURL: user's icon URL (from website)}
-		completed: boolean True if task has been completed
-		due: JS Date object representing the day the task is due
-		timeToComplete: string representing expected time to complete task
-*/
+
 
 const styles = StyleSheet.create({
   container: {
@@ -151,9 +119,60 @@ class TasksPage extends Component {
 	constructor(props) {
 		super(props);
 
+		/* 
+			Task object
+				name: name of the task
+				owner: user object from house
+				completed: boolean True if task has been completed
+				due: JS Date object representing the day the task is due
+				timeToComplete: string representing expected time to complete task
+		*/
+
+		this.taskList = [
+			{
+				name:'Take out trash', 
+				owner: props.house[0],
+				completed:false, 
+				due:new Date().setDate(today.getDate() + 1), 
+				timeToComplete: '5 min'
+			},
+			{
+				name:'Vacuum',
+				owner: props.house[0],
+				completed:false,
+				due:new Date().setMinutes(today.getMinutes() + 30),
+				timeToComplete: '15 min'
+			},
+			{
+				name:'Call the landlord', 
+				owner: props.house[1], 
+				completed:false, 
+				due:new Date().setDate(today.getDate() + 3), 
+				timeToComplete: '15 min'
+			},
+			{
+				name:'Clean room',
+				owner: props.house[3], 
+				completed:false, 
+				due:new Date().setDate(today.getDate() + 4), 
+				timeToComplete: '30 min' 
+			},
+		];
+
+		this.taskList.sort((value1, value2) => {
+			console.log(value1.due);
+			console.log(value2.due);
+			if (value1.due > value2.due.getTime)
+				return 1;
+			if (value1.due < value2.due)
+				return -1;
+			return 0;
+		});
+
+
 		this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		this.state = {
-			dataSource: this.ds.cloneWithRows(taskList.filter(this.checkTaskIsMine)),
+			dataSource: this.ds.cloneWithRows(this.taskList.filter(this.checkTaskIsMine)),
 			taskView: 'My Tasks',
 			modalVisible: false
 		};
@@ -168,7 +187,7 @@ class TasksPage extends Component {
 		taskItem.completed = !taskItem.completed;
 		this.setState({
 			dataSource: this.ds.cloneWithRows(this.state.taskView === "All Tasks" ? 
-				taskList : taskList.filter(this.checkTaskIsMine))
+				this.taskList : this.taskList.filter(this.checkTaskIsMine))
 		});
 	}
 
@@ -190,27 +209,27 @@ class TasksPage extends Component {
 	}
 
 	checkTaskIsMine = (value) => {
-		return value.isMyTask;
+		return value.owner.isMe;
 	}
 
 	onSegmentChanged = (value) => {
 		this.setState({
 			dataSource: this.ds.cloneWithRows(value === "All Tasks" ? 
-				taskList : taskList.filter(this.checkTaskIsMine)),
+				this.taskList : this.taskList.filter(this.checkTaskIsMine)),
 			taskView: value,
 		});
 	}
 
 	addTask = (task) => {
-		taskList.push(task);
+		this.taskList.push(task);
 		// double check to see this works
 		this.setState({
-			dataSource: this.ds.cloneWithRows(taskList)
+			dataSource: this.ds.cloneWithRows(this.taskList)
 		});
 	}
 
 	renderIcon = (data) => {
-		if (data.isMyTask) {
+		if (data.owner.isMe) {
 			return (
 				<TouchableOpacity onPress={() => this.onTaskCompleted(data)}>
 					<Image source={data.completed ? require('../assets/checked.png') : require('../assets/unchecked.png')} 

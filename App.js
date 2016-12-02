@@ -42,7 +42,7 @@ var house = [
 		firstName: 'David',
 		lastName: 'Morales',
 		isMe: false,
-		picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.jpg',
+		picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/David.JPG',
 	},
 ];
 
