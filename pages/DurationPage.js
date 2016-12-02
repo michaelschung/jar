@@ -42,8 +42,6 @@ const styles = StyleSheet.create({
   	fontFamily: 'Avenir',
   	marginBottom: 20,
   	marginLeft: 40,
-  	fontWeight: 'bold',
-    fontFamily: 'Avenir',
   },
 
   textInput: {
