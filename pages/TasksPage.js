@@ -172,6 +172,18 @@ class TasksPage extends Component {
 			}
 		];
 
+		this.sortTaskList();
+
+
+		this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+		this.state = {
+			dataSource: this.ds.cloneWithRows(this.taskList.filter(this.checkTaskIsMine)),
+			taskView: 'My Tasks',
+			modalVisible: false
+		};
+	}
+
+	sortTaskList = () => {
 		this.taskList.sort((value1, value2) => {
 			console.log(value1.due);
 			console.log(value2.due);
@@ -181,14 +193,6 @@ class TasksPage extends Component {
 				return -1;
 			return 0;
 		});
-
-
-		this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-		this.state = {
-			dataSource: this.ds.cloneWithRows(this.taskList.filter(this.checkTaskIsMine)),
-			taskView: 'My Tasks',
-			modalVisible: false
-		};
 	}
 
 	setModalVisible(visible) {
@@ -253,7 +257,7 @@ class TasksPage extends Component {
 
 	addTask = (task) => {
 		this.taskList.push(task);
-		// double check to see this works
+		this.sortTaskList();
 		this.updateDataSource();
 	}
 
