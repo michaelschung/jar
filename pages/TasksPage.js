@@ -140,35 +140,40 @@ class TasksPage extends Component {
 				owner: props.house[0],
 				completed:false, 
 				due:new Date().setDate(today.getDate() + 1), 
-				timeToComplete: '5 min'
+				timeToComplete: '5 min',
+				notes: '',
 			},
 			{
 				name:'Vacuum',
 				owner: props.house[0],
 				completed:false,
 				due:new Date().setMinutes(today.getMinutes() + 30),
-				timeToComplete: '15 min'
+				timeToComplete: '15 min',
+				notes: '',
 			},
 			{
 				name:'Call the landlord', 
 				owner: props.house[1], 
 				completed:false, 
 				due:new Date().setDate(today.getDate() + 3), 
-				timeToComplete: '15 min'
+				timeToComplete: '15 min',
+				notes: '',
 			},
 			{
 				name:'Clean room',
 				owner: props.house[3], 
 				completed:false, 
 				due:new Date().setDate(today.getDate() + 4), 
-				timeToComplete: '30 min' 
+				timeToComplete: '30 min',
+				notes: '',
 			},
 			{
 				name:'Wash dishes',
 				owner: props.house[2],
 				completed:false,
 				due:new Date().setMinutes(today.getMinutes() + 12),
-				timeToComplete: '15 min,'
+				timeToComplete: '15 min',
+				notes: '',
 			}
 		];
 
