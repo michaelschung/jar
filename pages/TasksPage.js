@@ -29,94 +29,94 @@ var moment = require('moment');
 var today = new Date();
 
 const styles = StyleSheet.create({
-  container: {
-  	flex: 1,
-  	paddingTop: 62,
-  },
-  modal: {
+	container: {
+		flex: 1,
+		paddingTop: 62,
+	},
+	modal: {
 
-  },
-  segmentedControl: {
-  	margin: 12, 
-  	backgroundColor: 'white',
-  },
-  list: {
-  	marginTop: -64, 
-  	zIndex: -100
-  },
-  row: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 12,
-  },
-  taskName: {
-    marginLeft: 12,
-    fontSize: 18,
-    fontWeight: '500',
-    fontFamily: 'Avenir',
-  },
-  photo: {
-    height: 45,
-    width: 45,
-    borderRadius: 22.5,
-  },
-  transferPhoto: {
-  	height: 45,
-  	width: 45,
-  	borderRadius: 22.5,
-  	opacity: .5,
-  },
-  checkBox: {
-  	height: 45,
-  	width: 45,
-  	borderRadius: 22.5,
-  	backgroundColor: '#319bce',
-  },
-  checkBoxIcon: {
-  	height: 45,
-  	width: 45,
-  },
-  dueInText: {
-    textAlign: 'right',
-    flex: 1,
-    fontSize: 16,
-    fontWeight: '400',
-    fontFamily: 'Avenir',
-  },
-  dueInTextUrgent: {
-    textAlign: 'right',
-    flex: 1,
-    color: 'red',
-    fontSize: 16,
-    fontWeight: '400',
-    fontFamily: 'Avenir',
-  },
-  separator: {
-  	flex: 1,
-    height: .5,
-    backgroundColor: '#8E8E8E',
-    padding: 0
-  },
-  segmentSeparator: {
-  	flex: 1,
-    maxHeight: .5,
-    backgroundColor: '#8E8E8E',
-    padding: .5
-  },
-  button: {
-    marginBottom: 20,
-    marginRight: 20,
-    position: 'absolute',
-    justifyContent: 'center',
-    borderRadius: 35,
-    minHeight: 50,
-    minWidth: 50,
-    width: 80,
-    height: 80,
-    bottom: 20,
-    right: 20,
-  },
+	},
+	segmentedControl: {
+		margin: 12, 
+		backgroundColor: 'white',
+	},
+	list: {
+		marginTop: -64, 
+		zIndex: -100
+	},
+	row: {
+		flex: 1,
+		flexDirection: 'row',
+		alignItems: 'center',
+		padding: 12,
+	},
+	taskName: {
+		marginLeft: 12,
+		fontSize: 18,
+		fontWeight: '500',
+		fontFamily: 'Avenir',
+	},
+	photo: {
+		height: 45,
+		width: 45,
+		borderRadius: 22.5,
+	},
+	transferPhoto: {
+		height: 45,
+		width: 45,
+		borderRadius: 22.5,
+		opacity: .5,
+	},
+	checkBox: {
+		height: 45,
+		width: 45,
+		borderRadius: 22.5,
+		backgroundColor: '#319bce',
+	},
+	checkBoxIcon: {
+		height: 45,
+		width: 45,
+	},
+	dueInText: {
+		textAlign: 'right',
+		flex: 1,
+		fontSize: 16,
+		fontWeight: '400',
+		fontFamily: 'Avenir',
+	},
+	dueInTextUrgent: {
+		textAlign: 'right',
+		flex: 1,
+		color: 'red',
+		fontSize: 16,
+		fontWeight: '400',
+		fontFamily: 'Avenir',
+	},
+	separator: {
+		flex: 1,
+		height: .5,
+		backgroundColor: '#8E8E8E',
+		padding: 0
+	},
+	segmentSeparator: {
+		flex: 1,
+		maxHeight: .5,
+		backgroundColor: '#8E8E8E',
+		padding: .5
+	},
+	button: {
+		marginBottom: 20,
+		marginRight: 20,
+		position: 'absolute',
+		justifyContent: 'center',
+		borderRadius: 35,
+		minHeight: 50,
+		minWidth: 50,
+		width: 80,
+		height: 80,
+		bottom: 20,
+		right: 20,
+	},
 });
 
 class TasksPage extends Component {
@@ -131,7 +131,7 @@ class TasksPage extends Component {
 				due: JS Date object representing the day the task is due
 				timeToComplete: string representing expected time to complete task
 				isAwaitingTransfer: user object to whom we requested a transfer, 
-									or null if no transfer is requested
+					or null if no transfer is requested
 		*/
 
 		this.taskList = [
@@ -201,8 +201,8 @@ class TasksPage extends Component {
 	}
 
 	setModalVisible(visible) {
-    	this.setState({modalVisible: visible});
-  	}
+		this.setState({modalVisible: visible});
+	}
 
 
 	onTaskCompleted = (taskItem) => {
@@ -312,9 +312,9 @@ class TasksPage extends Component {
 		return (
 			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
 			  <View style={styles.row}>
-			  	{this.renderIcon(data)}
-			    <Text style={styles.taskName}>{data.name}</Text>
-			    <Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{daysUntil}</Text>
+				{this.renderIcon(data)}
+				<Text style={styles.taskName}>{data.name}</Text>
+				<Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{daysUntil}</Text>
 
 			  </View>
 			</TouchableOpacity>
@@ -346,9 +346,9 @@ class TasksPage extends Component {
 				<View style={styles.segmentSeparator} />
 				<ListView
 					style={styles.list}
-				  	dataSource={this.state.dataSource}
-				  	renderRow={this.renderRow}  
-				  	renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
+					dataSource={this.state.dataSource}
+					renderRow={this.renderRow}  
+					renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
 				<TouchableOpacity onPress={() => this.onCreatePressed() }>
 					<Image style={styles.button} source={require('../assets/create_task_button.png')} />
 				</TouchableOpacity>

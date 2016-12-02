@@ -12,22 +12,22 @@ import {
 } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    paddingTop: 74,
-    paddingLeft: 40,
-    marginTop: 80
-  },
-  textPrompt: {
-  	color: 'black',
-  	fontSize: 30,
-  	fontWeight: 'bold',
-    fontFamily: 'Avenir',
-  	marginBottom: 20
-  },
+	container: {
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'flex-start',
+		alignItems: 'flex-start',
+		paddingTop: 74,
+		paddingLeft: 40,
+		marginTop: 80
+	},
+	textPrompt: {
+		color: 'black',
+		fontSize: 30,
+		fontWeight: 'bold',
+		fontFamily: 'Avenir',
+		marginBottom: 20
+	},
 });
 
 class MyHousePage extends Component {
