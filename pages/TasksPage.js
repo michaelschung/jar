@@ -102,9 +102,14 @@ const styles = StyleSheet.create({
   	height: 40,
   	width: 40,
   },
-  due: {
+  dueInText: {
     textAlign: 'right',
     flex: 1,
+  },
+  dueInTextUrgent: {
+    textAlign: 'right',
+    flex: 1,
+    color: 'red',
   },
   separator: {
   	flex: 1,
@@ -146,8 +151,8 @@ class TasksPage extends Component {
 
 		this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		this.state = {
-			dataSource: this.ds.cloneWithRows(taskList),
-			taskView: 'All Tasks',
+			dataSource: this.ds.cloneWithRows(taskList.filter(this.checkTaskIsMine)),
+			taskView: 'My Tasks',
 			modalVisible: false
 		};
 	}
@@ -219,13 +224,17 @@ class TasksPage extends Component {
 	}
 
 	renderRow = (data) => {
-		var numDays = moment(data.due).fromNow();
+		var daysUntil = moment(data.due).fromNow();
+		var now = new Date()
+		var timeDiff = Math.abs(now.getTime() - data.due)
+		var daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
 		return (
 			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
 			  <View style={styles.row}>
 			  	{this.renderIcon(data)}
 			    <Text style={styles.taskName}>{data.name}</Text>
-			    <Text style={styles.due}>{numDays}</Text>
+			    <Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{daysUntil}</Text>
+
 			  </View>
 			</TouchableOpacity>
 		);
@@ -248,7 +257,7 @@ class TasksPage extends Component {
 				<View style={{backgroundColor:'white'}}>
 					<SegmentedControlIOS 
 						style={styles.segmentedControl}
-						values={["All Tasks", "My Tasks"]} 
+						values={["My Tasks", "All Tasks"]} 
 						selectedIndex={0} 
 						tintColor='#319bce'
 						onValueChange={this.onSegmentChanged}/>
