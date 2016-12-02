@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import TaskRowItem from '../components/TaskRowItem'
 import NotesInput from '../components/NotesInput'
 import SimpleModal from '../components/SimpleModal'
+import ConfirmationModal from '../components/ConfirmationModal'
 import {
 	StyleSheet,
 	Text,
@@ -259,9 +260,11 @@ class TaskDetailsPage extends Component {
 		  showMessage: false,
 		  showConfirmTransferModal: false,
 		  showConfirmCompleteModal: false,
+		  showConfirmCancelTransferModal: false,
+		  showConfirmCompleteModal: false,
 		  showTransferSentMessage: false,
 		  showTaskCompletedMessage: false,
-		  transferSent: false,
+		  transferSent: this.props.task.isAwaitingTransfer,
 		  taskCompleted: this.props.task.completed,
 		};
   }
@@ -272,90 +275,84 @@ class TaskDetailsPage extends Component {
 
   /* For rendering transfer carousel when transfer button pressed */
   _onPressTransfer = () => {
-		this.setState((state) => ({
-		  renderPlaceholderOnly: state.renderPlaceholderOnly,
+		this.setState((state) => ({		  
 		  selectingTransfer: true,
-		  showModal: false,
-		  showMessage: false,
-		  transferSent: false,
-		  taskCompleted: false,
 		}));
   }
 
   /* For removing transfer carousel and rendering buttons when cancel is pressed */
   _onPressCancelTransfer = () => {
 		this.setState((state) => ({
-		  renderPlaceholderOnly: state.renderPlaceholderOnly,
 		  selectingTransfer: false,
-		  showModal: false,
-		  showMessage: false,
-		  transferSent: false,
-		  taskCompleted: false,
 		}));
   }
 
   /* For showing 'confirm transfer request' modal when transfer icon is pressed */
   _onPressTransferIcon = (userData) => {
 		this.setState((state) => ({
-		  renderPlaceholderOnly: state.renderPlaceholderOnly,
-		  selectingTransfer: false,
 		  showModal: true,
 		  showMessage: false,
 		  showConfirmTransferModal: true,
-		  showConfirmCompleteModal: false,
-		  transferSentTo: userData.firstName,
-		  transferSent: false,
-		  taskCompleted: false,
+		  transferSentTo: userData,
 		}));
   }
 
   /* transfer request confirmed */
-  _onConfirmTransferModal = (userData) => {
+  _onConfirmTransferModal = () => {
   	this.setState((state) => ({
-  	  renderPlaceholderOnly: state.renderPlaceholderOnly,
-  	  selectingTransfer: false,
+  		selectingTransfer: false,
   	  showModal: false,
   	  showMessage: true,
+  	  showConfirmTransferModal: false,
   	  showTaskTransferedMessage: true,
-  	  transferSentTo: userData.firstName,
+  	  transferSentTo: this.state.transferSentTo,
   	  transferSent: true,
-  	  taskCompleted: false,
+  	  disableComplete: true,
   	}));
 
-  	this.props.requestTransfer(this.props.task, userData);
-  }
-
-  /* Transfer request canceled */
-  _onCancelTransferModal = () => {
-  	
+  	this.props.requestTransfer(this.props.task, this.state.transferSentTo);
   }
 
   /* For canceling transfer */
-  _onCancelTransfer = () => {
+  _onPressCancelTransferRequest = () => {
 		this.setState((state) => ({
-		  renderPlaceholderOnly: state.renderPlaceholderOnly,
-		  selectingTransfer: false,
 		  showModal: true,
-		  showConfirmTransferModal: false,
-		  showConfirmCompleteModal: false,
-		  showCancelTransferModal: true,
-		  transferSent: false,
-		  taskCompleted: state.taskCompleted,
+		  showConfirmCancelTransferModal: true,
 		}));
   }
 
+  /* For confirming to cancel transfer request */
+  _onConfirmCancelTransferRequest = () => {
+  	this.setState((state) => ({
+  	  showModal: false,
+  	  showMessage: true,
+		  showConfirmCancelTransferModal: false,
+  	  showTransferCanceledMessage: true,
+  	  transferSent: false,
+  	  disableComplete: false,
+  	}));
+
+  	this.props.cancelTransfer(this.props.task);
+  }
+
   /* For showing "Task completed" modal */
-  _onCompleteTask = () => {
+  _onPressCompleteTask = () => {
 		this.setState((state) => ({
-		  renderPlaceholderOnly: state.renderPlaceholderOnly,
-		  selectingTransfer: false,
 		  showModal: true,
-		  showConfirmTransferModal: false,
 		  showConfirmCompleteModal: true,
-		  transferSent: false,
-		  taskCompleted: true,
 		}));
-	/*
+  }
+
+  /* For confirming completion of task */
+  _onConfirmCompleteTask = () => {
+  	this.setState((state) => ({
+  	  showModal: false,
+  	  showConfirmCompleteModal: false,
+  	  disableComplete: true,
+  	  taskCompleted: true,
+  	}));
+
+  	/*
 	  Set task as completed for other pages
 	*/
 		this.props.taskCompleted(this.props.task);
@@ -364,14 +361,11 @@ class TaskDetailsPage extends Component {
   /* For removing modal */
   _onDismissModal = () => {
 		this.setState((state) => ({
-		  renderPlaceholderOnly: state.renderPlaceholderOnly,
-		  selectingTransfer: false,
 		  showModal: false,
 		  showConfirmTransferModal: false,
 		  showConfirmCompleteModal: false,
-		  showCancelTransferModal: false,
-		  transferSent: state.transferSent,
-		  taskCompleted: state.taskCompleted,
+		  showConfirmCancelTransferModal: false,
+		  showConfirmCompleteModal: false,
 		}));
   }
 
@@ -379,14 +373,14 @@ class TaskDetailsPage extends Component {
   TransferButton = () => {
 	if (this.state.taskCompleted) {
 	  return (
-			<View style={[styles.button, styles.disabledButton]} onPress={this._onPressTransfer} >
+			<View style={[styles.button, styles.disabledButton]} >
 			  <Text style={styles.buttonText}>Transfer Task</Text>
 			</View>
 	  )
 	}
 	return this.state.transferSent ?
 	  (
-			<TouchableOpacity style={[styles.button, styles.warnButton]} onPress={this._onCancelTransfer} >
+			<TouchableOpacity style={[styles.button, styles.warnButton]} onPress={this._onPressCancelTransferRequest} >
 			  <Text style={styles.buttonText}>Cancel Transfer</Text>
 			</TouchableOpacity>
 	  ) :
@@ -399,14 +393,21 @@ class TaskDetailsPage extends Component {
 
   /* Complete button */
   CompleteButton = () => {
-		return this.state.taskCompleted ?
-			(
-			  <View style={[styles.button, styles.disabledButton]} >
-				<Text style={styles.buttonText}>Task Completed</Text>
-			  </View>
+		return this.state.disableComplete ?
+			(this.state.taskCompleted ?
+				(
+				  <View style={[styles.button, styles.disabledButton]} >
+					<Text style={styles.buttonText}>Task Completed</Text>
+				  </View>
+				) :
+				(
+				  <View style={[styles.button, styles.disabledButton]} >
+					<Text style={styles.buttonText}>Complete Task</Text>
+				  </View>
+				)
 			) :
 			(
-			  <TouchableOpacity style={styles.button} onPress={this._onCompleteTask} >
+			  <TouchableOpacity style={styles.button} onPress={this._onPressCompleteTask} >
 				<Text style={styles.buttonText}>Complete Task</Text>
 			  </TouchableOpacity>
 			)
@@ -429,7 +430,6 @@ class TaskDetailsPage extends Component {
 			)
 		}
 	}
-  
 
   /* Carousel */
   Carousel = () => 
@@ -454,19 +454,35 @@ class TaskDetailsPage extends Component {
 		var timeDiff = Math.abs(now.getTime() - dueDate.getTime())
 		var daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-		/* Determine whether to show transfer modal or not */
+		/* 
+			Determine whether to show modal or not 
+			And define modal to show
+		*/
 		var modal;
 		if (this.state.showModal) {
-			/* Message to show in modal */
-			var message = this.state.showConfirmTransferModal ? 
-			('Transfer request sent to ' + this.state.transferSentTo + '!') :
-			(this.state.showConfirmCompleteModal ? ('Task completed!') :
-			('Transfer canceled'));
+			/* Modal properties */
+			var title, confirmText, confirmCallback, cancelText, cancelCallback;
+			confirmText = 'Ok';
+			cancelText = 'Cancel';
+			cancelCallback = this._onDismissModal;
+			if (this.state.showConfirmTransferModal) {
+				title = 'Transfer task to ' + this.state.transferSentTo.firstName +'?';
+				confirmCallback = this._onConfirmTransferModal;
+			} else if (this.state.showConfirmCompleteModal) {
+				title = 'Complete task?';
+				confirmCallback = this._onConfirmCompleteTask;
+			} else if (this.state.showConfirmCancelTransferModal) {
+				title = 'Cancel task transfer?';
+				confirmCallback = this._onConfirmCancelTransferRequest;
+			}
 
-			modal = (<SimpleModal 
-			message={message}
-			removeModal={this._onDismissModal}
-			></SimpleModal>);
+			modal = (<ConfirmationModal 
+			title={title}
+			confirmText={confirmText}
+			confirmCallback={confirmCallback}
+			cancelText={cancelText}
+			cancelCallback={cancelCallback}
+			></ConfirmationModal>);
 		} else {
 		  modal = null;
 		}
