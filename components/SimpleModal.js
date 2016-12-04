@@ -48,7 +48,7 @@ class SimpleModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			modalVisible: true,
+			modalVisible: props.visible,
 		};
 	}
 
@@ -57,7 +57,14 @@ class SimpleModal extends Component {
 		this.props.removeModal();
 	}
 
+	componentWillReceiveProps = (nextProps) => {
+		if (this.props.visible != nextProps.visible) {
+			this.setState({modalVisible:nextProps.visible});
+		}
+	}
+
 	render() {
+		console.log('SimpleModal visible? ' + this.state.modalVisible)
 		return (
 			<View>
 				<Modal

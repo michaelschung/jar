@@ -162,26 +162,6 @@ class TasksPage extends Component {
 			},
 		];
 
-
-		// this.modals = {'getRequest': getRequest(), 'transferResponse': transferResponse()}
-		// console.log('modals from constructor', this.modals)
-
-		/* Transfer request modal */
-		var button1 = () => { return (<Button text='Deny' color='#C55254' size='medium' onPress={()=>{console.log('deny pressed')}}/>) }
-		var button2 = () => { return (<Button text='Accept' color='#6BAC4E' size='medium' onPress={()=>{console.log('accept pressed')}}/>) }
-
-
-		var getRequest = () => (<TitleBodyButtonsModal title='Transfer request from:' bodyView={body} buttonViews={[button1, button2]} />)
-
-		/* Transfer response */
-		var transferResponse = () => (<SimpleModal removeModal={() => {this.setModalVisible('transferResponse', false)}}/>)
-
-		console.log(transferResponse);
-
-		/* Assign modal */
-
-
-
 		this.taskList.sort((value1, value2) => {
 			console.log(value1.due);
 			console.log(value2.due);
@@ -197,8 +177,8 @@ class TasksPage extends Component {
 		this.state = {
 			dataSource: this.ds.cloneWithRows(this.taskList.filter(this.checkTaskIsMine)),
 			taskView: 'My Tasks',
-			modalVisible: false,
-			modal: 'transferResponse',
+			transferResponseModalVisible: false,
+			transferRequestModalVisible: false,
 		};
 	}
 
@@ -206,33 +186,21 @@ class TasksPage extends Component {
 		 LayoutAnimation.easeInEaseOut();
 	}
 
-	setModalVisible = (modalName, visible) => {
-		console.log('setModalVisible(' + modalName + ', ' + visible + ')');
-		console.log(this.state)
-    	this.setState((state) => ({modalVisible: visible, modal: visible ? modalName : ''}), () => console.log('setting visible' + visible + ' ' + this.state.modal));
-
+	setTransferResponseModalVisibility = (visible) => {
+    	this.setState({transferResponseModalVisible: visible});
   	}
 
-  	getModal = (modalName) => {
-  		console.log('getting ' + modalName)
-  		var task = {
-  			name:'Call the landlord', 
-  			owner: {name: 'Evan', picURL: 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/Evan.jpg'}, 
-  			completed:false, 
-  			due:new Date().setDate(today.getDate() + 3), 
-  			timeToComplete: '15 min'
-  		}
-  		var button1 = () => { return (<Button text='Deny' color='#C55254' size='medium' onPress={()=>{console.log('deny pressed')}}/>) }
-  		var button2 = () => { return (<Button text='Accept' color='#6BAC4E' size='medium' onPress={()=>{console.log('accept pressed')}}/>) }
-  		var body = () => { return (<TransferRequestBody fromName='Evan' task={task} />) }
-
-  		if (modalName === 'getRequest') {
-  			return (<TitleBodyButtonsModal title='Transfer request from:' bodyView={body} buttonViews={[button1, button2]} />);
-  		} else if (modalName === 'transferResponse') {
-  			return (<SimpleModal message='Somebody accepted your transfer request' removeModal={() => {this.setModalVisible('transferResponse', false)}}/>);
-  		}
+  	setTransferRequestModalVisibility = (visible) => {
+  		this.setState({transferRequestModalVisible: visible});
   	}
 
+  	getTransferResponseSender = () => {
+  			var task = this.taskList.filter((value) => value.isAwaitingTransfer)[0];
+  			if (!task) {
+  				return null;
+  			}
+  			return task.isAwaitingTransfer.firstName + ' accepted your transfer request!';
+  	}
 	onTaskCompleted = (taskItem) => {
 		taskItem.completed = !taskItem.completed;
 		this.setState({
@@ -256,7 +224,6 @@ class TasksPage extends Component {
 	}
 
 	onCreatePressed = () => {
-		// this.setModalVisible(true);
 		this.props.navigator.push({
 			title: 'Task Name',
 			component: CreatePage,
@@ -296,36 +263,107 @@ class TasksPage extends Component {
 
 	requestTransfer = (task, user) => {
 		task.isAwaitingTransfer = user;
-		this.setState({'userResponded': user});
 		this.updateDataSource();
+
 		/* Set timer to show transfer modal */
-		console.log('booom')
-		// var showModal = setTimeout(() => {
-		// 	console.log("timer up");
-		// 	this.setModalVisible('transferResponse', true);
-		// 	clearTimeout(this);
-		// 	console.log('passed timer');
-		// }, 5000);
-		this.setModalVisible('transferResponse', true);
-		console.log('afterrrrr')
+		console.log('booom');
+		var showModal = setTimeout(() => {
+			console.log("timer up");
+			this.setTransferResponseModalVisibility(true);
+			clearTimeout(this);
+			console.log('passed timer');
+		}, 5000);
 	}
 
 	cancelTransfer = (task) => {
 		task.isAwaitingTransfer = null;
 		this.updateDataSource();
-		this.setModalVisible('transferResponse', false);
-		this.setModalVisible('getRequest', false);
+		this.setTransferResponseModalVisibility(false);
 	}
 
-	acceptTransferRequest = (task) => {
-		task.owner = this.props.house.filter((value) => value.isMe)[0];
+	dismissTransferResponseModal = () => {
+		console.log('dismiss transfer response modal');
+		this.setTransferResponseModalVisibility(false);
+		var task = this.taskList.filter((value) => value.isAwaitingTransfer)[0]
+		task.owner = task.isAwaitingTransfer;
 		task.isAwaitingTransfer = null;
 		this.updateDataSource();
-		// send a notification to transfer requester
-		this.setModalVisible('getRequest', true);
+	}
+
+	acceptTransferRequest = () => {
+		console.log('accepting transfer')
+		var task = this.state.taskRequestingTransfer;
+		var newTask = {};
+		console.log(task)
+		newTask = Object.assign(newTask, task);
+		console.log(newTask);
+		newTask.owner = this.props.house.filter((value) => value.isMe)[0];
+		var index = this.taskList.indexOf(task);
+		this.taskList.splice(index, 1);
+		this.taskList.push(newTask);
+
+		this.updateDataSource();
+		// TODO: send a notification to transfer requester here 
+		this.setState({
+			taskRequestingTransfer: null,
+			transferRequestModalVisible: false,
+
+		})
+	}
+
+	denyTransferRequest = () => {
+		this.setState({
+			taskRequestingTransfer: null,
+			transferRequestModalVisible: false});
+	}
+
+
+	simulateTransferRequestNotification = () => {
+		console.log('transfer request from ');
+		// pick a task (not yours) to simulate getting a request from
+		var notMyTasks = this.taskList.filter((task) => !(task.owner.isMe));
+		if (notMyTasks.length === 0) {
+			return;
+		}
+		var index = Math.floor(Math.random() * (notMyTasks.length))
+		console.log(index);
+		console.log('getting transfer request for task: ' + notMyTasks[index]);
+		this.setState({
+			taskRequestingTransfer: notMyTasks[index],
+			transferRequestModalVisible: true
+		});
+	}
+
+	getRequestModalBody = () => {
+		return (<TransferRequestBody task={this.state.taskRequestingTransfer} />);
+	}
+
+	getRequestModalButtonDeny = () => {
+		return (
+			<Button 
+				text='Deny' 
+				color='#C55254' 
+				size='medium' 
+				onPress={()=>{this.denyTransferRequest()}}
+			/>
+		);
+	}
+
+	getRequestModalButtonAccept = () => {
+		return (
+			<Button
+				text='Accept'
+				color='#6BAC4E'
+				size='medium'
+				onPress={() => {
+					this.acceptTransferRequest();
+				}}
+			/>
+		);
 	}
 
 	renderIcon = (data) => {
+		console.log('UPDATING icon');
 		if (data.owner.isMe) {
 			if (!data.isAwaitingTransfer)
 				return (
@@ -335,6 +373,7 @@ class TasksPage extends Component {
 					</TouchableOpacity>
 				);
 			else {
+				console.log('awaiting transfer icon');
 				return (
 					<Image source={{ uri: data.isAwaitingTransfer.picURL }} style={styles.transferPhoto} />
 				);
@@ -364,10 +403,12 @@ class TasksPage extends Component {
 	}
 
 	render() {
-		console.log('render modal?', this.state.modalVisible)
-		console.log('render modal: ', this.state.modal)
+		console.log('modal visible? ' + this.state.transferResponseModalVisible)
 		return (
-			<View style={styles.container}>					
+			<View 
+				style={styles.container}
+				accessible={true}
+				onMagicTap={this.simulateTransferRequest}>					
 				<View style={{backgroundColor:'white'}}>
 					<SegmentedControlIOS 
 						style={styles.segmentedControl}
@@ -382,15 +423,25 @@ class TasksPage extends Component {
 				  	dataSource={this.state.dataSource}
 				  	renderRow={this.renderRow}  
 				  	renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
+				<Button
+					style={{position: 'absolute'}}
+					onPress={this.simulateTransferRequestNotification}
+					size='medium'
+					color='white'
+					text='click to receive request notification'/>
 				<TouchableOpacity onPress={() => this.onCreatePressed() }>
 					<Image style={styles.button} source={require('../assets/create_task_button.png')} />
 				</TouchableOpacity>
-				{
-					// this.state.modalVisible ?
-					// modalRender() :
-					// null
-					this.getModal(this.state.modal)
-				}
+				<SimpleModal 
+					message={this.getTransferResponseSender()}
+					removeModal={() => {this.dismissTransferResponseModal()}}
+					visible={this.state.transferResponseModalVisible}/>
+				<TitleBodyButtonsModal 
+					title='Transfer request from:' 
+					bodyView={this.getRequestModalBody} 
+					buttonViews={[this.getRequestModalButtonDeny, this.getRequestModalButtonAccept]}
+					visible={this.state.transferRequestModalVisible} />
+
 			</View>
 		);
 	}

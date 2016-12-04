@@ -66,7 +66,6 @@ class TransferRequestBody extends Component {
   /*
    * Expects the following properties:
    *
-   * .fromName - string containing name of user who is transfering task
    * .task - object representing task being transfered
    *    Should contain 'name', 'due', and 'timeToComplete' fields
    */
@@ -87,7 +86,7 @@ class TransferRequestBody extends Component {
     return (
       <View>
         {/* Name of user who sent request */}
-        <Text style={styles.senderName}>{this.props.fromName}</Text>
+        <Text style={styles.senderName}>{this.props.task.owner.firstName}</Text>
 
         {/* Task name */}
         <Text style={styles.taskName}>{this.props.task.name}</Text>

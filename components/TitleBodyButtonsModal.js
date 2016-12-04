@@ -59,13 +59,19 @@ class TitleBodyButtonsModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			modalVisible: true,
+			modalVisible: props.visible,
 		};
 	}
 
 	_removeModal = () => {
 		if (this.props.removeModal) {
 			this.props.removeModal();
+		}
+	}
+
+	componentWillReceiveProps = (nextProps) => {
+		if (this.props.visible != nextProps.visible) {
+			this.setState({modalVisible:nextProps.visible});
 		}
 	}
 
