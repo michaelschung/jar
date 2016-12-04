@@ -50,16 +50,22 @@ class SimpleModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			modalVisible: true,
+			modalVisible: props.visible,
 		};
 	}
 
 	_removeModal = () => {
+		console.log('removing modal from simplemodal')
 		this.props.removeModal();
 	}
 
+	componentWillReceiveProps = (nextProps) => {
+		if (this.props.visible != nextProps.visible) {
+			this.setState({modalVisible:nextProps.visible});
+		}
+	}
+
 	render() {
-		console.log('rendering SimpleModal');
 		return (
 			<View>
 				<Modal
