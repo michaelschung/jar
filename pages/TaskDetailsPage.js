@@ -297,7 +297,7 @@ class TaskDetailsPage extends Component {
 			showTransferSentMessage: false,
 			showTaskCompletedMessage: false,
 			transferSent: this.props.task.isAwaitingTransfer,
-			disableComplete: this.props.task.isAwaitingTransfer,
+			disableComplete: (this.props.task.isAwaitingTransfer || this.props.task.completed),
 			taskCompleted: this.props.task.completed,
 			notes: '',
 		};
@@ -359,7 +359,7 @@ class TaskDetailsPage extends Component {
 		this.setState((state) => ({
 			showModal: false,
 			showMessage: true,
-			 showConfirmCancelTransferModal: false,
+			showConfirmCancelTransferModal: false,
 			showTransferCanceledMessage: true,
 			transferSent: false,
 			disableComplete: false,
