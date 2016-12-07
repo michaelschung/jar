@@ -221,7 +221,7 @@ class TasksPage extends Component {
 				setTimeout(() => {
 					this.setDeadlineModalVisibility(true);
 					this.setNextTask('The deadline for "' +  task.name + '" has passed. You will be charged $1.');
-					this.props.changeJarAmount(-1);
+					this.props.changeJarAmount(+1);
 					clearTimeout(this);
 				}, timeLeft)
 				break;
@@ -535,7 +535,7 @@ class TasksPage extends Component {
 			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
 			  <View style={styles.row}>
 				{this.renderIcon(data)}
-				<Text style={styles.taskName}>{this.trunc(data.name, 26)}</Text>
+				<Text style={styles.taskName}>{this.trunc(data.name, 22)}</Text>
 				<Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{daysUntil}</Text>
 
 			  </View>
