@@ -208,6 +208,9 @@ class TasksPage extends Component {
 		});
 	}
 
+	trunc = (str, n) => {
+          return str.substr(0,n-1)+(str.length>n?'...':'');
+    }
 
 	componentWillUpdate() {
 		 LayoutAnimation.easeInEaseOut();
@@ -481,7 +484,7 @@ class TasksPage extends Component {
 			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
 			  <View style={styles.row}>
 				{this.renderIcon(data)}
-				<Text style={styles.taskName}>{data.name}</Text>
+				<Text style={styles.taskName}>{this.trunc(data.name, 26)}</Text>
 				<Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{daysUntil}</Text>
 
 			  </View>
