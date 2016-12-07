@@ -188,11 +188,14 @@ class TasksPage extends Component {
 			transferResponseModalVisible: false,
 			transferRequestModalVisible: false,
 			taskAssignedModalVisible: false,
+			deadlineModalVisible: false,
+			nextTask: ''
 		};
 	}
 
 
 	sortTaskList = () => {
+
 		this.taskList.sort((value1, value2) => {
 			// console.log(value1.due);
 			// console.log(value2.due);
@@ -202,6 +205,23 @@ class TasksPage extends Component {
 				return -1;
 			return 0;
 		});
+
+		for (var i = 0; i < this.taskList.length; i++) {
+			var task = this.taskList[i];
+
+			var today = new Date();
+			if (task.owner.isMe && !task.completed && task.due > today) {
+				// check for completed task
+				var timeLeft = (task.due - today)
+				clearTimeout(this);
+				setTimeout(() => {
+					this.setDeadlineModalVisibility(true);
+					this.setNextTask('The deadline for "' +  task.name + '" has passed. You will be charged $1.');
+					clearTimeout(this);
+				}, timeLeft)
+				break;
+			}
+		}
 	}
 
 
@@ -220,6 +240,15 @@ class TasksPage extends Component {
   	setTaskAssignedModalVisibility = (visible) => {
   		this.setState({taskAssignedModalVisible: visible});	
   	}
+
+  	setDeadlineModalVisibility = (visible) => {
+  		this.setState({deadlineModalVisible: visible});
+  	}
+
+  	setNextTask = (task) => {
+  		this.setState({nextTask: task});
+  	}
+
 
   	getTransferResponseSender = () => {
   			var task = this.taskList.filter((value) => value.isAwaitingTransfer)[0];
@@ -324,6 +353,10 @@ class TasksPage extends Component {
 
 	dismissTaskAssignedModal = () => {
 		this.setTaskAssignedModalVisibility(false);
+	}
+
+	dismissDeadlineModal = () => {
+		this.setDeadlineModalVisibility(false);
 	}
 
 	acceptTransferRequest = () => {
@@ -494,6 +527,10 @@ class TasksPage extends Component {
 					message={this.getTransferResponseSender()}
 					removeModal={() => {this.dismissTransferResponseModal()}}
 					visible={this.state.transferResponseModalVisible}/>
+				<SimpleModal 
+					message={this.state.nextTask}
+					removeModal={() => {this.dismissDeadlineModal()}}
+					visible={this.state.deadlineModalVisible}/>
 				<TitleBodyButtonsModal 
 					title='Transfer request from:' 
 					bodyView={this.getRequestModalBody} 
