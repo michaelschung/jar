@@ -164,7 +164,10 @@ class App extends Component {
 					title: 'Home',
 					// component: ProfilePage,
 					// title: 'Profile',
-					passProps: {house: house,},
+					passProps: {
+						house: house,
+						changeJarAmount: this.changeJarAmount,
+					},
 					// uncomment the next line for the Jar title logo
 					//titleImage: require('./assets/jar_title.png'),
 					rightButtonIcon: require('./assets/jar_transparent_resized.png'),

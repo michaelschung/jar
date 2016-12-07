@@ -152,7 +152,7 @@ class TasksPage extends Component {
 				name:'Vacuum',
 				owner: props.house[0],
 				completed:false,
-				due:new Date().setMinutes(today.getMinutes() + 30),
+				due:new Date().setMinutes(today.getMinutes() + 1),
 				timeToComplete: '15 min',
 				notes: '',
 			},
@@ -221,6 +221,7 @@ class TasksPage extends Component {
 				setTimeout(() => {
 					this.setDeadlineModalVisibility(true);
 					this.setNextTask('The deadline for "' +  task.name + '" has passed. You will be charged $1.');
+					this.props.changeJarAmount(-1);
 					clearTimeout(this);
 				}, timeLeft)
 				break;
