@@ -106,18 +106,21 @@ const styles = StyleSheet.create({
 		backgroundColor: '#8E8E8E',
 		padding: .5
 	},
-	button: {
+	addButton: {
 		marginBottom: 20,
 		marginRight: 20,
 		position: 'absolute',
 		justifyContent: 'center',
-		borderRadius: 35,
+		borderRadius: 40,
 		minHeight: 50,
 		minWidth: 50,
 		width: 80,
 		height: 80,
 		bottom: 20,
 		right: 20,
+	},
+	transferRequestButton: {
+		position: 'absolute',
 	},
 });
 
@@ -507,13 +510,13 @@ class TasksPage extends Component {
 				  	renderRow={this.renderRow}  
 				  	renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
 				<Button
-					style={{position: 'absolute'}}
+					style={styles.transferRequestButton}
 					onPress={this.simulateTransferRequestNotification}
 					size='medium'
 					color='white'
 					text='click to receive request notification'/>
 				<TouchableOpacity onPress={() => this.onCreatePressed() }>
-					<Image style={styles.button} source={require('../assets/create_task_button.png')} />
+					<Image style={styles.addButton} source={require('../assets/create_task_button.png')} />
 				</TouchableOpacity>
 				<SimpleModal 
 					message={this.getTransferResponseSender()}
