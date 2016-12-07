@@ -4,7 +4,8 @@ import {
 	View, 
 	Text, 
 	StyleSheet,
-	TextInput
+	TextInput,
+  Image,
 	 } from 'react-native';
 
 var moment = require('moment');
@@ -15,6 +16,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontSize: 22,
 		margin: 10,
+    fontFamily: 'Avenir',
 	},
 
 	/* Task name */
@@ -23,12 +25,14 @@ const styles = StyleSheet.create({
 		fontSize: 22,
 		fontWeight: '700',
 		margin: 10,
+    fontFamily: 'Avenir',
 	},
 
 	/* Details */
 	label: {
 		textAlign: 'left',
 		fontSize: 20,
+    fontFamily: 'Avenir',
 	},
 	detailsContainer: {
 		flexDirection: 'column',
@@ -44,11 +48,13 @@ const styles = StyleSheet.create({
 		color: '#319bce',
 		textAlign: 'right',
 		fontSize: 20,
+    fontFamily: 'Avenir',
 	},
 	dueInTextUrgent: {
 		color: 'red',
 		textAlign: 'right',
 		fontSize: 20,
+    fontFamily: 'Avenir',
 	},
 	timeToCompleteTextContainer: {
 		justifyContent: 'space-between',
@@ -59,6 +65,7 @@ const styles = StyleSheet.create({
 	timeToCompleteText: {
 		textAlign: 'right',
 		fontSize: 20,
+    fontFamily: 'Avenir',
 	},
 });
 
@@ -86,7 +93,10 @@ class TransferRequestBody extends Component {
 		return (
 			<View>
 				{/* Name of user who sent request */}
-				<Text style={styles.senderName}>{this.props.task.owner.firstName}</Text>
+        <View style={{flexDirection: 'column', margin: 10, alignItems: 'center'}}>
+          <Image source={{ uri: this.props.task.owner.picURL }} style={{height: 70, width: 70, borderRadius: 35, marginBottom: 5}} />
+          <Text style={{fontSize: 18, fontWeight: '500', fontFamily: 'Avenir'}}>{this.props.task.owner.firstName}</Text>
+        </View>
 				{/* Task name */}
 				<Text style={styles.taskName}>{this.props.task.name}</Text>
 
@@ -95,7 +105,7 @@ class TransferRequestBody extends Component {
 					<View style={styles.dueInTextContainer}>
 						<Text style={styles.label}>Due:</Text>
 						{/* Use urgent style if task is due within 24 hours (1 day) */}
-						<Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{numDays}</Text>
+						<Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}> {numDays}</Text>
 					</View>
 					<View style={styles.timeToCompleteTextContainer}>
 						<Text style={styles.label}>Will Take:</Text>

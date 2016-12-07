@@ -229,7 +229,13 @@ const styles = StyleSheet.create({
 		borderRadius: 30,
 		marginBottom: 5,
     },
-    userName: {}
+    userName: {},
+    notes: {
+		height: 120,
+		color: '#8F8E94',
+		fontSize: 16,
+		fontFamily: 'Avenir',
+	},
 });
 
 class OverviewPage extends Component {
@@ -321,7 +327,7 @@ class OverviewPage extends Component {
 
 					<View style={styles.notesContainer}>
 						<Text style={styles.label}>Notes:</Text>
-						{/*
+						
 						<TextInput
 							style={styles.notes}
 							autoCorrect={true}
@@ -330,10 +336,6 @@ class OverviewPage extends Component {
 							onChangeText={this.setNotes}
 							placeholder={'Add a note...'}
 							value={this.state.text}
-						/>
-						*/}
-						<NotesInput
-							task={this.props.currentTask}
 						/>
 					</View>
 

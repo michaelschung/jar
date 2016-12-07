@@ -106,18 +106,21 @@ const styles = StyleSheet.create({
 		backgroundColor: '#8E8E8E',
 		padding: .5
 	},
-	button: {
+	addButton: {
 		marginBottom: 20,
 		marginRight: 20,
 		position: 'absolute',
 		justifyContent: 'center',
-		borderRadius: 35,
+		borderRadius: 40,
 		minHeight: 50,
 		minWidth: 50,
 		width: 80,
 		height: 80,
 		bottom: 20,
 		right: 20,
+	},
+	transferRequestButton: {
+		position: 'absolute',
 	},
 });
 
@@ -190,6 +193,7 @@ class TasksPage extends Component {
 			taskAssignedModalVisible: false,
 			deadlineModalVisible: false,
 			nextTask: ''
+			timerMap: new Map(),
 		};
 	}
 
@@ -224,12 +228,16 @@ class TasksPage extends Component {
 		}
 	}
 
+	trunc = (str, n) => {
+          return str.substr(0,n-1)+(str.length>n?'...':'');
+    }
 
 	componentWillUpdate() {
 		 LayoutAnimation.easeInEaseOut();
 	}
 
 	setTransferResponseModalVisibility = (visible) => {
+<<<<<<< HEAD
     	this.setState({transferResponseModalVisible: visible});
   	}
 
@@ -258,12 +266,56 @@ class TasksPage extends Component {
   			return task.isAwaitingTransfer.firstName + ' accepted your transfer request!';
   	}
   	
+=======
+		this.setState({transferResponseModalVisible: visible});
+	}
+
+	setTransferRequestModalVisibility = (visible) => {
+		this.setState({transferRequestModalVisible: visible});
+	}
+
+	setTaskAssignedModalVisibility = (visible) => {
+		this.setState({taskAssignedModalVisible: visible});	
+	}
+
+	getTransferResponseSender = () => {
+			var task = this.taskList.filter((value) => value.isAwaitingTransfer)[0];
+			if (!task) {
+				return null;
+			}
+			return task.isAwaitingTransfer.firstName + ' accepted your transfer request!';
+	}
+	
 	onTaskCompleted = (taskItem) => {
 		taskItem.completed = !taskItem.completed;
-		this.setState({
-			dataSource: this.ds.cloneWithRows(this.state.taskView === "All Tasks" ? 
-				this.taskList : this.taskList.filter(this.checkTaskIsMine))
-		});
+		var timer = this.state.timerMap.get(taskItem);
+		var taskPage = this;
+		var map = this.state.timerMap;
+		if (timer) {
+			// timer has been set already, so clear it and uncheck box
+			clearTimeout(timer);
+
+			map.delete(taskItem);
+			this.setState({
+				timerMap: map,
+			});
+		} else {
+			// set timer to remove task
+			map.set(taskItem, setTimeout(() => {
+					console.log("timer up");
+					var index = taskPage.taskList.indexOf(taskItem);
+					taskPage.taskList.splice(index, 1);
+					clearTimeout(this);
+					taskPage.updateDataSource();
+					console.log('task completed timer up');
+				}, 5000)
+			);
+			this.setState({
+				timerMap: map,
+			})
+
+		}
+		this.updateDataSource();
 	}
 
 	onTaskPressed = (taskItem) => {
@@ -486,7 +538,7 @@ class TasksPage extends Component {
 			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
 			  <View style={styles.row}>
 				{this.renderIcon(data)}
-				<Text style={styles.taskName}>{data.name}</Text>
+				<Text style={styles.taskName}>{this.trunc(data.name, 26)}</Text>
 				<Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{daysUntil}</Text>
 
 			  </View>
@@ -511,17 +563,19 @@ class TasksPage extends Component {
 				<View style={styles.segmentSeparator} />
 				<ListView
 					style={styles.list}
-				  	dataSource={this.state.dataSource}
-				  	renderRow={this.renderRow}  
-				  	renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
+					dataSource={this.state.dataSource}
+					renderRow={this.renderRow}  
+					renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }
+					enableEmptySections={true}
+				/>
 				<Button
-					style={{position: 'absolute'}}
+					style={styles.transferRequestButton}
 					onPress={this.simulateTransferRequestNotification}
 					size='medium'
 					color='white'
 					text='click to receive request notification'/>
 				<TouchableOpacity onPress={() => this.onCreatePressed() }>
-					<Image style={styles.button} source={require('../assets/create_task_button.png')} />
+					<Image style={styles.addButton} source={require('../assets/create_task_button.png')} />
 				</TouchableOpacity>
 				<SimpleModal 
 					message={this.getTransferResponseSender()}
