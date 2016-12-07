@@ -13,6 +13,8 @@ import {
     Dimensions,
 } from 'react-native';
 
+var moment = require('moment');
+
 import NotesInput from '../components/NotesInput'
 
 const window = Dimensions.get('window');
@@ -241,8 +243,14 @@ class OverviewPage extends Component {
 		var now = new Date()
 		var timeDiff = Math.abs(now.getTime() - dueDate.getTime())
 		var daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
-		return daysLeft;
+		return daysLeft
 	}
+
+	getNumDays() {
+		var numDays = moment(this.props.currentTask.due).fromNow();
+		return numDays
+	}
+
 
 	onPressAssign() {
 
@@ -281,11 +289,6 @@ class OverviewPage extends Component {
 		this.props.navigator.popToTop(0);
 	}
 
-	// small grammar correction
-	dayOrDays(daysRemaining) {
-		return daysRemaining <= 1 ? "day" : "days";
-	}
-
 	setNotes = (text) => {
 		// console.log("NOTES:", text);
 		this.props.currentTask.notes = text;
@@ -306,7 +309,7 @@ class OverviewPage extends Component {
 								<View style={styles.dueInTextContainer}>
 									<Text style={styles.label}>Due:</Text>
 									{/* Use urgent style if task is due within 24 hours (1 day) */}
-									<Text style={this.daysRemaining() > 1 ? styles.dueInText : styles.dueInTextUrgent}>{this.daysRemaining()} {this.dayOrDays(this.daysRemaining())}</Text>
+									<Text style={this.daysRemaining() > 1 ? styles.dueInText : styles.dueInTextUrgent}>{this.getNumDays()}</Text>
 								</View>
 								<View style={styles.timeToCompleteTextContainer}>
 									<Text style={styles.label}>Will Take:</Text>
