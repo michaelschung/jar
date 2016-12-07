@@ -187,6 +187,7 @@ class TasksPage extends Component {
 			taskView: 'My Tasks',
 			transferResponseModalVisible: false,
 			transferRequestModalVisible: false,
+			taskAssignedModalVisible: false,
 		};
 	}
 
@@ -216,6 +217,10 @@ class TasksPage extends Component {
   		this.setState({transferRequestModalVisible: visible});
   	}
 
+  	setTaskAssignedModalVisibility = (visible) => {
+  		this.setState({taskAssignedModalVisible: visible});	
+  	}
+
   	getTransferResponseSender = () => {
   			var task = this.taskList.filter((value) => value.isAwaitingTransfer)[0];
   			if (!task) {
@@ -223,6 +228,7 @@ class TasksPage extends Component {
   			}
   			return task.isAwaitingTransfer.firstName + ' accepted your transfer request!';
   	}
+  	
 	onTaskCompleted = (taskItem) => {
 		taskItem.completed = !taskItem.completed;
 		this.setState({
@@ -278,6 +284,10 @@ class TasksPage extends Component {
 	}
 
 	addTask = (task) => {
+		// Show 'task assigned to' modal
+		console.log(task)
+		this.setTaskAssignedModalVisibility(true);
+		this.lastAddedTask = task;
 		this.taskList.push(task);
 		this.sortTaskList();
 		this.updateDataSource();
@@ -312,6 +322,10 @@ class TasksPage extends Component {
 		this.updateDataSource();
 	}
 
+	dismissTaskAssignedModal = () => {
+		this.setTaskAssignedModalVisibility(false);
+	}
+
 	acceptTransferRequest = () => {
 		console.log('accepting transfer')
 		var task = this.state.taskRequestingTransfer;
@@ -339,7 +353,6 @@ class TasksPage extends Component {
 			transferRequestModalVisible: false});
 	}
 
-
 	simulateTransferRequestNotification = () => {
 		console.log('transfer request from ');
 		// pick a task (not yours) to simulate getting a request from
@@ -358,6 +371,17 @@ class TasksPage extends Component {
 
 	getRequestModalBody = () => {
 		return (<TransferRequestBody task={this.state.taskRequestingTransfer} />);
+	}
+
+	getTaskAssignedBody = () => {
+		if (this.state.taskAssignedModalVisible) {
+			return (
+				<View style={{flexDirection: 'column', margin: 10, alignItems: 'center'}}>
+					<Image source={{ uri: this.lastAddedTask.owner.picURL }} style={{height: 70, width: 70, borderRadius: 35, marginBottom: 5}} />
+					<Text style={{fontSize: 15, fontWeight: '500', fontFamily: 'Avenir'}}>{this.lastAddedTask.owner.firstName}</Text>
+				</View>
+			)
+		}
 	}
 
 	getRequestModalButtonDeny = () => {
@@ -379,6 +403,19 @@ class TasksPage extends Component {
 				size='medium'
 				onPress={() => {
 					this.acceptTransferRequest();
+				}}
+			/>
+		);
+	}
+
+	getTaskAssignedButtonOK = () => {
+		return (
+			<Button
+				text='OK'
+				color='#319bce'
+				size='medium'
+				onPress={() => {
+					this.dismissTaskAssignedModal();
 				}}
 			/>
 		);
@@ -462,7 +499,11 @@ class TasksPage extends Component {
 					bodyView={this.getRequestModalBody} 
 					buttonViews={[this.getRequestModalButtonDeny, this.getRequestModalButtonAccept]}
 					visible={this.state.transferRequestModalVisible} />
-
+				<TitleBodyButtonsModal
+					title='Task assigned to:'
+					bodyView={this.getTaskAssignedBody}
+					buttonViews={[this.getTaskAssignedButtonOK]}
+					visible={this.state.taskAssignedModalVisible} />
 			</View>
 		);
 	}
