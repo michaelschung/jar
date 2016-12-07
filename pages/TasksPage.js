@@ -188,6 +188,7 @@ class TasksPage extends Component {
 			transferResponseModalVisible: false,
 			transferRequestModalVisible: false,
 			taskAssignedModalVisible: false,
+			timerMap: new Map(),
 		};
 	}
 
@@ -231,10 +232,34 @@ class TasksPage extends Component {
   	
 	onTaskCompleted = (taskItem) => {
 		taskItem.completed = !taskItem.completed;
-		this.setState({
-			dataSource: this.ds.cloneWithRows(this.state.taskView === "All Tasks" ? 
-				this.taskList : this.taskList.filter(this.checkTaskIsMine))
-		});
+		var timer = this.state.timerMap.get(taskItem);
+		var taskPage = this;
+		var map = this.state.timerMap;
+		if (timer) {
+			// timer has been set already, so clear it and uncheck box
+			clearTimeout(timer);
+
+			map.delete(taskItem);
+			this.setState({
+				timerMap: map,
+			});
+		} else {
+			// set timer to remove task
+			map.set(taskItem, setTimeout(() => {
+					console.log("timer up");
+					var index = taskPage.taskList.indexOf(taskItem);
+					taskPage.taskList.splice(index, 1);
+					clearTimeout(this);
+					taskPage.updateDataSource();
+					console.log('task completed timer up');
+				}, 5000)
+			);
+			this.setState({
+				timerMap: map,
+			})
+
+		}
+		this.updateDataSource();
 	}
 
 	onTaskPressed = (taskItem) => {
