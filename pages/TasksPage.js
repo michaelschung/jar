@@ -192,8 +192,8 @@ class TasksPage extends Component {
 			transferRequestModalVisible: false,
 			taskAssignedModalVisible: false,
 			deadlineModalVisible: false,
-			nextTask: ''
-			timerMap: new Map(),
+			nextTask: '',
+			timerMap: new Map()
 		};
 	}
 
@@ -237,7 +237,6 @@ class TasksPage extends Component {
 	}
 
 	setTransferResponseModalVisibility = (visible) => {
-<<<<<<< HEAD
     	this.setState({transferResponseModalVisible: visible});
   	}
 
@@ -266,9 +265,6 @@ class TasksPage extends Component {
   			return task.isAwaitingTransfer.firstName + ' accepted your transfer request!';
   	}
   	
-=======
-		this.setState({transferResponseModalVisible: visible});
-	}
 
 	setTransferRequestModalVisibility = (visible) => {
 		this.setState({transferRequestModalVisible: visible});
