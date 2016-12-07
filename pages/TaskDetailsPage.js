@@ -106,9 +106,9 @@ const styles = StyleSheet.create({
 	},
 	ownerImage: {
 		marginRight: 20,
-		height: 120,
-		width: 120,
-		borderRadius: 60,
+		height: 100,
+		width: 100,
+		borderRadius: 50,
 	},
 	transferImage: {
 		marginRight: 20,
