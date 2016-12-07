@@ -66,48 +66,71 @@ class JarPage extends Component {
 		super(props);
 		this.state = {
 			renderPlaceholderOnly: true,
-			showModal: false
+			showReaderModal: false,
+			showPayModal: false,
+			jarAmount: this.props.jarAmount,
 		};
 	}
 
 	onPressUseNow = () => {
 		this.setState({
-			showModal: true,
+			showReaderModal: true,
+			timer: setTimeout(() => {
+				clearTimeout(this);
+				console.log("timer up");
+				this.setState({
+					showReaderModal: false,
+					showPayModal: true,
+				})
+			}, 3000)
 		});
+
 	}
 
 	removeModal = () => {
 		this.setState({
-			showModal: false,
+			showReaderModal: false,
+			showPayModal: false,
 		});
 	}
 
 
-  getCancelButton = () => {
-    return (
-      <Button 
-        text='Cancel' 
-        color='#C55254' 
-        size='medium' 
-        onPress={()=>{this.setState({
-          showModal: false
-        })}}
-      />
-    );
-  }
+	getCancelButton = () => {
+		return (
+		  <Button 
+		    text='Cancel' 
+		    color='#C55254' 
+		    size='medium' 
+		    onPress={()=>{
+		    	var timer = this.state.timer;
+		    	clearTimeout(timer);
+		    	this.setState({
+			      showReaderModal: false,
+			      showPayModal: false,
+		    	})
+		    }}
+		  />
+		);
+	}
 
-  getAcceptButton = () => {
-    return (
-      <Button
-        text='Pay'
-        color='#6BAC4E'
-        size='medium'
-        onPress={()=>{this.setState({
-          showModal: false
-        })}}
-      />
-    );
-  }
+	getAcceptButton = () => {
+		return (
+		  <Button
+		    text='Pay'
+		    color='#6BAC4E'
+		    size='medium'
+		    onPress={()=>{
+		    	this.props.changeJarAmount(-17.59);
+		    	var oldAmount = this.state.jarAmount;
+		    	this.setState({
+		      		showPayModal: false,
+		      		jarAmount: oldAmount - 17.59,
+		    	});
+
+		    }}
+		  />
+		);
+	}
 
   getModalBody = () => {
   	return (
@@ -126,29 +149,38 @@ class JarPage extends Component {
   	);
   }
 
+	getReaderModalBody = () => {
+		return (
+			<View style={{alignItems:'center'}}>
+				<Image 
+					source={require('../assets/reader_icon.png')}
+				/>
+	  		</View>
+		);
+	}
+
 	render() {
 		console.log('rendering JarPage');
 
-		var modal;
-		if (this.state.showModal) {
-			modal = (<TitleBodyButtonsModal
-				title='Pay with Jar!' 
-				bodyView={this.getModalBody} 
-				buttonViews={[this.getCancelButton, this.getAcceptButton]}
-				visible={true}
-    		/>);
-		} else {
-			modal = null;
-		}
-
 		return (
 			<View style={styles.container}>
-				<Text style={styles.jarTotal}>$50</Text>
+				<Text style={styles.jarTotal}>${this.state.jarAmount.toFixed(2)}</Text>
 				<Image source={require('../assets/jar_logo.png')} style={styles.jarLogo} />
 				<TouchableOpacity onPress={() => this.onPressUseNow()} style={styles.useNowButton}>
 					<Text style={styles.buttonText}>Use</Text>
 				</TouchableOpacity>
-				{modal}
+				<TitleBodyButtonsModal
+					title='Pay with Jar!' 
+					bodyView={this.getModalBody} 
+					buttonViews={[this.getCancelButton, this.getAcceptButton]}
+					visible={this.state.showPayModal}
+	    		/>
+	    		<TitleBodyButtonsModal
+					title='Hold near reader to pay!' 
+					bodyView={this.getReaderModalBody} 
+					buttonViews={[this.getCancelButton]}
+					visible={this.state.showReaderModal}
+	    		/>
 			</View>
 		);
 	}

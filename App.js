@@ -86,6 +86,8 @@ class Button extends Component {
 class App extends Component {
 	constructor(props) {
 		super(props);
+
+		this.jarAmount = 50.0
 	}
 
 	state = {
@@ -98,7 +100,15 @@ class App extends Component {
 		this.refs.nav.push({
 			title: 'Jar',
 			component: JarPage,
+			passProps: {
+				jarAmount: this.jarAmount,
+				changeJarAmount: this.changeJarAmount,
+			},
 		});
+	}
+
+	changeJarAmount = (delta) => {
+		this.jarAmount += delta;
 	}
 
 	/* Toggle the state of the HamburgerPanel (open or closed) */
