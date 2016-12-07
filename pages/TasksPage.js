@@ -214,25 +214,25 @@ class TasksPage extends Component {
 	}
 
 	setTransferResponseModalVisibility = (visible) => {
-    	this.setState({transferResponseModalVisible: visible});
-  	}
+		this.setState({transferResponseModalVisible: visible});
+	}
 
-  	setTransferRequestModalVisibility = (visible) => {
-  		this.setState({transferRequestModalVisible: visible});
-  	}
+	setTransferRequestModalVisibility = (visible) => {
+		this.setState({transferRequestModalVisible: visible});
+	}
 
-  	setTaskAssignedModalVisibility = (visible) => {
-  		this.setState({taskAssignedModalVisible: visible});	
-  	}
+	setTaskAssignedModalVisibility = (visible) => {
+		this.setState({taskAssignedModalVisible: visible});	
+	}
 
-  	getTransferResponseSender = () => {
-  			var task = this.taskList.filter((value) => value.isAwaitingTransfer)[0];
-  			if (!task) {
-  				return null;
-  			}
-  			return task.isAwaitingTransfer.firstName + ' accepted your transfer request!';
-  	}
-  	
+	getTransferResponseSender = () => {
+			var task = this.taskList.filter((value) => value.isAwaitingTransfer)[0];
+			if (!task) {
+				return null;
+			}
+			return task.isAwaitingTransfer.firstName + ' accepted your transfer request!';
+	}
+	
 	onTaskCompleted = (taskItem) => {
 		taskItem.completed = !taskItem.completed;
 		var timer = this.state.timerMap.get(taskItem);
@@ -506,9 +506,11 @@ class TasksPage extends Component {
 				<View style={styles.segmentSeparator} />
 				<ListView
 					style={styles.list}
-				  	dataSource={this.state.dataSource}
-				  	renderRow={this.renderRow}  
-				  	renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }/>
+					dataSource={this.state.dataSource}
+					renderRow={this.renderRow}  
+					renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }
+					enableEmptySections={true}
+				/>
 				<Button
 					style={styles.transferRequestButton}
 					onPress={this.simulateTransferRequestNotification}
