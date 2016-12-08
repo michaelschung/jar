@@ -179,6 +179,14 @@ class TasksPage extends Component {
 				due:new Date().setMinutes(today.getMinutes() + 12),
 				timeToComplete: '15 min',
 				notes: '',
+			},
+			{
+				name:'Remind Tessera to take out the trash',
+				owner: props.house[2],
+				completed:false,
+				due:new Date().setMinutes(today.getMinutes() + 12),
+				timeToComplete: '15 min',
+				notes: '',
 			}
 		];
 
@@ -535,7 +543,7 @@ class TasksPage extends Component {
 			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
 			  <View style={styles.row}>
 				{this.renderIcon(data)}
-				<Text style={styles.taskName}>{this.trunc(data.name, 22)}</Text>
+				<Text style={styles.taskName}>{this.trunc(data.name, 18)}</Text>
 				<Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{daysUntil}</Text>
 
 			  </View>

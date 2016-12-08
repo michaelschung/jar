@@ -41,7 +41,11 @@ const styles = StyleSheet.create({
 		minHeight: 50,
 		marginTop: 20,
 		flexDirection: 'row',
-		flex: 1,
+	},
+	detailsTopContainer: {
+		justifyContent: 'space-between',
+		flexWrap: 'nowrap',
+		flexDirection: 'row',
 	},
 	textDetailsContainer: {
 		marginLeft: 20,
@@ -65,6 +69,9 @@ const styles = StyleSheet.create({
 		fontFamily: 'Avenir',
 	},
 	dueAndTimeContainer: {
+		flex: 1,
+		position: 'absolute',
+		width: 170, /* Hard coded for now */
 		flexDirection: 'column',
 	},
 	dueInTextContainer: {
@@ -100,8 +107,8 @@ const styles = StyleSheet.create({
 		fontFamily: 'Avenir',
 	},
 	taskOwnerImageContainer: {
+		marginLeft: 15,
 		flexDirection: 'column',
-		flex: 1,
 		alignItems: 'flex-end',
 	},
 	ownerImage: {
@@ -134,7 +141,6 @@ const styles = StyleSheet.create({
 	notesContainer: {
 		marginTop: -20,
 		marginLeft: 20,
-		flex: 1,
 		flexDirection: 'column',
 		alignItems: 'stretch',
 	},
@@ -154,7 +160,6 @@ const styles = StyleSheet.create({
 	/* Styling for buttons */
 	buttonsContainer: {
 		marginTop: 20,
-		flex: 1,
 		alignItems: 'center',
 	},
 	button: {
@@ -303,8 +308,26 @@ class TaskDetailsPage extends Component {
 		};
 	}
 
+	trunc = (str, n) => {
+        return str.substr(0,n-1)+(str.length>n?'...':'');
+    }
+
 	componentWillUpdate() {
 		LayoutAnimation.easeInEaseOut();
+	}
+
+	/* For showing all of task name */
+	onPressTaskName = () => {
+		this.setState((state) => ({
+			pressingTaskName: true,
+		}));
+	}
+
+	/* For truncating task name */
+	onUnPressTaskName = () => {
+		this.setState((state) => ({
+			pressingTaskName: false,
+		}));
 	}
 
 	/* For rendering transfer carousel when transfer button pressed */
@@ -538,33 +561,45 @@ class TaskDetailsPage extends Component {
 					{/* Details about task */}
 					<View style={styles.detailsContainer}>
 						<View style={styles.textDetailsContainer}>
-							<View style={styles.taskNameTextContainer}>
-								<Text style={styles.taskNameText}>{this.props.task.name}</Text>
-							</View>
-							<View style={styles.dueAndTimeContainer}>
-								<View style={styles.dueInTextContainer}>
-									<Text style={styles.label}>Due: </Text>
-									{/* Use urgent style if task is due within 24 hours (1 day) */}
-									<Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{numDays}</Text>
+							<View style={styles.detailsTopContainer}>
+								<View>
+									<TouchableWithoutFeedback 
+										onPressIn={this.onPressTaskName}
+										onPressOut={this.onUnPressTaskName} >
+										{
+											this.state.pressingTaskName ? 
+											<View style={styles.taskNameTextContainer}><Text style={styles.taskNameText}>{this.props.task.name}</Text></View>
+											:
+											<View style={[styles.taskNameTextContainer, {maxWidth: 180}]}><Text style={styles.taskNameText}>{this.trunc(this.props.task.name, 14)}</Text></View>
+										}
+									</TouchableWithoutFeedback>
+									<View style={styles.dueAndTimeContainer}>
+										<View style={styles.dueInTextContainer}>
+											<Text style={styles.label}>Due: </Text>
+											{/* Use urgent style if task is due within 24 hours (1 day) */}
+											<Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{numDays}</Text>
+										</View>
+										<View style={styles.timeToCompleteTextContainer}>
+											<Text style={styles.label}>Will Take: </Text>
+											<Text style={styles.timeToCompleteText}>{this.props.task.timeToComplete}</Text>
+										</View>
+									</View>
 								</View>
-								<View style={styles.timeToCompleteTextContainer}>
-									<Text style={styles.label}>Will Take: </Text>
-									<Text style={styles.timeToCompleteText}>{this.props.task.timeToComplete}</Text>
+								<View style={styles.taskOwnerImageContainer}>
+									<Image 
+										source={{ uri: this.props.task.isAwaitingTransfer ? this.props.task.isAwaitingTransfer.picURL : this.props.task.owner.picURL }} 
+										style={this.props.task.isAwaitingTransfer ? styles.transferImage : styles.ownerImage}
+									/>
+									<View style={styles.taskStatusContainer}> 
+										{
+											this.props.task.isAwaitingTransfer ?
+											(<Text style={styles.status}>Awaiting Transfer</Text>) :
+											null
+										}
+									</View>
 								</View>
 							</View>
-						</View>
-						<View style={styles.taskOwnerImageContainer}>
-							<Image 
-								source={{ uri: this.props.task.isAwaitingTransfer ? this.props.task.isAwaitingTransfer.picURL : this.props.task.owner.picURL }} 
-								style={this.props.task.isAwaitingTransfer ? styles.transferImage : styles.ownerImage}
-							/>
-							<View style={styles.taskStatusContainer}> 
-								{
-									this.props.task.isAwaitingTransfer ?
-									(<Text style={styles.status}>Awaiting Transfer</Text>) :
-									null
-								}
-							</View>
+							
 						</View>
 					</View>
 
