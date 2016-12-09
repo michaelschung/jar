@@ -8,10 +8,12 @@ import {
 	Text,
 	TextInput,
 	TouchableOpacity,
+	TouchableWithoutFeedback,
 	View,
 } from 'react-native';
 
 import DeadlinePage from '../pages/DeadlinePage'
+const dismissKeyboard = require('dismissKeyboard');
 
 
 const styles = StyleSheet.create({
@@ -112,30 +114,32 @@ class CreatePage extends Component {
 	render() {
 		console.log('rendering CreatePage');
 		return (
-			<View style={styles.container}>
+			<TouchableWithoutFeedback onPress={() => dismissKeyboard()}>
+				<View style={styles.container}>
 
-				<Text style={styles.textPrompt}>What's the task?</Text>
-				<View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
-					<TextInput
-						style={styles.textInput}
-						multiline={false}
-						onChangeText={(text) => this.setState({text})}
-					/>
+					<Text style={styles.textPrompt}>What's the task?</Text>
+					<View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
+						<TextInput
+							style={styles.textInput}
+							multiline={false}
+							onChangeText={(text) => this.setState({text})}
+						/>
+					</View>
+
+					<View style={styles.buttonContainer}>
+
+						<TouchableOpacity style={styles.backButton} onPress={() => this.onPressBack()}>
+							<Text style={styles.buttonText}>Back</Text>
+						</TouchableOpacity>
+
+
+						<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
+							<Text style={styles.buttonText}>Next</Text>
+						</TouchableOpacity>
+
+					</View>
 				</View>
-
-				<View style={styles.buttonContainer}>
-
-					<TouchableOpacity style={styles.backButton} onPress={() => this.onPressBack()}>
-						<Text style={styles.buttonText}>Back</Text>
-					</TouchableOpacity>
-
-
-					<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressNext()}>
-						<Text style={styles.buttonText}>Next</Text>
-					</TouchableOpacity>
-
-				</View>
-			</View>
+			</TouchableWithoutFeedback>
 		);
 	}
 }
