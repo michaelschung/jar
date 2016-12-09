@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		alignItems: 'center',
 		minHeight: 50,
+		paddingLeft: 10,
+		paddingRight: 10,
 	},
 	modalText: {
 		color: '#319BCE',
@@ -27,6 +29,8 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 		marginTop: 30,
 		fontFamily:'Avenir',
+		textAlign: 'center',
+
 	},
 	modalButton: {
 		justifyContent: 'center',

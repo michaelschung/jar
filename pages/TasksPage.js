@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
 		fontFamily: 'Avenir',
 		fontSize: 50,
 	},
+
 });
 
 class TasksPage extends Component {
@@ -194,19 +195,23 @@ class TasksPage extends Component {
 			}
 		];
 
-		this.sortTaskList();
-
-		this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		this.state = {
-			dataSource: this.ds.cloneWithRows(this.taskList.filter(this.checkTaskIsMine)),
 			taskView: 'My Tasks',
 			transferResponseModalVisible: false,
 			transferRequestModalVisible: false,
 			taskAssignedModalVisible: false,
 			deadlineModalVisible: false,
 			nextTask: '',
-			timerMap: new Map()
+			timerMap: new Map(),
+			deadlineTimer: -1
 		};
+
+		this.sortTaskList();
+
+		this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+		this.state.dataSource = this.ds.cloneWithRows(this.taskList.filter(this.checkTaskIsMine));
+
 	}
 
 
@@ -226,17 +231,27 @@ class TasksPage extends Component {
 			var task = this.taskList[i];
 
 			var today = new Date();
+			if (this.state.nextTask == '') {
+				console.log('hi');
+			}
+
+			if (this.state.deadlineTimer != -1)
+				clearTimeout(this.state.deadlineTimer);
+
 			if (task.owner.isMe && !task.completed && task.due > today) {
 				// check for completed task
 				var timeLeft = (task.due - today)
-				clearTimeout(this);
-				setTimeout(() => {
-					this.setNextTask('The deadline for "' +  task.name + '" has passed. You will be charged $1.');
-					this.setDeadlineModalVisibility(true);
-					this.props.changeJarAmount(+1);
-					clearTimeout(this);
-					this.updateDataSource()
-				}, timeLeft)
+				this.state.deadlineTimer = 
+
+					setTimeout(() => {
+						this.setNextTask('The deadline for "' +  task.name + '" has passed. You will be charged $1.');
+						this.setDeadlineModalVisibility(true);
+						this.props.changeJarAmount(+1);
+						clearTimeout(this);
+						this.sortTaskList();
+						this.updateDataSource()
+					}, timeLeft)
+
 				break;
 			}
 		}
@@ -248,6 +263,10 @@ class TasksPage extends Component {
 
 	componentWillUpdate() {
 		 LayoutAnimation.easeInEaseOut();
+	}
+
+	setDeadlineTimer = (id) => {
+		this.setState({deadlineTimer: id});
 	}
 
 	setTransferResponseModalVisibility = (visible) => {
@@ -325,6 +344,7 @@ class TasksPage extends Component {
 			})
 
 		}
+		this.sortTaskList();
 		this.updateDataSource();
 	}
 
