@@ -7,7 +7,8 @@
 3. In the auto-filled field 'Go to an Exponent link...,' enter the url 'exp.host/@tesserachin/jar'
 
 ###Special Gestures
-* From the home screen, tap in the bottom left corner to simulate an incoming transfer request
+* From the home screen, tap in the bottom left corner to simulate an incoming transfer request.
+* (EXPONENT XDE GESTURE) At any point in the app, hold two fingers on the screen to access a special Exponent XDE modal with the options to reload the app and to return to the Exponent XDE home page.
 
 ###Limitations
 * There is no backend implementation for this prototype, so all of the presented information is hard-coded.
