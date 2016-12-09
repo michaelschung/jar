@@ -118,13 +118,13 @@ const styles = StyleSheet.create({
 	transferRequestButton: {
 		position: 'absolute',
 	},
-	noTasks: {
+	noTasksText: {
 		position: 'absolute',
-		left: 100,
-		top: 200,
-		color: 'black',
+		left: 150,
+		top: 130,
+		color: '#979797',
 		fontFamily: 'Avenir',
-		fontSize: 50,
+		fontSize: 18,
 	},
 
 });
@@ -538,9 +538,16 @@ class TasksPage extends Component {
 
 	noTasks = () => {
 		console.log('LENGTH IS ZERO:', this.taskList.filter(this.checkTaskIsMine).length == 0);
-		if(this.taskList.filter(this.checkTaskIsMine).length == 0) {
+		var noTasks = false;
+		if (this.state.taskView == 'My Tasks') {
+			noTasks = this.taskList.filter(this.checkTaskIsMine).length == 0
+		} else {
+			noTasks = this.taskList.length == 0
+		}
+
+		if(noTasks) {
 			return (
-				<Text style={styles.noTasks}>No Tasks!</Text>
+				<Text style={styles.noTasksText}>No Tasks!</Text>
 			)
 		} else return null
 	}

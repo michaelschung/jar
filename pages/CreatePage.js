@@ -8,13 +8,14 @@ import {
 	Text,
 	TextInput,
 	TouchableOpacity,
+	Keyboard,
 	TouchableWithoutFeedback,
 	View,
 } from 'react-native';
 
 import DeadlinePage from '../pages/DeadlinePage'
-const dismissKeyboard = require('dismissKeyboard');
 
+const dismissKeyboard = require('dismissKeyboard');
 
 const styles = StyleSheet.create({
 	container: {
@@ -120,6 +121,7 @@ class CreatePage extends Component {
 					<Text style={styles.textPrompt}>What's the task?</Text>
 					<View style={{borderBottomColor: '#d3d3d3', borderBottomWidth: 1}}>
 						<TextInput
+							autoCorrect={true}
 							style={styles.textInput}
 							multiline={false}
 							onChangeText={(text) => this.setState({text})}
