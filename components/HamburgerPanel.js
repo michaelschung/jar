@@ -153,13 +153,20 @@ class HamburgerPanel extends Component {
 			leftButtonIcon: require('../assets/hamburger_cropped.png'),
 			rightButtonIcon: require('../assets/jar_transparent_resized.png'),
 			onLeftButtonPress: () => this.props.toggle(),
-			onRightButtonPress: () => this.props.navigator.push({title: 'Jar', component: JarPage}),
+			onRightButtonPress: () => this.props.navigator.push({
+				title: 'Jar',
+				component: JarPage,
+				passProps: {
+					jarAmount: this.props.jarAmount,
+				},
+			}),
 		};
 	}
 
 	/* When an option is pressed, navigate to the proper page */
 	onOptionPressed = (data) => {
-		this.props.navigator.push(this.fetchOption(data.name));
+		// if(data.name == 'Home') this.props.navigator.popToTop();
+		this.props.navigator.replace(this.fetchOption(data.name));
 		// close the settings menu
 		this.props.toggle(); // OR:
 		// this.props.updateMenuState(this.props.isOpen);

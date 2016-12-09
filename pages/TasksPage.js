@@ -42,10 +42,6 @@ const styles = StyleSheet.create({
 		margin: 12, 
 		backgroundColor: 'white',
 	},
-	list: {
-		marginTop: -64, 
-		zIndex: -100
-	},
 	row: {
 		flex: 1,
 		flexDirection: 'row',
@@ -121,6 +117,14 @@ const styles = StyleSheet.create({
 	},
 	transferRequestButton: {
 		position: 'absolute',
+	},
+	noTasks: {
+		position: 'absolute',
+		left: 100,
+		top: 200,
+		color: 'black',
+		fontFamily: 'Avenir',
+		fontSize: 50,
 	},
 });
 
@@ -227,10 +231,11 @@ class TasksPage extends Component {
 				var timeLeft = (task.due - today)
 				clearTimeout(this);
 				setTimeout(() => {
-					this.setDeadlineModalVisibility(true);
 					this.setNextTask('The deadline for "' +  task.name + '" has passed. You will be charged $1.');
+					this.setDeadlineModalVisibility(true);
 					this.props.changeJarAmount(+1);
 					clearTimeout(this);
+					this.updateDataSource()
 				}, timeLeft)
 				break;
 			}
@@ -280,7 +285,7 @@ class TasksPage extends Component {
 	}
 
 	setTaskAssignedModalVisibility = (visible) => {
-		this.setState({taskAssignedModalVisible: visible});	
+		this.setState({taskAssignedModalVisible: visible});
 	}
 
 	getTransferResponseSender = () => {
@@ -511,6 +516,15 @@ class TasksPage extends Component {
 		);
 	}
 
+	noTasks = () => {
+		console.log('LENGTH IS ZERO:', this.taskList.filter(this.checkTaskIsMine).length == 0);
+		if(this.taskList.filter(this.checkTaskIsMine).length == 0) {
+			return (
+				<Text style={styles.noTasks}>No Tasks!</Text>
+			)
+		} else return null
+	}
+
 	renderIcon = (data) => {
 		console.log('UPDATING icon');
 		if (data.owner.isMe) {
@@ -572,7 +586,9 @@ class TasksPage extends Component {
 					renderRow={this.renderRow}  
 					renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }
 					enableEmptySections={true}
+					automaticallyAdjustContentInsets={false}
 				/>
+				{this.noTasks()}
 				<Button
 					style={styles.transferRequestButton}
 					onPress={this.simulateTransferRequestNotification}
