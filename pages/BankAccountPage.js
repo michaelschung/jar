@@ -35,7 +35,7 @@ class BankAccountPage extends Component {
 		console.log('rendering BankAccountPage');
 		return (
 			<View style={styles.container}>
-				<Text style={styles.textPrompt}>Bank Account</Text>
+				<Text style={styles.textPrompt}>(Coming soon!)</Text>
 			</View>
 		);
 	}

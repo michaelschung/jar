@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingTop: 62,
 	},
-	modal: {
-
+	list: {
+		flex: 1,
 	},
 	segmentedControl: {
 		margin: 12, 
@@ -117,6 +117,10 @@ const styles = StyleSheet.create({
 	},
 	transferRequestButton: {
 		position: 'absolute',
+		opacity: 0,
+		height: 60,
+		width: 180,
+		bottom: 0,
 	},
 	noTasksText: {
 		position: 'absolute',
@@ -453,6 +457,8 @@ class TasksPage extends Component {
 		this.taskList.splice(index, 1);
 		this.taskList.push(newTask);
 
+		this.sortTaskList();
+
 		this.updateDataSource();
 		// TODO: send a notification to transfer requester here 
 		this.setState({
@@ -549,7 +555,7 @@ class TasksPage extends Component {
 			return (
 				<Text style={styles.noTasksText}>No Tasks!</Text>
 			)
-		} else return null
+		}
 	}
 
 	renderIcon = (data) => {
@@ -616,12 +622,10 @@ class TasksPage extends Component {
 					automaticallyAdjustContentInsets={false}
 				/>
 				{this.noTasks()}
-				<Button
+				<TouchableOpacity
 					style={styles.transferRequestButton}
-					onPress={this.simulateTransferRequestNotification}
-					size='medium'
-					color='white'
-					text='click to receive request notification'/>
+					onPress={() => this.simulateTransferRequestNotification()}>
+				</TouchableOpacity>
 				<TouchableOpacity onPress={() => this.onCreatePressed() }>
 					<Image style={styles.addButton} source={require('../assets/create_task_button.png')} />
 				</TouchableOpacity>
