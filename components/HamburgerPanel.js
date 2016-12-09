@@ -158,6 +158,7 @@ class HamburgerPanel extends Component {
 				component: JarPage,
 				passProps: {
 					jarAmount: this.props.jarAmount,
+					changeJarAmount: this.props.changeJarAmount,
 				},
 			}),
 		};
@@ -165,8 +166,8 @@ class HamburgerPanel extends Component {
 
 	/* When an option is pressed, navigate to the proper page */
 	onOptionPressed = (data) => {
-		// if(data.name == 'Home') this.props.navigator.popToTop();
-		this.props.navigator.replace(this.fetchOption(data.name));
+		if(data.name == 'Home') this.props.navigator.popToTop();
+		else this.props.navigator.push(this.fetchOption(data.name));
 		// close the settings menu
 		this.props.toggle(); // OR:
 		// this.props.updateMenuState(this.props.isOpen);

@@ -555,7 +555,7 @@ class TasksPage extends Component {
 			return (
 				<Text style={styles.noTasksText}>No Tasks!</Text>
 			)
-		} else return null
+		}
 	}
 
 	renderIcon = (data) => {
