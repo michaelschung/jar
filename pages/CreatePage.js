@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 class CreatePage extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {renderPlaceholderOnly: true};
+		this.state = {renderPlaceholderOnly: true, text: ''};
 	}
 
 	onPressBack() {
