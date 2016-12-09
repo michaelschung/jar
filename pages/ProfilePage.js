@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
   	},
   	textPrompt: {
+  		position: 'relative',
+  		top: 150,
 		color: 'black',
 		fontSize: 30,
 		fontWeight: 'bold',
@@ -60,6 +62,7 @@ class ProfilePage extends Component {
 			<View style={styles.container}>
 				<Image style={styles.profilePic} source={{ uri: this.getUser()[0].picURL }} />
 				<Text style={styles.name}>{this.getUser()[0].firstName} {this.getUser()[0].lastName}</Text>
+				<Text style={styles.textPrompt}>(Coming soon!)</Text>
 			</View>
 		);
 	}

@@ -19,14 +19,14 @@ const styles = StyleSheet.create({
 		alignItems: 'flex-start',
 		paddingTop: 74,
 		paddingLeft: 40,
-		marginTop: 80
+		marginTop: 80,
 	},
 	textPrompt: {
 		color: 'black',
 		fontSize: 30,
 		fontWeight: 'bold',
 		fontFamily: 'Avenir',
-		marginBottom: 20
+		marginBottom: 20,
 	},
 });
 
@@ -35,7 +35,7 @@ class SettingsPage extends Component {
 		console.log('rendering SettingsPage');
 		return (
 			<View style={styles.container}>
-				<Text style={styles.textPrompt}>Settings</Text>
+				<Text style={styles.textPrompt}>(Coming soon!)</Text>
 			</View>
 		);
 	}
