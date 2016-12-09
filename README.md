@@ -12,7 +12,7 @@
 ###Limitations
 * There is no backend implementation for this prototype, so all of the presented information is hard-coded.
 * Notifications are simulated using timers and special gestures (see 'Special Gestures' and 'Notes' sections).
-* The hamburger menu items are currently under construction; the 'Logout' button has no functionality at all.
+* The 'Settings' SideMenu items are currently under construction; the 'Logout' button has no functionality at all.
 * The Jar page cannot actually use money yet. The interactions are simulated (see 'Notes' section).
 
 ###Notes

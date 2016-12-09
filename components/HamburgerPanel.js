@@ -81,9 +81,6 @@ const styles = StyleSheet.create({
 	},
 });
 
-var jar = require('../assets/jar_transparent_resized.png');
-var hamburger = require('../assets/hamburger_cropped.png');
-
 var options = [
 	{
 		name: 'Home',
@@ -153,10 +150,10 @@ class HamburgerPanel extends Component {
 			passProps: {
 				house: this.props.house,
 			},
-			// leftButtonTitle: 'Settings',
-			// rightButtonTitle: 'Jar',
-			rightButtonIcon: jar,
-			leftButtonIcon: hamburger,
+			leftButtonTitle: 'Settings',
+			rightButtonTitle: 'Jar',
+			// leftButtonIcon: require('../assets/hamburger_cropped.png'),
+			// rightButtonIcon: require('../assets/jar_transparent_resized.png'),
 			onLeftButtonPress: () => this.props.toggle(),
 			onRightButtonPress: () => this.props.navigator.push({
 				title: 'Jar',
