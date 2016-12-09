@@ -42,10 +42,6 @@ const styles = StyleSheet.create({
 		margin: 12, 
 		backgroundColor: 'white',
 	},
-	list: {
-		marginTop: -64, 
-		zIndex: -100
-	},
 	row: {
 		flex: 1,
 		flexDirection: 'row',
@@ -573,6 +569,7 @@ class TasksPage extends Component {
 					renderRow={this.renderRow}  
 					renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }
 					enableEmptySections={true}
+					automaticallyAdjustContentInsets={false}
 				/>
 				<Button
 					style={styles.transferRequestButton}
