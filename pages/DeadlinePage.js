@@ -195,7 +195,7 @@ class DeadlinePage extends Component {
 			        mode="time"
 			        timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
 			        onDateChange={this.onDateChange}
-			        minuteInterval={10}
+			        minuteInterval={5}
         		/>
 
 				<View style={styles.buttonContainer}>

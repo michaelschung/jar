@@ -227,10 +227,11 @@ class TasksPage extends Component {
 				var timeLeft = (task.due - today)
 				clearTimeout(this);
 				setTimeout(() => {
-					this.setDeadlineModalVisibility(true);
 					this.setNextTask('The deadline for "' +  task.name + '" has passed. You will be charged $1.');
+					this.setDeadlineModalVisibility(true);
 					this.props.changeJarAmount(+1);
 					clearTimeout(this);
+					this.updateDataSource()
 				}, timeLeft)
 				break;
 			}
