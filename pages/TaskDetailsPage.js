@@ -304,29 +304,23 @@ class TaskDetailsPage extends Component {
 			transferSent: this.props.task.isAwaitingTransfer,
 			disableComplete: (this.props.task.isAwaitingTransfer || this.props.task.completed),
 			taskCompleted: this.props.task.completed,
+			showFullTaskName: false,
 			notes: '',
 		};
 	}
 
 	trunc = (str, n) => {
-        return str.substr(0,n-1)+(str.length>n?'...':'');
+        return str.substr(0,n-1)+(str.length>=n?'...':'');
     }
 
 	componentWillUpdate() {
 		LayoutAnimation.easeInEaseOut();
 	}
 
-	/* For showing all of task name */
+	/* Toggle showing all of task name */
 	onPressTaskName = () => {
 		this.setState((state) => ({
-			pressingTaskName: true,
-		}));
-	}
-
-	/* For truncating task name */
-	onUnPressTaskName = () => {
-		this.setState((state) => ({
-			pressingTaskName: false,
+			showFullTaskName: !this.state.showFullTaskName,
 		}));
 	}
 
@@ -564,13 +558,12 @@ class TaskDetailsPage extends Component {
 							<View style={styles.detailsTopContainer}>
 								<View>
 									<TouchableWithoutFeedback 
-										onPressIn={this.onPressTaskName}
-										onPressOut={this.onUnPressTaskName} >
+										onPress={this.onPressTaskName} >
 										{
-											this.state.pressingTaskName ? 
+											this.state.showFullTaskName ? 
 											<View style={styles.taskNameTextContainer}><Text style={styles.taskNameText}>{this.props.task.name}</Text></View>
 											:
-											<View style={[styles.taskNameTextContainer, {maxWidth: 180}]}><Text style={styles.taskNameText}>{this.trunc(this.props.task.name, 14)}</Text></View>
+											<View style={[styles.taskNameTextContainer, {maxWidth: 180}]}><Text style={styles.taskNameText}>{this.trunc(this.props.task.name, 15)}</Text></View>
 										}
 									</TouchableWithoutFeedback>
 									<View style={styles.dueAndTimeContainer}>
