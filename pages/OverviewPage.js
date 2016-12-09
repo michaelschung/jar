@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 		minWidth: 50,
 		height: 80,
 		width: 250,
-		left: window.width/2 - 125,
+		alignSelf: 'center',
     },
 
     buttonText: {
@@ -78,12 +78,13 @@ const styles = StyleSheet.create({
     taskNameTextContainer: {
 		marginTop: 15,
 		alignSelf: 'stretch',
-		marginBottom: 20,
+		marginBottom: 15,
     },
     taskNameText: {
-		fontSize: 24,
+		fontSize: 30,
 		fontWeight: '500',
 		fontFamily: 'Avenir',
+		marginBottom: 10
     },
     label: {
 		textAlign: 'left',
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
 
     /* Styling for notes */
     notesContainer: {
-		marginTop: -20,
+		marginTop: 10,
 		marginLeft: 20,
 		flex: 1,
 		flexDirection: 'column',
@@ -155,11 +156,6 @@ const styles = StyleSheet.create({
     },
 
     /* Styling for buttons */
-    buttonsContainer: {
-		marginTop: 20,
-		flex: 1,
-		alignItems: 'center',
-    },
     button: {
 		justifyContent: 'center',
 		backgroundColor: '#319bce',
@@ -169,55 +165,20 @@ const styles = StyleSheet.create({
 		minWidth: 250,
 		alignItems: 'center',
     },
-    disabledButton: {
-		backgroundColor: '#979797',
-    },
-    buttonText: {
-		fontWeight: '500',
+	buttonText: {
+		color: '#319bce',
+		alignSelf: 'center',
+		fontSize: 25,
+		marginTop: 9,
+		fontFamily: 'Avenir'
+	},
+	assignText: {
 		color: 'white',
 		alignSelf: 'center',
-		fontSize: 24,
-		fontFamily: 'Avenir',
-    },
-
-    /* Styling for carousel */
-    carousel: {
-		flex: 1,
-		flexDirection: 'column',
-		margin: 20,
-    },
-    carouselHeader: {
-		flexDirection: 'row',
-		alignItems: 'stretch',
-		justifyContent: 'space-between',
-    },
-    carouselHeaderText: {
-		textAlign: 'left',
-		fontSize: 16,
-		fontWeight: '900',
-		fontFamily: 'Avenir',
-    },
-    carouselCancel: {
-		justifyContent: 'center',
-    },
-    carouselCancelButton: {
-		alignItems: 'center',
-		backgroundColor: '#D8D8D8',
-		height: 30,
-		width: 30,
-		borderWidth: 1,
-		borderRadius: 60,
-    },
-    cancelText: {
-		textAlign: 'center',
-		fontSize: 20,
-		fontWeight: 'bold',
-		fontFamily: 'Avenir',
-    },
-    carouselScrollView: {
-		height: 50,
-		margin: 20,
-    },
+		fontSize: 25,
+		marginTop: 8,
+		fontFamily: 'Avenir'
+	},
     userContainer: {
 		flexDirection: 'column',
 		margin: 10,
@@ -235,6 +196,36 @@ const styles = StyleSheet.create({
 		color: '#8F8E94',
 		fontSize: 16,
 		fontFamily: 'Avenir',
+	},
+	buttonContainer: {
+		flexDirection: 'row',
+		marginTop: 165,
+		paddingBottom: 4,
+		paddingLeft: 28,
+	},
+	backButton: {
+		borderColor: '#319bce',
+		borderWidth: 1,
+		justifyContent: 'center',
+		marginBottom: 5,
+		borderRadius: 10,
+		minHeight: 50,
+		minWidth: 50,
+		height: 40,
+		width: 100,
+		alignSelf: 'flex-start',
+	},
+	nextButton: {
+		backgroundColor: '#319bce',
+		justifyContent: 'center',
+		marginBottom: 5,
+		borderRadius: 10,
+		minHeight: 50,
+		minWidth: 50,
+		height: 40,
+		width: 100,
+		marginLeft: 95,
+		alignSelf: 'flex-end',
 	},
 });
 
@@ -255,6 +246,10 @@ class OverviewPage extends Component {
 	getNumDays() {
 		var numDays = moment(this.props.currentTask.due).fromNow();
 		return numDays
+	}
+
+	onPressBack() {
+		this.props.navigator.pop();
 	}
 
 
@@ -339,11 +334,17 @@ class OverviewPage extends Component {
 						/>
 					</View>
 
-					<View style={styles.separator}></View>
 
-					<TouchableOpacity style={styles.assignButton} onPress={() => this.onPressAssign()}>
-						<Text style={styles.buttonText}>Assign Task</Text>
-					</TouchableOpacity>
+
+					<View style={styles.buttonContainer}>
+						<TouchableOpacity style={styles.backButton} onPress={() => this.onPressBack()}>
+							<Text style={styles.buttonText}>Back</Text>
+						</TouchableOpacity>
+
+						<TouchableOpacity style={styles.nextButton} onPress={() => this.onPressAssign()}>
+							<Text style={styles.assignText}>Assign</Text>
+						</TouchableOpacity>
+					</View>	
 				</View>
 			</TouchableWithoutFeedback>
 		);

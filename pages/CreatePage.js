@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
 	},
 
 	backButton: {
-		backgroundColor: '#319bce',
+		borderColor: '#319bce',
+		borderWidth: 1,
 		justifyContent: 'center',
 		top: 50,
 		marginBottom: 0,
@@ -64,7 +65,8 @@ const styles = StyleSheet.create({
 	},
 
 	nextButton: {
-		backgroundColor: '#319bce',
+		borderColor: '#319bce',
+		borderWidth: 1,
 		justifyContent: 'center',
 		top: 50,
 		marginBottom: 0,
@@ -78,10 +80,10 @@ const styles = StyleSheet.create({
 	},
 
 	buttonText: {
-		color: 'white',
+		color: '#319bce',
 		alignSelf: 'center',
 		fontSize: 25,
-		marginTop: 7,
+		marginTop: 9,
 		fontWeight: '500',
 		fontFamily: 'Avenir',
 	}

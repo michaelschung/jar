@@ -231,9 +231,6 @@ class TasksPage extends Component {
 			var task = this.taskList[i];
 
 			var today = new Date();
-			if (this.state.nextTask == '') {
-				console.log('hi');
-			}
 
 			if (this.state.deadlineTimer != -1)
 				clearTimeout(this.state.deadlineTimer);
