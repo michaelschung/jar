@@ -172,10 +172,10 @@ class App extends Component {
 					},
 					// uncomment the next line for the Jar title logo
 					//titleImage: require('./assets/jar_title.png'),
-					leftButtonTitle: 'Settings',
-					rightButtonTitle: 'Jar',
-					// rightButtonIcon: require('./assets/jar_transparent_resized.png'),
-					// leftButtonIcon: require('./assets/hamburger_cropped.png'),
+					// leftButtonTitle: 'Settings',
+					// rightButtonTitle: 'Jar',
+					rightButtonIcon: require('./assets/jar_transparent_resized.png'),
+					leftButtonIcon: require('./assets/hamburger_cropped.png'),
 					onRightButtonPress: () => this.jarPressed(),
 					onLeftButtonPress: () => this.toggle(),
 				}}

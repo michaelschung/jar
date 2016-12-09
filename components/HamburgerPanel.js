@@ -150,10 +150,10 @@ class HamburgerPanel extends Component {
 			passProps: {
 				house: this.props.house,
 			},
-			leftButtonTitle: 'Settings',
-			rightButtonTitle: 'Jar',
-			// leftButtonIcon: require('../assets/hamburger_cropped.png'),
-			// rightButtonIcon: require('../assets/jar_transparent_resized.png'),
+			// leftButtonTitle: 'Settings',
+			// rightButtonTitle: 'Jar',
+			leftButtonIcon: require('../assets/hamburger_cropped.png'),
+			rightButtonIcon: require('../assets/jar_transparent_resized.png'),
 			onLeftButtonPress: () => this.props.toggle(),
 			onRightButtonPress: () => this.props.navigator.push({
 				title: 'Jar',
