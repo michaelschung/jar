@@ -147,6 +147,7 @@ class App extends Component {
 				// updateMenuState={(isOpen) => this.updateMenuState()}
 				jarPressed={() => this.jarPressed()}
 				house={house}
+				jarAmount={this.jarAmount}
 			/>
 		)
 	}
