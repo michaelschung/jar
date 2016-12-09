@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
 	noTasksText: {
 		position: 'absolute',
 		left: 150,
-		top: 130,
+		top: 138,
 		color: '#979797',
 		fontFamily: 'Avenir',
 		fontSize: 18,
