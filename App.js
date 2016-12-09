@@ -148,6 +148,7 @@ class App extends Component {
 				jarPressed={() => this.jarPressed()}
 				house={house}
 				jarAmount={this.jarAmount}
+				changeJarAmount={(delta) => this.changeJarAmount}
 			/>
 		)
 	}

@@ -35,7 +35,7 @@ class LogoutPage extends Component {
 		console.log('rendering LogoutPage');
 		return (
 			<View style={styles.container}>
-				<Text style={styles.textPrompt}>Logged out!</Text>
+				<Text style={styles.textPrompt}>(Coming soon!)</Text>
 			</View>
 		);
 	}
