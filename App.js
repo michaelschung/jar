@@ -21,6 +21,9 @@ import ProfilePage from './pages/ProfilePage.js'
 const { Component } = React;
 const window = Dimensions.get('window');
 
+var jar = require('./assets/jar_transparent_resized.png');
+var hamburger = require('./assets/hamburger_cropped.png');
+
 var house = [
 	{
 		firstName: 'Michael',
@@ -172,10 +175,10 @@ class App extends Component {
 					},
 					// uncomment the next line for the Jar title logo
 					//titleImage: require('./assets/jar_title.png'),
-					leftButtonTitle: 'Settings',
-					rightButtonTitle: 'Jar',
-					// rightButtonIcon: require('./assets/jar_transparent_resized.png'),
-					// leftButtonIcon: require('./assets/hamburger_cropped.png'),
+					// leftButtonTitle: 'Settings',
+					// rightButtonTitle: 'Jar',
+					rightButtonIcon: jar,
+					leftButtonIcon: hamburger,
 					onRightButtonPress: () => this.jarPressed(),
 					onLeftButtonPress: () => this.toggle(),
 				}}
