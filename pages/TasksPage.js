@@ -457,6 +457,8 @@ class TasksPage extends Component {
 		this.taskList.splice(index, 1);
 		this.taskList.push(newTask);
 
+		this.sortTaskList();
+
 		this.updateDataSource();
 		// TODO: send a notification to transfer requester here 
 		this.setState({
