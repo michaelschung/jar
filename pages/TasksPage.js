@@ -161,7 +161,7 @@ class TasksPage extends Component {
 				name:'Vacuum',
 				owner: props.house[0],
 				completed:false,
-				due:new Date().setMinutes(today.getMinutes() + 1),
+				due:new Date().setMinutes(today.getMinutes() + 3),
 				timeToComplete: '15 min',
 				notes: '',
 			},
@@ -189,14 +189,6 @@ class TasksPage extends Component {
 				timeToComplete: '15 min',
 				notes: '',
 			},
-			{
-				name:'Remind Tessera to take out the trash',
-				owner: props.house[2],
-				completed:false,
-				due:new Date().setMinutes(today.getMinutes() + 12),
-				timeToComplete: '15 min',
-				notes: '',
-			}
 		];
 
 		this.state = {
