@@ -147,7 +147,8 @@ class DeadlinePage extends Component {
 			this.state.date.getHours(),
 			this.state.date.getMinutes(),
 			this.state.date.getSeconds(),
-			this.state.date.getMilliseconds());
+			this.state.date.getMilliseconds()
+		);
 
 		this.props.currentTask.due = newDate;
 

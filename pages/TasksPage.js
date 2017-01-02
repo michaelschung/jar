@@ -163,48 +163,48 @@ class TasksPage extends Component {
 
 		this.taskList = [];
 
-		// this.ogTaskList = [
-		// 	{
-		// 		name:'Take out trash', 
-		// 		owner: props.house[0],
-		// 		completed:false, 
-		// 		due:new Date().setDate(today.getDate() + 1),
-		// 		timeToComplete: '5 min',
-		// 		notes: '',
-		// 	},
-		// 	{
-		// 		name: 'Vacuum',
-		// 		owner: props.house[0],
-		// 		completed:false,
-		// 		due:new Date().setMinutes(today.getMinutes() + 2),
-		// 		timeToComplete: '15 min',
-		// 		notes: '',
-		// 	},
-		// 	{
-		// 		name:'Call the landlord', 
-		// 		owner: props.house[1], 
-		// 		completed:false, 
-		// 		due:new Date().setDate(today.getDate() + 3),
-		// 		timeToComplete: '15 min',
-		// 		notes: '',
-		// 	},
-		// 	{
-		// 		name:'Clean room',
-		// 		owner: props.house[3], 
-		// 		completed:false, 
-		// 		due:new Date().setDate(today.getDate() + 4),
-		// 		timeToComplete: '30 min',
-		// 		notes: '',
-		// 	},
-		// 	{
-		// 		name:'Wash dishes',
-		// 		owner: props.house[2],
-		// 		completed:false,
-		// 		due:new Date().setMinutes(today.getMinutes() + 12),
-		// 		timeToComplete: '15 min',
-		// 		notes: '',
-		// 	},
-		// ];
+		this.ogTaskList = [
+			{
+				name:'Take out trash', 
+				owner: props.house[0],
+				completed:false, 
+				due:new Date().setDate(today.getDate() + 1),
+				timeToComplete: '5 min',
+				notes: '',
+			},
+			{
+				name: 'Vacuum',
+				owner: props.house[0],
+				completed:false,
+				due:new Date().setMinutes(today.getMinutes() + 2),
+				timeToComplete: '15 min',
+				notes: '',
+			},
+			{
+				name:'Call the landlord', 
+				owner: props.house[1], 
+				completed:false, 
+				due:new Date().setDate(today.getDate() + 3),
+				timeToComplete: '15 min',
+				notes: '',
+			},
+			{
+				name:'Clean room',
+				owner: props.house[3], 
+				completed:false, 
+				due:new Date().setDate(today.getDate() + 4),
+				timeToComplete: '30 min',
+				notes: '',
+			},
+			{
+				name:'Wash dishes',
+				owner: props.house[2],
+				completed:false,
+				due:new Date().setMinutes(today.getMinutes() + 12),
+				timeToComplete: '15 min',
+				notes: '',
+			},
+		];
 
 		// this.populateFirebase();
 
@@ -230,7 +230,6 @@ class TasksPage extends Component {
 
 	listenForTasks(tasksRef) {
 		tasksRef.on('value', (snap) => {
-			// var taskList = [];
 			snap.forEach((child) => {
 				this.taskList.push({
 					name: child.val().name,
@@ -242,11 +241,11 @@ class TasksPage extends Component {
 				});
 			});
 
+			this.sortTaskList();
+
 			this.setState({
 				dataSource: this.state.dataSource.cloneWithRows(this.taskList.filter(this.checkTaskIsMine))
 			});
-
-			this.sortTaskList();
 		});
 	}
 
@@ -274,7 +273,7 @@ class TasksPage extends Component {
 		this.taskList.sort((value1, value2) => {
 			// console.log(value1.due);
 			// console.log(value2.due);
-			if (value1.due > value2.due.getTime)
+			if (value1.due > value2.due/*.getTime*/)
 				return 1;
 			if (value1.due < value2.due)
 				return -1;
@@ -419,7 +418,7 @@ class TasksPage extends Component {
 			component: CreatePage,
 			passProps: {
 				addTask: this.addTask,
-				currentTask: {notes: '',}
+				currentTask: {notes: '',},
 			},
 			leftButtonTitle: 'Cancel',
 			onLeftButtonPress: () => this.props.navigator.popToTop(0)
@@ -447,12 +446,21 @@ class TasksPage extends Component {
 
 	addTask = (task) => {
 		// Show 'task assigned to' modal
-		console.log(task)
+		console.log('NEW TASK:', task);
 		this.setTaskAssignedModalVisibility(true);
 		this.lastAddedTask = task;
-		this.taskList.push(task);
-		this.sortTaskList();
-		this.updateDataSource();
+		database.ref('Tasks/' + this.taskList.length).set({
+			name: task.name,
+			owner: task.owner,
+			completed: task.completed,
+			due: task.due.getTime(),
+			timeToComplete: task.timeToComplete,
+			notes: task.notes,
+		});
+		// this.taskList.push(task);
+		
+		// this.updateDataSource();
+		// this.sortTaskList();
 	}
 
 	requestTransfer = (task, user) => {
@@ -630,17 +638,16 @@ class TasksPage extends Component {
 
 	renderRow = (data) => {
 		var daysUntil = moment(data.due).fromNow();
-		var now = new Date()
-		var timeDiff = Math.abs(now.getTime() - data.due)
+		var now = new Date();
+		var timeDiff = Math.abs(now.getTime() - data.due);
 		var daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
 		return (
 			<TouchableOpacity onPress={() => this.onTaskPressed(data)}>
-			  <View style={styles.row}>
-				{this.renderIcon(data)}
-				<Text style={styles.taskName}>{this.trunc(data.name, 18)}</Text>
-				<Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{daysUntil}</Text>
-
-			  </View>
+				<View style={styles.row}>
+					{this.renderIcon(data)}
+					<Text style={styles.taskName}>{this.trunc(data.name, 18)}</Text>
+					<Text style={daysLeft > 1 ? styles.dueInText : styles.dueInTextUrgent}>{daysUntil}</Text>
+				</View>
 			</TouchableOpacity>
 		);
 	}
@@ -663,7 +670,7 @@ class TasksPage extends Component {
 				<ListView
 					style={styles.list}
 					dataSource={this.state.dataSource}
-					renderRow={this.renderRow}  
+					renderRow={this.renderRow}
 					renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} /> }
 					enableEmptySections={true}
 					automaticallyAdjustContentInsets={false}

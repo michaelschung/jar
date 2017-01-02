@@ -94,7 +94,7 @@ class TitleBodyButtonsModal extends Component {
 	}
 
 	render() {
-		console.log('rendering TitleBodyButtonsModal');
+		// console.log('rendering TitleBodyButtonsModal');
 		return (
 			<View>
 				<Modal
