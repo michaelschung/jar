@@ -18,8 +18,14 @@ import SideMenu from 'react-native-side-menu'
 
 import ProfilePage from './pages/ProfilePage.js'
 
+import * as firebase from 'firebase';
+const database = firebase.database();
+
 const { Component } = React;
 const window = Dimensions.get('window');
+
+var hamburgerUrl = 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/hamburger_cropped.png';
+var jarUrl = 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/jar_transparent_resized.png';
 
 var house = [
 	{
@@ -88,6 +94,25 @@ class App extends Component {
 		super(props);
 
 		this.jarAmount = 50.0
+	}
+
+	populateFirebase() {
+		for(var user in house) {
+			// console.log(house[user].firstName);
+			database.ref('House/' + house[user].firstName).set({
+				firstName: house[user].firstName,
+				lastName: house[user].lastName,
+				isMe: house[user].isMe,
+				picURL: house[user].picURL,
+				totalTime: house[user].totalTime,
+			});
+		}
+	}
+
+	setTaskName(userId, taskName) {
+		firebase.database().ref(userId).set({
+			taskName: taskName
+		});
 	}
 
 	state = {
@@ -171,7 +196,7 @@ class App extends Component {
 						changeJarAmount: this.changeJarAmount,
 					},
 					// uncomment the next line for the Jar title logo
-					//titleImage: require('./assets/jar_title.png'),
+					// titleImage: require('./assets/jar_title.png'),
 					/* WORDS */
 					// leftButtonTitle: 'Settings',
 					// rightButtonTitle: 'Jar',
@@ -188,7 +213,11 @@ class App extends Component {
 
 	/* Render everything */
 	render() {
-		console.log('rendering App');
+		// console.log('rendering App');
+
+		// this.populateFirebase();
+
+		// this.setTaskName('Michael', 'Vacuum');
 
 		return (
 			<SideMenu

@@ -206,7 +206,7 @@ class HamburgerPanel extends Component {
 
 	/* Render everything in the HamburgerPanel. */
 	render() {
-		console.log('rendering HamburgerPanel');
+		// console.log('rendering HamburgerPanel');
 		return (
 			<ScrollView scrollEnabled={false} scrollsToTop={false} style={styles.menu}>
 				<View style={styles.avatarContainer}>

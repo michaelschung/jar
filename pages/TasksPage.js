@@ -26,6 +26,19 @@ import {
 
 import TaskDetailsPage from './TaskDetailsPage.js'
 
+import * as firebase from 'firebase';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBIC0SmV3VkB4wBQZ-24TlDyZT1bAMJW3Q",
+  authDomain: "jar-backend.firebaseapp.com",
+  databaseURL: "https://jar-backend.firebaseio.com",
+  storageBucket: "jar-backend.appspot.com"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+
 var moment = require('moment');
 
 var today = new Date();
@@ -148,48 +161,52 @@ class TasksPage extends Component {
 					or null if no transfer is requested
 		*/
 
-		this.taskList = [
-			{
-				name:'Take out trash', 
-				owner: props.house[0],
-				completed:false, 
-				due:new Date().setDate(today.getDate() + 1), 
-				timeToComplete: '5 min',
-				notes: '',
-			},
-			{
-				name:'Vacuum',
-				owner: props.house[0],
-				completed:false,
-				due:new Date().setMinutes(today.getMinutes() + 3),
-				timeToComplete: '15 min',
-				notes: '',
-			},
-			{
-				name:'Call the landlord', 
-				owner: props.house[1], 
-				completed:false, 
-				due:new Date().setDate(today.getDate() + 3), 
-				timeToComplete: '15 min',
-				notes: '',
-			},
-			{
-				name:'Clean room',
-				owner: props.house[3], 
-				completed:false, 
-				due:new Date().setDate(today.getDate() + 4), 
-				timeToComplete: '30 min',
-				notes: '',
-			},
-			{
-				name:'Wash dishes',
-				owner: props.house[2],
-				completed:false,
-				due:new Date().setMinutes(today.getMinutes() + 12),
-				timeToComplete: '15 min',
-				notes: '',
-			},
-		];
+		this.taskList = [];
+
+		// this.ogTaskList = [
+		// 	{
+		// 		name:'Take out trash', 
+		// 		owner: props.house[0],
+		// 		completed:false, 
+		// 		due:new Date().setDate(today.getDate() + 1),
+		// 		timeToComplete: '5 min',
+		// 		notes: '',
+		// 	},
+		// 	{
+		// 		name: 'Vacuum',
+		// 		owner: props.house[0],
+		// 		completed:false,
+		// 		due:new Date().setMinutes(today.getMinutes() + 2),
+		// 		timeToComplete: '15 min',
+		// 		notes: '',
+		// 	},
+		// 	{
+		// 		name:'Call the landlord', 
+		// 		owner: props.house[1], 
+		// 		completed:false, 
+		// 		due:new Date().setDate(today.getDate() + 3),
+		// 		timeToComplete: '15 min',
+		// 		notes: '',
+		// 	},
+		// 	{
+		// 		name:'Clean room',
+		// 		owner: props.house[3], 
+		// 		completed:false, 
+		// 		due:new Date().setDate(today.getDate() + 4),
+		// 		timeToComplete: '30 min',
+		// 		notes: '',
+		// 	},
+		// 	{
+		// 		name:'Wash dishes',
+		// 		owner: props.house[2],
+		// 		completed:false,
+		// 		due:new Date().setMinutes(today.getMinutes() + 12),
+		// 		timeToComplete: '15 min',
+		// 		notes: '',
+		// 	},
+		// ];
+
+		// this.populateFirebase();
 
 		this.state = {
 			taskView: 'My Tasks',
@@ -199,17 +216,58 @@ class TasksPage extends Component {
 			deadlineModalVisible: false,
 			nextTask: '',
 			timerMap: new Map(),
-			deadlineTimer: -1
+			deadlineTimer: -1,
+			// ---------------------------IMPORTANT---------------------------
+			dataSource: new ListView.DataSource({
+				rowHasChanged: (r1, r2) => r1 !== r2
+			})
 		};
 
-		this.sortTaskList();
+		this.tasksRef = database.ref().child('Tasks');
 
-		this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-		this.state.dataSource = this.ds.cloneWithRows(this.taskList.filter(this.checkTaskIsMine));
-
+		this.listenForTasks(this.tasksRef);
 	}
 
+	listenForTasks(tasksRef) {
+		tasksRef.on('value', (snap) => {
+			// var taskList = [];
+			snap.forEach((child) => {
+				this.taskList.push({
+					name: child.val().name,
+					owner: child.val().owner,
+					completed: child.val().completed,
+					due: child.val().due,
+					timeToComplete: child.val().timeToComplete,
+					notes: child.val().notes,
+				});
+			});
+
+			this.setState({
+				dataSource: this.state.dataSource.cloneWithRows(this.taskList.filter(this.checkTaskIsMine))
+			});
+
+			this.sortTaskList();
+		});
+	}
+
+	// componentDidMount() {
+	// 	this.listenForTasks(this.tasksRef);
+	// }
+
+	// adds initial tasks to database
+	populateFirebase() {
+		for(var task in this.ogTaskList) {
+			// console.log(task);
+			database.ref('Tasks/' + task).set({
+				name: this.ogTaskList[task].name,
+				owner: this.ogTaskList[task].owner,
+				completed: this.ogTaskList[task].completed,
+				due: this.ogTaskList[task].due,
+				timeToComplete: this.ogTaskList[task].timeToComplete,
+				notes: this.ogTaskList[task].notes,
+			});
+		}
+	}
 
 	sortTaskList = () => {
 
@@ -374,7 +432,7 @@ class TasksPage extends Component {
 
 	onSegmentChanged = (value) => {
 		this.setState({
-			dataSource: this.ds.cloneWithRows(value === "All Tasks" ? 
+			dataSource: this.state.dataSource.cloneWithRows(value === "All Tasks" ? 
 				this.taskList : this.taskList.filter(this.checkTaskIsMine)),
 			taskView: value,
 		});
@@ -382,7 +440,7 @@ class TasksPage extends Component {
 
 	updateDataSource = () => {
 		this.setState({
-			dataSource: this.ds.cloneWithRows(this.state.taskView === "All Tasks" ? 
+			dataSource: this.state.dataSource.cloneWithRows(this.state.taskView === "All Tasks" ? 
 				this.taskList : this.taskList.filter(this.checkTaskIsMine)),
 		});
 	}
@@ -532,7 +590,7 @@ class TasksPage extends Component {
 	}
 
 	noTasks = () => {
-		console.log('LENGTH IS ZERO:', this.taskList.filter(this.checkTaskIsMine).length == 0);
+		// console.log('LENGTH IS ZERO:', this.taskList.filter(this.checkTaskIsMine).length == 0);
 		var noTasks = false;
 		if (this.state.taskView == 'My Tasks') {
 			noTasks = this.taskList.filter(this.checkTaskIsMine).length == 0
@@ -548,7 +606,7 @@ class TasksPage extends Component {
 	}
 
 	renderIcon = (data) => {
-		console.log('UPDATING icon');
+		// console.log('UPDATING icon');
 		if (data.owner.isMe) {
 			if (!data.isAwaitingTransfer)
 				return (
