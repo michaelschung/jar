@@ -20,6 +20,7 @@ import ProfilePage from './pages/ProfilePage.js'
 
 import * as firebase from 'firebase';
 const database = firebase.database();
+const ref = database.ref();
 
 const { Component } = React;
 const window = Dimensions.get('window');
@@ -99,13 +100,15 @@ class App extends Component {
 	populateFirebase() {
 		for(var user in house) {
 			// console.log(house[user].firstName);
-			database.ref('House/' + house[user].firstName).set({
+			ref.child('House/' + house[user].firstName).set({
 				firstName: house[user].firstName,
 				lastName: house[user].lastName,
 				isMe: house[user].isMe,
 				picURL: house[user].picURL,
 				totalTime: house[user].totalTime,
 			});
+
+			ref.child('Jar/total').set(this.jarAmount);
 		}
 	}
 

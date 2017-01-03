@@ -38,6 +38,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const database = firebase.database();
+const ref = database.ref();
 
 var moment = require('moment');
 
@@ -176,7 +177,7 @@ class TasksPage extends Component {
 				name: 'Vacuum',
 				owner: props.house[0],
 				completed:false,
-				due:new Date().setMinutes(today.getMinutes() + 2),
+				due:new Date().setMinutes(today.getMinutes() + 1),
 				timeToComplete: '15 min',
 				notes: '',
 			},
@@ -206,7 +207,7 @@ class TasksPage extends Component {
 			},
 		];
 
-		// this.populateFirebase();
+		this.populateFirebase();
 
 		this.state = {
 			taskView: 'My Tasks',
@@ -223,7 +224,7 @@ class TasksPage extends Component {
 			})
 		};
 
-		this.tasksRef = database.ref().child('Tasks');
+		this.tasksRef = ref.child('Tasks');
 
 		this.listenForTasks(this.tasksRef);
 	}
@@ -257,7 +258,7 @@ class TasksPage extends Component {
 	populateFirebase() {
 		for(var task in this.ogTaskList) {
 			// console.log(task);
-			database.ref('Tasks/' + task).set({
+			ref.child('Tasks/' + task).set({
 				name: this.ogTaskList[task].name,
 				owner: this.ogTaskList[task].owner,
 				completed: this.ogTaskList[task].completed,
@@ -296,7 +297,13 @@ class TasksPage extends Component {
 					setTimeout(() => {
 						this.setNextTask('The deadline for "' +  task.name + '" has passed. You will be charged $1.');
 						this.setDeadlineModalVisibility(true);
-						this.props.changeJarAmount(+1);
+						
+						ref.child('Jar/total').once('value').then(function(snap) {
+							ref.child('Jar/total').set(snap.val() + 1);
+						});
+
+						// ref.child('Jar/total').set(+1);
+						// this.props.changeJarAmount(+1);
 						clearTimeout(this);
 						this.sortTaskList();
 						this.updateDataSource()
@@ -449,7 +456,7 @@ class TasksPage extends Component {
 		console.log('NEW TASK:', task);
 		this.setTaskAssignedModalVisibility(true);
 		this.lastAddedTask = task;
-		database.ref('Tasks/' + this.taskList.length).set({
+		ref.child('Tasks/' + this.taskList.length).set({
 			name: task.name,
 			owner: task.owner,
 			completed: task.completed,
@@ -458,7 +465,6 @@ class TasksPage extends Component {
 			notes: task.notes,
 		});
 		// this.taskList.push(task);
-		
 		// this.updateDataSource();
 		// this.sortTaskList();
 	}
