@@ -28,6 +28,8 @@ const window = Dimensions.get('window');
 var hamburgerUrl = 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/hamburger_cropped.png';
 var jarUrl = 'http://web.stanford.edu/class/cs147/projects/Home/Jar/images/jar_transparent_resized.png';
 
+var today = new Date();
+
 var house = [
 	{
 		firstName: 'Michael',
@@ -58,6 +60,51 @@ var house = [
 		totalTime: 0,
 	},
 ];
+
+var ogTaskList = [
+	{
+		name:'Take out trash', 
+		owner: house[0],
+		completed:false, 
+		due:new Date().setDate(today.getDate() + 1),
+		timeToComplete: '5 min',
+		notes: '',
+	},
+	{
+		name: 'Vacuum',
+		owner: house[0],
+		completed:false,
+		due:new Date().setMinutes(today.getMinutes() + 1),
+		timeToComplete: '15 min',
+		notes: '',
+	},
+	{
+		name:'Call the landlord', 
+		owner: house[1], 
+		completed:false, 
+		due:new Date().setDate(today.getDate() + 3),
+		timeToComplete: '15 min',
+		notes: '',
+	},
+	{
+		name:'Clean room',
+		owner: house[3], 
+		completed:false, 
+		due:new Date().setDate(today.getDate() + 4),
+		timeToComplete: '30 min',
+		notes: '',
+	},
+	{
+		name:'Wash dishes',
+		owner: house[2],
+		completed:false,
+		due:new Date().setMinutes(today.getMinutes() + 12),
+		timeToComplete: '15 min',
+		notes: '',
+	},
+];
+
+var ogJarAmount = 50.0;
 
 const styles = StyleSheet.create({
 	button: {
@@ -94,7 +141,8 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		this.jarAmount = 50.0
+		// ---------------UNCOMMENT NEXT LINE TO RESET DATA---------------
+		// this.populateFirebase();
 	}
 
 	populateFirebase() {
@@ -108,7 +156,21 @@ class App extends Component {
 				totalTime: house[user].totalTime,
 			});
 
-			ref.child('Jar/total').set(this.jarAmount);
+			ref.child('Jar/total').set(ogJarAmount);
+		}
+
+		for(var task in ogTaskList) {
+			// console.log(task);
+			var t = ogTaskList[task];
+			// if you want tasks to be stored by index, replace 't.name' with 'task'
+			ref.child('Tasks/' + t.name).set({
+				name: t.name,
+				owner: t.owner,
+				completed: t.completed,
+				due: t.due,
+				timeToComplete: t.timeToComplete,
+				notes: t.notes,
+			});
 		}
 	}
 
@@ -217,8 +279,6 @@ class App extends Component {
 	/* Render everything */
 	render() {
 		// console.log('rendering App');
-
-		// this.populateFirebase();
 
 		// this.setTaskName('Michael', 'Vacuum');
 

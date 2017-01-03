@@ -164,51 +164,6 @@ class TasksPage extends Component {
 
 		this.taskList = [];
 
-		this.ogTaskList = [
-			{
-				name:'Take out trash', 
-				owner: props.house[0],
-				completed:false, 
-				due:new Date().setDate(today.getDate() + 1),
-				timeToComplete: '5 min',
-				notes: '',
-			},
-			{
-				name: 'Vacuum',
-				owner: props.house[0],
-				completed:false,
-				due:new Date().setMinutes(today.getMinutes() + 1),
-				timeToComplete: '15 min',
-				notes: '',
-			},
-			{
-				name:'Call the landlord', 
-				owner: props.house[1], 
-				completed:false, 
-				due:new Date().setDate(today.getDate() + 3),
-				timeToComplete: '15 min',
-				notes: '',
-			},
-			{
-				name:'Clean room',
-				owner: props.house[3], 
-				completed:false, 
-				due:new Date().setDate(today.getDate() + 4),
-				timeToComplete: '30 min',
-				notes: '',
-			},
-			{
-				name:'Wash dishes',
-				owner: props.house[2],
-				completed:false,
-				due:new Date().setMinutes(today.getMinutes() + 12),
-				timeToComplete: '15 min',
-				notes: '',
-			},
-		];
-
-		this.populateFirebase();
-
 		this.state = {
 			taskView: 'My Tasks',
 			transferResponseModalVisible: false,
@@ -253,21 +208,6 @@ class TasksPage extends Component {
 	// componentDidMount() {
 	// 	this.listenForTasks(this.tasksRef);
 	// }
-
-	// adds initial tasks to database
-	populateFirebase() {
-		for(var task in this.ogTaskList) {
-			// console.log(task);
-			ref.child('Tasks/' + task).set({
-				name: this.ogTaskList[task].name,
-				owner: this.ogTaskList[task].owner,
-				completed: this.ogTaskList[task].completed,
-				due: this.ogTaskList[task].due,
-				timeToComplete: this.ogTaskList[task].timeToComplete,
-				notes: this.ogTaskList[task].notes,
-			});
-		}
-	}
 
 	sortTaskList = () => {
 
@@ -377,11 +317,15 @@ class TasksPage extends Component {
 		var timer = this.state.timerMap.get(taskItem);
 		var taskPage = this;
 		var map = this.state.timerMap;
+
+		console.log('TASKITEM.NAME:', taskItem.name);
+
 		if (timer) {
 			// timer has been set already, so clear it and uncheck box
 			clearTimeout(timer);
 
 			map.delete(taskItem);
+
 			this.setState({
 				timerMap: map,
 			});
@@ -390,7 +334,9 @@ class TasksPage extends Component {
 			map.set(taskItem, setTimeout(() => {
 					console.log("timer up");
 					var index = taskPage.taskList.indexOf(taskItem);
-					taskPage.taskList.splice(index, 1);
+					// taskPage.taskList.splice(index, 1);
+					// delete task from database
+					ref.child('Tasks/' + taskItem.name).set(null);
 					clearTimeout(this);
 					taskPage.updateDataSource();
 					console.log('task completed timer up');
@@ -456,7 +402,8 @@ class TasksPage extends Component {
 		console.log('NEW TASK:', task);
 		this.setTaskAssignedModalVisibility(true);
 		this.lastAddedTask = task;
-		ref.child('Tasks/' + this.taskList.length).set({
+		// if you want tasks to be stored by index, replace 'task.name' with 'task.taskList.length'
+		ref.child('Tasks/' + task.name).set({
 			name: task.name,
 			owner: task.owner,
 			completed: task.completed,
