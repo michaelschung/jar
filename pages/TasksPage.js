@@ -27,16 +27,6 @@ import {
 import TaskDetailsPage from './TaskDetailsPage.js'
 
 import * as firebase from 'firebase';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBIC0SmV3VkB4wBQZ-24TlDyZT1bAMJW3Q",
-  authDomain: "jar-backend.firebaseapp.com",
-  databaseURL: "https://jar-backend.firebaseio.com",
-  storageBucket: "jar-backend.appspot.com"
-};
-
-firebase.initializeApp(firebaseConfig);
-
 const database = firebase.database();
 const ref = database.ref();
 

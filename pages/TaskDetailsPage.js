@@ -24,6 +24,19 @@ import {
 var moment = require('moment');
 const dismissKeyboard = require('dismissKeyboard');
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBIC0SmV3VkB4wBQZ-24TlDyZT1bAMJW3Q",
+  authDomain: "jar-backend.firebaseapp.com",
+  databaseURL: "https://jar-backend.firebaseio.com",
+  storageBucket: "jar-backend.appspot.com"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+import * as firebase from 'firebase';
+const database = firebase.database();
+const ref = database.ref();
+
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'column',
@@ -243,9 +256,6 @@ const styles = StyleSheet.create({
 	},
 });
 
-
-
-
 /* Transfer users carousel component */
 class TransferToCarousel extends Component {
 	constructor(props) {
@@ -421,7 +431,8 @@ class TaskDetailsPage extends Component {
 
 	setNotes = (text) => {
 		// console.log("NOTES:", text);
-		this.props.task.notes = text;
+		// this.props.task.notes = text;
+		ref.child('Tasks/' + this.props.task.name).child('notes').set(text);
 	}
 
 	getPlaceholderNotes() {
